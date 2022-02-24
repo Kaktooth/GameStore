@@ -1,12 +1,43 @@
 package com.store.gamestore.service;
 
-public interface GameService<T, I> {
+import com.store.gamestore.repository.CommonRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-    void save(T object);
+import java.io.File;
 
-    T get(I id);
+@Slf4j
+@Service
+@Transactional
+public class GameService implements CommonService<MultipartFile, Integer> {
 
-    void update(T object);
+    private final CommonRepository<MultipartFile, Integer> gameRepository;
 
-    void delete(I id);
+    @Autowired
+    public GameService(CommonRepository<MultipartFile, Integer> gameRepository){
+        this.gameRepository = gameRepository;
+    }
+
+    @Override
+    public void save(MultipartFile gameFile) {
+        gameRepository.save(gameFile);
+    }
+
+    @Override
+    public MultipartFile get(Integer id) {
+        return null;
+    }
+
+    @Override
+    public void update(MultipartFile gameFile) {
+
+    }
+
+    @Override
+    public void delete(Integer id) {
+
+    }
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <title>Sign in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+
+</head>
+<body class="d-flex justify-content-center align-items-center text-center">
+<form class="form-signin" name="form" th:action="@{/sign-in}" method="post">
+    <h1 class="h3 mb-3 font-weight-normal ">Please sign in</h1>
+
+    <div th:if="${param.accepted}">
+        You have been signed in.
+    </div>
+
+    <div th:if="${param.error}">
+        Invalid username and password.
+    </div>
+
+    <div th:if="${param.signout}">
+        You have been signed out.
+    </div>
+
+    <label for="user" class="sr-only">Email address</label>
+    <input type="text" id="user" name="user" class="form-control" placeholder="Enter username or email" required="" autofocus="">
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Password">
+
+    <div class="checkbox mb-6">
+        <label>
+            <input type="checkbox" name="remember-me" id="remember-me" value="remember-me"> Remember me
+        </label>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+    <div>
+        <label> or you can sign up</label>
+        <a href="/sign-up">
+            Sign up
+        </a>
+    </div>
+</form>
+
+</body>
+</html>

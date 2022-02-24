@@ -1,6 +1,6 @@
 package com.store.gamestore.controller;
 
-import com.store.gamestore.service.GameServiceImpl;
+import com.store.gamestore.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +17,11 @@ import java.nio.file.StandardCopyOption;
 @Controller
 public class UploadController {
 
-    private final GameServiceImpl gameServiceImpl;
-    private final String UPLOAD_DIR = "upload/";
+    private final GameService gameServiceImpl;
+    private static final String UPLOAD_DIR = "upload/";
 
     @Autowired
-    public UploadController(GameServiceImpl gameServiceImpl) {
+    public UploadController(GameService gameServiceImpl) {
         this.gameServiceImpl = gameServiceImpl;
     }
 
@@ -50,7 +50,7 @@ public class UploadController {
             e.printStackTrace();
         }
 
-        gameServiceImpl.save(newGameFile);
+        gameServiceImpl.save(file);
 
         try {
             Files.delete(newGameFile.toPath());
