@@ -19,7 +19,7 @@ public class GameRepositoryImpl implements CommonRepository<MultipartFile, Integ
 
     String saveGameToBlob = "SELECT lo_import(?);";
 
-    String saveGameFile = "INSERT INTO games (file_name, large_object) VALUES (?, ?);";
+    String saveGameFile = "INSERT INTO games (file_name, object_id) VALUES (?, ?);";
 
     String getGameFile = "SELECT id, name, object_id FROM games";
 
