@@ -1,8 +1,5 @@
 package com.store.gamestore.repository;
 
-import org.springframework.stereotype.Repository;
-
-@Repository
 public interface CommonRepository<T, I> {
 
     void save(T object);

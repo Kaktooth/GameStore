@@ -7,7 +7,6 @@
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
-
 </head>
 <body class="d-flex justify-content-center align-items-center text-center">
 <form class="form-signin" name="form" th:action="@{/sign-in}" method="post">
@@ -25,8 +24,8 @@
         You have been signed out.
     </div>
 
-    <label for="user" class="sr-only">Email address</label>
-    <input type="text" id="user" name="user" class="form-control" placeholder="Enter username or email" required="" autofocus="">
+    <label for="user" class="sr-only">Username or email address</label>
+    <input type="text" id="user" name="user" class="form-control" placeholder="Enter username" required="" autofocus="">
     <label for="password" class="sr-only">Password</label>
     <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Password">
 
@@ -44,6 +43,7 @@
             Sign up
         </a>
     </div>
+    <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>`
 </form>
 
 </body>

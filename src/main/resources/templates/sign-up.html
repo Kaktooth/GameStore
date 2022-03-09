@@ -8,7 +8,6 @@
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
-
 </head>
 
 <body class="d-flex justify-content-center align-items-center text-center">
@@ -16,21 +15,22 @@
 <form name="form2" th:action="@{/sign-up}" method="post">
     <h1 class="h3 mb-3 font-weight-normal ">Please sign up</h1>
 
-    <label for="user" class="sr-only">Email address</label>
-    <input type="email" id="user" name="user" class="form-control" placeholder="Email address" required="" autofocus="">
+    <label for="user" class="sr-only">Username</label>
+    <input type="text" id="user" name="user" class="form-control" placeholder="Enter username" required="" autofocus="">
     <label for="password" class="sr-only">Password</label>
     <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Password">
-    <label for="phone" class="sr-only">Phone number</label>
-    <input type="tel" id="phone" name="phone" class="form-control mb-4" placeholder="Phone Number">
+    <label for="user" class="sr-only">Email address</label>
+    <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required="" autofocus="">
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
-
+    <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <div>
         <label> go back to sign in page </label>
-        <a href="/sign-in" method="get">
+        <a href="/sign-in" methods="get">
             Sign in
         </a>
     </div>
+
 </form>
 </body>
 </html>

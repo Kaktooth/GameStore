@@ -1,6 +1,6 @@
 package com.store.gamestore.controller;
 
-import com.store.gamestore.service.GameService;
+import com.store.gamestore.service.game.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,16 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-
 @Controller
 public class UploadController {
 
     private final GameService gameServiceImpl;
-    private static final String UPLOAD_DIR = "upload/";
 
     @Autowired
     public UploadController(GameService gameServiceImpl) {
@@ -38,27 +32,9 @@ public class UploadController {
             return "redirect:/";
         }
 
-        // to-do
-        // create new class to create file and delete
-
-        String fileName = file.getOriginalFilename();
-        File newGameFile = new File(UPLOAD_DIR + fileName);
-
-        try {
-            Files.copy(file.getInputStream(), newGameFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         gameServiceImpl.save(file);
 
-        try {
-            Files.delete(newGameFile.toPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        attributes.addFlashAttribute("message", "You successfully uploaded " + fileName + '!');
+        attributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + '!');
 
         return "redirect:/";
     }

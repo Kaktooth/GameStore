@@ -10,7 +10,7 @@
 
 </head>
 <body>
-
 <h1 class="h3 mb-3 font-weight-normal ">You can't go here</h1>
+<input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>`
 </body>
 </html>

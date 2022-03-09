@@ -1,13 +1,17 @@
 package com.store.gamestore.model;
 
+import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 
+import java.util.UUID;
+
 
 @Value
+@Builder
 public class User {
 
-    @NonNull Integer id;
+    @NonNull UUID id;
     @NonNull String username;
     @NonNull String password;
     @NonNull Boolean enabled;

@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
-
 <section class="my-5">
     <div class="container">
         <div class="row">
@@ -19,6 +18,8 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">Upload File</button>
+                    <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>`
+
                 </form>
             </div>
         </div>
