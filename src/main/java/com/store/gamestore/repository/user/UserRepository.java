@@ -15,9 +15,10 @@ import java.util.UUID;
 public class UserRepository extends AbstractRepository<User, UUID> {
 
     private static final String insertAuthorities = "INSERT INTO user_authorities VALUES (0, 'USER'),   (1, 'ADMIN')";
-    private static final String newUserQuery = "INSERT INTO users(id, username, password, enabled, email) VALUES (?, ?, ?, ?, ?)";
-    private static final String queryForAuthorities = "INSERT INTO authorities(id, username, authority, user_id) VALUES (?, ?, ?, ?)";
-    private static final String deleteUserQuery = "DELETE FROM users WHERE id = ?";
+    private static final String newUser = "INSERT INTO users(id, username, password, enabled, email) VALUES (?, ?, ?, ?, ?)";
+    private static final String newUserProfile = "INSERT INTO user_profiles(id, public_username, user_id) VALUES (?, ?, ?)";
+    private static final String newUsersAuthority = "INSERT INTO authorities(id, username, email, authority, user_id) VALUES (?, ?, ?, ?, ?)";
+    private static final String deleteUser = "DELETE FROM users WHERE id = ?";
     private static final String query = "SELECT id, username, password, enabled, phone_number FROM users WHERE users.username = ?";
 
     @Autowired
@@ -29,7 +30,7 @@ public class UserRepository extends AbstractRepository<User, UUID> {
     public void save(User user) {
 
         jdbcTemplate.update(con -> {
-            PreparedStatement ps = con.prepareStatement(newUserQuery);
+            PreparedStatement ps = con.prepareStatement(newUser);
             ps.setObject(1, user.getId());
             ps.setString(2, user.getUsername());
             ps.setString(3, user.getPassword());
@@ -39,11 +40,20 @@ public class UserRepository extends AbstractRepository<User, UUID> {
         });
 
         jdbcTemplate.update(con -> {
-            PreparedStatement ps = con.prepareStatement(queryForAuthorities);
+            PreparedStatement ps = con.prepareStatement(newUsersAuthority);
             ps.setInt(1, 0);
             ps.setString(2, user.getUsername());
-            ps.setInt(3, 0);
-            ps.setObject(4, user.getId());
+            ps.setString(3, user.getEmail());
+            ps.setInt(4, 0);
+            ps.setObject(5, user.getId());
+            return ps;
+        });
+
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(newUserProfile);
+            ps.setInt(1, 0);
+            ps.setString(2, user.getProfileUsername());
+            ps.setObject(3, user.getId());
             return ps;
         });
 

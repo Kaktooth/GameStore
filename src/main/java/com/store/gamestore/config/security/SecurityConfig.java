@@ -20,9 +20,11 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     String errorPage = "/error";
-    String signInPage = "/sign-in";
-    String signUpPage = "/sign-up";
+    String logInPage = "/log-in";
+    String createAccountPage = "/create-account";
     String accessDeniedPage = "/access-denied-page";
+    String storePage = "/store";
+    String page = "/";
 
     private final DataSource dataSource;
     private final PasswordEncoder passwordEncoder;
@@ -44,8 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .jdbcAuthentication()
             .dataSource(dataSource)
             .passwordEncoder(passwordEncoder)
-            .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username = ?")
-            .authoritiesByUsernameQuery("SELECT username, authority FROM authorities WHERE username = ?");
+            .usersByUsernameQuery("SELECT username, email, password, enabled FROM users WHERE username = ?")
+            .authoritiesByUsernameQuery("SELECT username, email, authority FROM authorities WHERE username = ?");
     }
 
     @Override
@@ -60,24 +62,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sameOrigin()
             .and()
             .authorizeRequests()
-            .mvcMatchers(errorPage, signInPage, signUpPage)
+            .mvcMatchers(errorPage, logInPage, createAccountPage, storePage, page)
             .permitAll()
-            .anyRequest().authenticated()
+            .anyRequest()
+            .authenticated()
             .and()
             .formLogin()
-            .loginPage(signInPage)
-            .loginProcessingUrl(signInPage)
+            .loginPage(logInPage)
+            .loginProcessingUrl(logInPage)
             .usernameParameter("user")
             .passwordParameter("password")
-            .defaultSuccessUrl("/upload", true)
-            .failureUrl(signInPage + "?error")
+            .defaultSuccessUrl("/", true)
+            .failureUrl(logInPage + "?error&login")
             .permitAll()
             .and()
             .logout()
             .invalidateHttpSession(true)
             .deleteCookies("JSESSIONID")
-            .logoutUrl("/signout")
-            .logoutSuccessUrl(signInPage + "?signout")
+            .logoutUrl("/logout")
+            .logoutSuccessUrl(logInPage + "?logout")
             .permitAll();
 
     }

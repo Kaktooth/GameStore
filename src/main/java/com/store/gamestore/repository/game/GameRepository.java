@@ -31,12 +31,13 @@ public class GameRepository extends AbstractRepository<MultipartFile, Integer> {
         if (gameFile.getSize() < Runtime.getRuntime().freeMemory()) {
             jdbcTemplate.update(conn -> {
                 PreparedStatement ps = conn.prepareStatement(saveGameFile, new String[]{"id"});
-                try {
                     ps.setString(1, gameFile.getOriginalFilename());
+                try {
                     ps.setBlob(2, gameFile.getInputStream());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
                 return ps;
             });
         }

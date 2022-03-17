@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <title>Account creation</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+</head>
+
+<body>
+<div class="d-flex justify-content-center bg-dark">
+    <form name="form2" th:action="@{/create-account}" method="post">
+        <h1 class="h3 mb-3 font-weight-normal text-white">Create your account</h1>
+
+        <label for="user" class="text-muted">Username</label>
+        <input type="text" id="user" name="user" class="form-control" placeholder="Enter username" required=""
+               autofocus="">
+        <label for="userProfile" class="text-muted">Profile username</label>
+        <input type="text" id="userProfile" name="userProfile" class="form-control"
+               placeholder="This username will be shown publicly" required="" autofocus="">
+        <label for="password" class="text-muted">Password</label>
+        <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Enter password">
+        <label for="email" class="text-muted">Email address</label>
+        <input type="email" id="email" name="email" class="form-control mb-4"
+               placeholder="Enter email like: john@mail.com"
+               required="" autofocus="">
+        <div class="text-center">
+            <button style="width: 170px; background-image: var(--bs-gradient);" class="btn btn-md btn-primary" type="submit">
+                Create account
+            </button>
+        </div>
+        <div>
+            <label class="text-white"> go back to log in page </label>
+            <a href="/?login" methods="get">
+                Log in
+            </a>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

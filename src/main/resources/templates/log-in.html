@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <title>Log in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous"/>
+</head>
+<body>
+<div class="d-flex justify-content-center bg-dark">
+    <form class="form-login" name="form" th:action="@{/log-in}" method="post">
+        <h1 class="h3 mb-3 font-weight-normal text-center text-white">Please log in</h1>
+
+        <div class="text-white" th:if="${param.accepted}">
+            You have been logged in.
+        </div>
+
+        <div class="text-white" th:if="${param.signout}">
+            You have been logged out.
+        </div>
+
+        <label for="user" class="text-muted">Username</label>
+        <input type="text" id="user" name="user" class="bg-gradient-light form-control text-muted"
+               autofocus="">
+        <label for="password" class="text-muted">Password</label>
+        <input type="password" id="password" name="password" class="form-control bg-gradient-light mb-4 text-muted">
+        <div th:if="${param.error}">
+            <label class="text-warning">Invalid username or password.</label>
+            <a class="text-info">Forgot password?</a>
+        </div>
+
+        <div class="checkbox mb-6">
+            <label class="text-muted">
+                <input type="checkbox" name="remember-me" id="remember-me" value="remember-me"/> Remember me
+            </label>
+        </div>
+        <div class="text-center">
+            <button style="width: 170px; background-image: var(--bs-gradient);" class="btn btn-md btn-primary align-content-center" type="submit">Sign in</button>
+        </div>
+
+        <div class="bg-gradient-light">
+            <label class="text-white"> or you can sign up</label>
+            <a href="/?create_account" class="text-info">
+                Create new account
+            </a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/sign-up")
+@RequestMapping("/create-account")
 class UserController {
 
     private final AbstractService<User, UUID> userService;
@@ -27,11 +27,12 @@ class UserController {
 
     @GetMapping
     public String getRegisterPage() {
-        return "/sign-up";
+        return "create-account";
     }
 
     @PostMapping
     public String registerNewUser(@RequestParam(value = "user") String username,
+                                  @RequestParam(value = "userProfile") String profileUsername,
                                   @RequestParam(value = "password") String password,
                                   @RequestParam(value = "email") String email) {
 
@@ -40,6 +41,7 @@ class UserController {
             .builder()
             .id(UUID.randomUUID())
             .username(username)
+            .profileUsername(profileUsername)
             .password(encodedPassword)
             .enabled(true)
             .email(email)
@@ -47,6 +49,6 @@ class UserController {
 
         userService.save(user);
 
-        return "/sign-in";
+        return "log-in";
     }
 }

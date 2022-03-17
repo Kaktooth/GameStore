@@ -10,12 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-public class UploadController {
+public class GameUploadController {
 
     private final GameService gameServiceImpl;
 
     @Autowired
-    public UploadController(GameService gameServiceImpl) {
+    public GameUploadController(GameService gameServiceImpl) {
         this.gameServiceImpl = gameServiceImpl;
     }
 
@@ -34,7 +34,7 @@ public class UploadController {
 
         gameServiceImpl.save(file);
 
-        attributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + '!');
+        attributes.addFlashAttribute("message", "Your file successfully uploaded " + file.getOriginalFilename() + '!');
 
         return "redirect:/";
     }
