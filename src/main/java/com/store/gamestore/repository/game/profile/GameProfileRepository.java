@@ -1,0 +1,64 @@
+package com.store.gamestore.repository.game.profile;
+
+import com.store.gamestore.model.GameProfile;
+import com.store.gamestore.repository.AbstractRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
+
+import java.sql.PreparedStatement;
+import java.sql.Timestamp;
+
+@Slf4j
+@Repository
+public class GameProfileRepository extends AbstractRepository<GameProfile, Integer> {
+
+    private static final String saveGameProfile = "INSERT INTO game_profiles(price, name," +
+        " developer, publisher, rating, release_date, description, brief_description," +
+        " game_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String getGameProfile = "SELECT * FROM game_profiles WHERE id = ?";
+
+    public GameProfileRepository(JdbcTemplate jdbcTemplate) {
+        super(jdbcTemplate);
+    }
+
+    @Override
+    public GameProfile save(GameProfile gameProfile) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(saveGameProfile, new String[]{"id"});
+            ps.setBigDecimal(1, gameProfile.getPrice());
+            ps.setString(2, gameProfile.getName());
+            ps.setString(3, gameProfile.getDeveloper());
+            ps.setString(4, gameProfile.getPublisher());
+            ps.setInt(5, gameProfile.getRating());
+            ps.setTimestamp(6, Timestamp.valueOf(gameProfile.getReleaseDate()));
+            ps.setString(7, gameProfile.getDescription());
+            ps.setString(8, gameProfile.getBriefDescription());
+            ps.setInt(9, gameProfile.getGameId());
+            return ps;
+        }, keyHolder);
+
+        Integer entityId = (Integer) keyHolder.getKey();
+
+        return get(entityId);
+    }
+
+    @Override
+    public GameProfile get(Integer id) {
+        return jdbcTemplate.queryForObject(getGameProfile, new BeanPropertyRowMapper<>(GameProfile.class), id);
+    }
+
+    @Override
+    public void update(GameProfile gameProfile) {
+
+    }
+
+    @Override
+    public void delete(Integer id) {
+
+    }
+}

@@ -11,7 +11,7 @@ public class AbstractRepository<T, I> implements CommonRepository<T, I> {
     }
 
     @Override
-    public void save(T object) {}
+    public T save(T object) { return null; }
 
     @Override
     public T get(I id) {

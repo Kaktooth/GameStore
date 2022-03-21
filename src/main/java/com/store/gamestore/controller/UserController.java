@@ -49,6 +49,6 @@ class UserController {
 
         userService.save(user);
 
-        return "log-in";
+        return "redirect:/log-in?login";
     }
 }

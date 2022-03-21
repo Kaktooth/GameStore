@@ -1,5 +1,5 @@
 CREATE TABLE operating_systems
 (
-    id               SERIAL PRIMARY KEY,
-    operating_system VARCHAR NOT NULL
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL
 );

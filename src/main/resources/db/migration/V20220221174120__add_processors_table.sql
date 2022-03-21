@@ -1,5 +1,5 @@
 CREATE TABLE processors
 (
-    id        SERIAL PRIMARY KEY,
-    processor VARCHAR NOT NULL
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL
 );

@@ -11,8 +11,8 @@ public class AbstractService<T, I> implements CommonService<T, I> {
     }
 
     @Override
-    public void save(T object) {
-        repository.save(object);
+    public T save(T object) {
+        return repository.save(object);
     }
 
     @Override
