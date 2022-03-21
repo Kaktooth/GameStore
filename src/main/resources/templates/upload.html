@@ -19,8 +19,9 @@
         <div class="container-fluid d-grid gap-3 align-items-center bg-dark">
             <ul class="nav col col-lg-auto me-lg-auto mb-2 justify-content-left mb-md-0">
                 <a class="font-weight-bold navbar-brand" href="/">Upload Game</a>
-                <li><a class="nav-link px-2 text-white" href="/?store">Documentation</a></li>
-                <li><a class="nav-link px-2 text-white" href="/?collection">FAQ</a></li>
+                <li><a class="nav-link px-2 text-white" href="/documentation">Documentation</a></li>
+                <li><a class="nav-link px-2 text-white" href="/faq">FAQ</a></li>
+                <li><a class="nav-link px-2 text-white" href="/uploaded-games">Uploaded Games</a></li>
             </ul>
             <div class="d-flex justify-content-end text-white">
                 <div th:if="${#httpServletRequest.remoteUser}!=null">
@@ -86,7 +87,7 @@
                         <input type="text" id="publisher" name="publisher" th:field="*{publisher}"
                                class="bg-gradient-light form-control text-muted" autofocus="">
 
-                        <h4>Select minimal requirements for your game</h4>
+                        <h4>Select minimal requirements for your gameFile</h4>
                         <select th:field="*{minProcessorId}" name="minProcessorId" id="minProcessorId">
                             <option th:each="p: ${processors}" th:value="${p.id}" th:text="${p.name}"></option>
                         </select>
@@ -105,7 +106,7 @@
                         <input type="number" id="minStorage" th:field="*{minStorage}"
                                name="minStorage" class="bg-gradient-light form-control text-muted" autofocus="">
 
-                        <h4>Select maximal requirements for your game</h4>
+                        <h4>Select maximal requirements for your gameFile</h4>
                         <select th:field="*{recProcessorId}" name="recProcessorId" id="recProcessorId">
                             <option th:each="p: ${processors}" th:value="${p.id}" th:text="${p.getName()}"></option>
                         </select>
@@ -125,7 +126,7 @@
                                name="recStorage" class="bg-gradient-light form-control text-muted" autofocus="">
 
 
-                        <h4>Upload game in zip archive</h4>
+                        <h4>Upload gameFile in zip archive</h4>
                         <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
 
 

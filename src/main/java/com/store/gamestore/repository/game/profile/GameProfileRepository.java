@@ -38,7 +38,7 @@ public class GameProfileRepository extends AbstractRepository<GameProfile, Integ
             ps.setTimestamp(6, Timestamp.valueOf(gameProfile.getReleaseDate()));
             ps.setString(7, gameProfile.getDescription());
             ps.setString(8, gameProfile.getBriefDescription());
-            ps.setInt(9, gameProfile.getGameId());
+            ps.setObject(9, gameProfile.getGameId());
             return ps;
         }, keyHolder);
 

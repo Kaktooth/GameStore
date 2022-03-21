@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Getter
@@ -24,5 +25,5 @@ public class GameProfile {
     private LocalDateTime releaseDate;
     private String description;
     private String briefDescription;
-    private Integer gameId;
+    private UUID gameId;
 }

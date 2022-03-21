@@ -4,6 +4,7 @@ import com.store.gamestore.model.User;
 import com.store.gamestore.repository.AbstractRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 @Slf4j
 @Repository
-public class UserRepository extends AbstractRepository<User, UUID> {
+public class UserRepository extends AbstractRepository<User, UUID> implements UserDetailsRepository {
 
     private static final String newUser = "INSERT INTO users(id, username, password, enabled, email) VALUES (?, ?, ?, ?, ?)";
     private static final String newUserWithPhone = "INSERT INTO users(id, username, password, enabled, email, phone_number) VALUES (?, ?, ?, ?, ?, ?)";
@@ -22,6 +23,7 @@ public class UserRepository extends AbstractRepository<User, UUID> {
     private static final String deleteUser = "DELETE FROM users WHERE id = ?";
     private static final String getUser = "SELECT users.id, username, password, enabled, email, phone_number, public_username FROM users, user_profiles WHERE users.id = :id";
     private static final String getUserWithPhone = "SELECT id, username, password, enabled, email, phone_number FROM users WHERE id = ?";
+    private static final String getUserId = "SELECT id FROM users WHERE username = ?";
 
     @Autowired
     public UserRepository(JdbcTemplate jdbcTemplate) {
@@ -65,7 +67,11 @@ public class UserRepository extends AbstractRepository<User, UUID> {
 
     @Override
     public User get(UUID userId) {
-        return jdbcTemplate.queryForObject(getUser, User.class, new MapSqlParameterSource().addValue("id", userId));
+        return jdbcTemplate.queryForObject(
+            getUser,
+            User.class,
+            new MapSqlParameterSource().addValue("id", userId)
+        );
     }
 
     @Override
@@ -76,6 +82,15 @@ public class UserRepository extends AbstractRepository<User, UUID> {
     @Override
     public void delete(UUID userId) {
 
+    }
+
+    @Override
+    public User get(String username) {
+        return jdbcTemplate.queryForObject(
+            getUserId,
+            new BeanPropertyRowMapper<>(User.class),
+            username
+        );
     }
 }
 

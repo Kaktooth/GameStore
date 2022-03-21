@@ -5,7 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.util.UUID;
 
 @Data
 @Getter
@@ -13,7 +14,5 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Game {
-    private Integer id;
-    private Integer objectId;
-    private MultipartFile multipartFile;
+    private UUID id;
 }
