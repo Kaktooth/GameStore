@@ -1,6 +1,7 @@
 package com.store.gamestore.repository.game;
 
 import com.store.gamestore.model.Game;
+import com.store.gamestore.model.GameMapper;
 import com.store.gamestore.repository.AbstractRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -8,12 +9,19 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.UUID;
+
 @Slf4j
 @Repository
 @Transactional
-public class GameRepository extends AbstractRepository<Game, Integer> {
+public class GameRepository extends AbstractRepository<Game, UUID> {
     private static final String saveGame = "INSERT INTO games VALUES (?)";
-    private static final String getGame = "SELECT * FROM games WHERE id = ?";
+    private static final String getGame = "SELECT * FROM games " +
+        "INNER JOIN game_files gf ON games.id = gf.game_id " +
+        "INNER JOIN game_profiles gp ON games.id = gp.game_id " +
+        "WHERE games.id = ?";
+
 
     public GameRepository(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
@@ -26,8 +34,13 @@ public class GameRepository extends AbstractRepository<Game, Integer> {
     }
 
     @Override
-    public Game get(Integer gameId) {
+    public Game get(UUID gameId) {
         return jdbcTemplate.queryForObject(getGame, new BeanPropertyRowMapper<>(Game.class), gameId);
+    }
+
+    @Override
+    public List<Game> getAll(UUID id) {
+        return jdbcTemplate.query(getGame,  new GameMapper(), id);
     }
 
     @Override
@@ -36,7 +49,7 @@ public class GameRepository extends AbstractRepository<Game, Integer> {
     }
 
     @Override
-    public void delete(Integer gameId) {
+    public void delete(UUID gameId) {
 
     }
 }

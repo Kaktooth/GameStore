@@ -25,6 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     String accessDeniedPage = "/access-denied-page";
     String storePage = "/store";
     String page = "/";
+    String webjars = "/webjars/**";
+    String resources = "/resources/**";
 
     private final DataSource dataSource;
     private final PasswordEncoder passwordEncoder;
@@ -62,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sameOrigin()
             .and()
             .authorizeRequests()
-            .mvcMatchers(errorPage, logInPage, createAccountPage, storePage, page)
+            .mvcMatchers(errorPage, logInPage, createAccountPage, storePage, page, webjars, resources)
             .permitAll()
             .anyRequest()
             .authenticated()

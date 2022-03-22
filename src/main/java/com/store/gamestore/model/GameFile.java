@@ -17,6 +17,7 @@ import java.util.UUID;
 public class GameFile {
     private Integer id;
     private Integer objectId;
+    private String name;
     private String version;
     private MultipartFile multipartFile;
     private UUID gameId;

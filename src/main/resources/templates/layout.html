@@ -9,45 +9,34 @@
 
     <style>
         :root {
-            --bs-blue: #0d6efd;
-            --bs-indigo: #6610f2;
-            --bs-purple: #6f42c1;
-            --bs-pink: #d63384;
-            --bs-red: #dc3545;
-            --bs-orange: #fd7e14;
-            --bs-yellow: #ffc107;
-            --bs-green: #198754;
-            --bs-teal: #20c997;
-            --bs-cyan: #0dcaf0;
-            --bs-white: #fff;
-            --bs-gray: #6c757d;
-            --bs-gray-dark: #343a40;
-            --bs-primary: #0d6efd;
-            --bs-secondary: #6c757d;
-            --bs-success: #198754;
-            --bs-info: #0dcaf0;
-            --bs-warning: #ffc107;
-            --bs-danger: #dc3545;
-            --bs-light: #f8f9fa;
-            --bs-dark: #212529;
-            --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            --bs-dark-rgb: rgb(33, 37, 41);
             --bs-gradient: linear-gradient(75deg, rgba(255, 255, 25, 0.25), rgba(255, 25, 255, 0));
             --bg-gradient: linear-gradient(65deg, rgba(0, 12, 15, 0.15), rgba(255, 144, 200, 0));
             --bg-gradient2: linear-gradient(123deg, rgba(241, 12, 0, 0.28), rgba(0, 12, 15, 0.15), rgba(255, 144, 200, 0), rgba(2, 180, 210, 0.24));
             --bg-gradient3: linear-gradient(36deg, rgba(241, 244, 0, 0.02), rgba(0, 2, 15, 0.13), rgba(2, 180, 210, 0.09));
+
+        }
+
+        .gradient-button .btn {
+            background-image: linear-gradient(to bottom, rgba(251, 253, 255, 0.3), rgba(255, 255, 255, 0.2) 49%, rgba(0, 0, 0, 0.15) 51%, rgba(0, 0, 0, 0.05));
+        }
+
+        .bg-dark-2 {
+            background: #212529;
+            color: aliceblue;
         }
     </style>
 </head>
-<body class="bg-dark" style="background-image: var(--bg-gradient2);">
+<body class="bg-dark-2" style="background-image: var(--bg-gradient2);">
 
 <header class="masthead special-color-dark mb-4">
-    <nav class="navbar shadow navbar-dark p-3 bg-dark text-white" aria-label="Main navigation">
-        <div class="container-fluid d-grid gap-3 align-items-center bg-dark">
+    <nav class="navbar shadow navbar-dark p-3 bg-dark-2 text-white" aria-label="Main navigation">
+        <div class="container-fluid d-grid gap-3 align-items-center">
             <ul class="nav col col-lg-auto me-lg-auto mb-2 justify-content-left mb-md-0">
                 <a class="font-weight-bold navbar-brand" href="/">Game Store</a>
                 <li><a class="nav-link px-2 text-white" href="/?store">Store</a></li>
-                <li><a th:if="${#httpServletRequest.remoteUser}!=null" class="nav-link px-2 text-white" href="/?collection">Collection</a></li>
+                <li><a th:if="${#httpServletRequest.remoteUser}!=null" class="nav-link px-2 text-white"
+                       href="/?collection">Collection</a></li>
             </ul>
             <div class="d-flex justify-content-end text-white">
                 <div th:if="${#httpServletRequest.remoteUser}!=null">

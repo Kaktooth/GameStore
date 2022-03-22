@@ -2,6 +2,8 @@ package com.store.gamestore.service;
 
 import com.store.gamestore.repository.CommonRepository;
 
+import java.util.List;
+
 public class AbstractService<T, I> implements CommonService<T, I> {
 
     protected final CommonRepository<T, I> repository;
@@ -18,6 +20,11 @@ public class AbstractService<T, I> implements CommonService<T, I> {
     @Override
     public T get(I id) {
         return repository.get(id);
+    }
+
+    @Override
+    public List<T> getAll(I id) {
+        return repository.getAll(id);
     }
 
     @Override

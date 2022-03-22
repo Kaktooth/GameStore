@@ -2,21 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Upload Game</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.css">
 
     <style>
         :root {
             --bg-gradient2: linear-gradient(123deg, rgba(241, 12, 0, 0.28), rgba(0, 12, 15, 0.15), rgba(255, 144, 200, 0), rgba(2, 180, 210, 0.24));
             --bg-gradient3: linear-gradient(36deg, rgba(241, 244, 0, 0.02), rgba(0, 2, 15, 0.13), rgba(2, 180, 210, 0.09));
         }
+        .bg-dark-2 {
+            background: #212529;
+            color: aliceblue;
+        }
     </style>
 </head>
-<body class="bg-dark" style="background-image: var(--bg-gradient2);">
-
+<body class="bg-dark-2" style="background-image: var(--bg-gradient2);">
 <header class="masthead special-color-dark mb-4">
-    <nav class="navbar shadow navbar-dark p-3 bg-dark text-white" aria-label="Main navigation">
-        <div class="container-fluid d-grid gap-3 align-items-center bg-dark">
+    <nav class="navbar shadow navbar-dark p-3 bg-dark-2 text-white" aria-label="Main navigation">
+        <div class="container-fluid d-grid gap-3 align-items-center">
             <ul class="nav col col-lg-auto me-lg-auto mb-2 justify-content-left mb-md-0">
                 <a class="font-weight-bold navbar-brand" href="/">Upload Game</a>
                 <li><a class="nav-link px-2 text-white" href="/documentation">Documentation</a></li>
@@ -67,13 +69,13 @@
                                class="bg-gradient-light form-control text-muted" autofocus="">
 
                         <label for="description">Description</label>
-                        <input type="text" id="description" name="description" th:field="*{description}"
-                               class="bg-gradient-light form-control text-muted" autofocus="">
+                        <textarea type="text" id="description" name="description" th:field="*{description}"
+                                  class="bg-gradient-light form-control text-muted" autofocus=""/>
 
                         <label for="smallDescription">Small description</label>
-                        <input type="text" id="smallDescription"
-                               name="smallDescription" th:field="*{smallDescription}"
-                               class="bg-gradient-light form-control text-muted" autofocus="">
+                        <textarea type="text" id="smallDescription"
+                                  name="smallDescription" th:field="*{smallDescription}"
+                                  class="bg-gradient-light form-control text-muted" autofocus=""/>
 
                         <label for="release">Release date</label>
                         <input type="datetime-local" id="release" name="release" th:field="*{release}"
@@ -156,6 +158,7 @@ justify-content-center special-color-dark font-small text-muted shadow">
         <a href="">Agreement</a>
     </div>
 </footer>
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>

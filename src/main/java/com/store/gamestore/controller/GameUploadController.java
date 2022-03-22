@@ -25,26 +25,27 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Controller
 public class GameUploadController {
 
     private final CommonService<User, UUID> userService;
-    private final CommonService<Game, Integer> gameService;
+    private final CommonService<Game, UUID> gameService;
     private final CommonService<GameFile, Integer> gameFileService;
     private final CommonService<GameProfile, Integer> gameProfileService;
     private final CommonService<Requirements, Integer> requirementsService;
-    private final CommonService<UploadedGame, Integer> uploadedGameService;
+    private final CommonService<UploadedGame, UUID> uploadedGameService;
 
     @Autowired
     public GameUploadController(
         CommonService<User, UUID> userService,
-        CommonService<Game, Integer> gameService,
+        CommonService<Game, UUID> gameService,
         CommonService<GameFile, Integer> gameFileService,
         CommonService<GameProfile, Integer> gameProfileService,
         CommonService<Requirements, Integer> requirementsService,
-        CommonService<UploadedGame, Integer> uploadedGameService) {
+        CommonService<UploadedGame, UUID> uploadedGameService) {
 
         this.userService = userService;
         this.gameService = gameService;
@@ -76,9 +77,9 @@ public class GameUploadController {
             attributes.addFlashAttribute("message", "Please select a file to upload.");
             return "redirect:/";
         }
-        Game game = gameService.save(new Game(UUID.randomUUID()));
+        Game game = gameService.save(new Game(UUID.randomUUID(), new ArrayList<>(), new GameProfile()));
 
-        gameFileService.save(new GameFile(0, 1000, "1.0", file, game.getId()));
+        gameFileService.save(new GameFile(0, 1000, "", "1.0", file, game.getId()));
         LocalDateTime releaseDate = LocalDateTime.parse(uploadInput.getRelease(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
         GameProfile gameProfile = new GameProfile(0, uploadInput.getPrice(), uploadInput.getName(),
