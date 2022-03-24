@@ -1,6 +1,6 @@
 package com.store.gamestore.repository;
 
-import java.util.List;
+import java.util.Set;
 
 public interface CommonRepository<T, I> {
 
@@ -8,7 +8,7 @@ public interface CommonRepository<T, I> {
 
     T get(I id);
 
-    List<T> getAll(I id);
+    Set<T> getAll(I id);
 
     void update(T object);
 

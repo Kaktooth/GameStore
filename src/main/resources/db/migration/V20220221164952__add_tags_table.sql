@@ -1,5 +1,5 @@
 CREATE TABLE tags
 (
     id  SERIAL PRIMARY KEY,
-    tag VARCHAR NOT NULL
+    tag VARCHAR UNIQUE NOT NULL
 );

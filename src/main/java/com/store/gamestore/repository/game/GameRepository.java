@@ -7,14 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Slf4j
 @Repository
-@Transactional
 public class GameRepository extends AbstractRepository<Game, UUID> {
     private static final String saveGame = "INSERT INTO games VALUES (?)";
     private static final String getGame = "SELECT * FROM games " +
@@ -39,8 +38,8 @@ public class GameRepository extends AbstractRepository<Game, UUID> {
     }
 
     @Override
-    public List<Game> getAll(UUID id) {
-        return jdbcTemplate.query(getGame,  new GameMapper(), id);
+    public Set<Game> getAll(UUID id) {
+        return new HashSet<>(jdbcTemplate.query(getGame,  new GameMapper(), id));
     }
 
     @Override

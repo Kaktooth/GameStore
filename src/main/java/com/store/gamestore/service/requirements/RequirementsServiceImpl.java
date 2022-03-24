@@ -8,7 +8,7 @@ import com.store.gamestore.service.AbstractService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -19,17 +19,17 @@ public class RequirementsServiceImpl extends AbstractService<Requirements, Integ
     }
 
     @Override
-    public List<ComputerComponent> getProcessorNames() {
+    public Set<ComputerComponent> getProcessorNames() {
         return ((RequirementsRepository) repository).getProcessorNames();
     }
 
     @Override
-    public List<ComputerComponent> getGraphicsCardNames() {
+    public Set<ComputerComponent> getGraphicsCardNames() {
         return ((RequirementsRepository) repository).getGraphicCardNames();
     }
 
     @Override
-    public List<ComputerComponent> getOSNames() {
+    public Set<ComputerComponent> getOSNames() {
         return ((RequirementsRepository) repository).getOSNames();
     }
 

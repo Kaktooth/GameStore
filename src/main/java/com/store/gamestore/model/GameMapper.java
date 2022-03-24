@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class GameMapper implements RowMapper<Game> {
-    List<GameFile> gameFiles = new ArrayList<>();
+    Set<GameFile> gameFiles = new HashSet<>();
 
     public Game mapRow(ResultSet rs, int rowNum) throws SQLException {
         Game game = new Game();
@@ -26,7 +28,7 @@ public class GameMapper implements RowMapper<Game> {
             gameFile.setName(rs.getString("game_files.name"));
             gameFiles.add(gameFile);
         }
-        game.setGameFile(gameFiles);
+        game.setGameFiles(gameFiles);
 
         GameProfile gameProfile = new GameProfile();
         gameProfile.setGameId(gameId);

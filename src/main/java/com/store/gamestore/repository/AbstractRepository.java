@@ -2,8 +2,8 @@ package com.store.gamestore.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AbstractRepository<T, I> implements CommonRepository<T, I> {
 
@@ -24,8 +24,8 @@ public class AbstractRepository<T, I> implements CommonRepository<T, I> {
     }
 
     @Override
-    public List<T> getAll(I id) {
-        return new ArrayList<>();
+    public Set<T> getAll(I id) {
+        return new HashSet<>();
     }
 
     @Override

@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @ToString
 @NoArgsConstructor
@@ -29,4 +30,5 @@ public class UploadInput {
     private Integer recProcessorId;
     private Integer recGraphicCardId;
     private Integer recOSId;
+    private List<Integer> genres;
 }

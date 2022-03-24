@@ -12,8 +12,9 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Slf4j
 @Repository
@@ -38,8 +39,8 @@ public class RequirementsRepositoryImpl extends AbstractRepository<Requirements,
     }
 
     @Override
-    public List<ComputerComponent> getProcessorNames() {
-        return jdbcTemplate.query(getAllProcessors, new ComputerComponentMapper());
+    public Set<ComputerComponent> getProcessorNames() {
+        return new HashSet<>(jdbcTemplate.query(getAllProcessors, new ComputerComponentMapper()));
     }
 
     @Override
@@ -49,8 +50,8 @@ public class RequirementsRepositoryImpl extends AbstractRepository<Requirements,
     }
 
     @Override
-    public List<ComputerComponent> getGraphicCardNames() {
-        return jdbcTemplate.query(getAllGraphicCards, new ComputerComponentMapper());
+    public Set<ComputerComponent> getGraphicCardNames() {
+        return new HashSet<>(jdbcTemplate.query(getAllGraphicCards, new ComputerComponentMapper()));
     }
 
     @Override
@@ -60,8 +61,8 @@ public class RequirementsRepositoryImpl extends AbstractRepository<Requirements,
     }
 
     @Override
-    public List<ComputerComponent> getOSNames() {
-        return jdbcTemplate.query(getAllOS, new ComputerComponentMapper());
+    public Set<ComputerComponent> getOSNames() {
+        return new HashSet<>(jdbcTemplate.query(getAllOS, new ComputerComponentMapper()));
     }
 
     @Override

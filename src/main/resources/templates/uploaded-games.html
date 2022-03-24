@@ -9,6 +9,7 @@
             --bg-gradient2: linear-gradient(123deg, rgba(241, 12, 0, 0.28), rgba(0, 12, 15, 0.15), rgba(255, 144, 200, 0), rgba(2, 180, 210, 0.24));
             --bg-gradient3: linear-gradient(36deg, rgba(241, 244, 0, 0.02), rgba(0, 2, 15, 0.13), rgba(2, 180, 210, 0.09));
         }
+
         .bg-dark-2 {
             background: #212529;
             color: aliceblue;
@@ -62,21 +63,33 @@
 </header>
 <main role="main" class="shadow text-white mb-4">
     <div class="container-md text-white mb-4 bg-dark-2">
-        <div th:each="upload: ${uploadedGames}" class="row shadow border border-dark rounded-5 border-2 mb-2">
+        <div th:each="upload: ${uploadedGames}" th:if="${upload} != null" class="row shadow border border-dark rounded-5 border-2 mb-2">
             <div class="col">
                 <img style="width:120px;height:120px" src="" class="d-block w-100" alt=""/>
             </div>
-            <div class="col text-left">
+            <div class="col-5 text-left">
                 <h6 th:text="${upload.game.gameProfile.name}"></h6>
-                <p class="text-muted" th:text="'Developer: ' + ${upload.game.gameProfile.developer}"></p>
-                <p th:if="${upload.game.gameProfile.developer}!=${upload.game.gameProfile.publisher}"
-                   class="text-muted" th:text="'Publisher: ' + ${upload.game.gameProfile.publisher}"></p>
+                <p class="text-info" th:text="'Developer: ' + ${upload.game.gameProfile.developer}"></p>
+                <p th:if="${upload.game.gameProfile.developer} != ${upload.game.gameProfile.publisher}"
+                   class="md-2 text-info" th:text="'Publisher: ' + ${upload.game.gameProfile.publisher}"></p>
+                <label class="text-info" th:text="${upload.game.genre.toString()}"></label>
             </div>
             <div class="col text-right">
                 <p th:if="${upload.game.gameProfile.price} > 0" th:text="${upload.game.gameProfile.price} + ' $'"></p>
                 <p th:if="${upload.game.gameProfile.price} == 0" th:text="'Free'"></p>
+                <div class="text-right">
+                    <button style="background-image: var(--bs-gradient);"
+                            class="btn btn-sm btn-success align-content-center"
+                            type="button" th:action="@{/uploaded-games/edit/${upload.game.id}}">
+                        Edit
+                    </button>
+                    <button style="background-image: var(--bs-gradient);"
+                            class="btn btn-sm btn-primary align-content-center"
+                            type="button" th:action="@{/uploaded-games/edit/${upload.game.id}}">
+                        Visit
+                    </button>
+                </div>
             </div>
-
         </div>
     </div>
 </main>

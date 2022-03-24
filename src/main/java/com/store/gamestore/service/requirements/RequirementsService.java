@@ -2,18 +2,18 @@ package com.store.gamestore.service.requirements;
 
 import com.store.gamestore.model.ComputerComponent;
 
-import java.util.List;
+import java.util.Set;
 
 public interface RequirementsService {
-    List<ComputerComponent> getProcessorNames();
+    Set<ComputerComponent> getProcessorNames();
 
     Integer getProcessorId(String processor);
 
-    List<ComputerComponent> getGraphicsCardNames();
+    Set<ComputerComponent> getGraphicsCardNames();
 
     Integer getGraphicCardId(String graphicCard);
 
-    List<ComputerComponent> getOSNames();
+    Set<ComputerComponent> getOSNames();
 
     Integer getOSId(String OS);
 }

@@ -1,6 +1,6 @@
 package com.store.gamestore.service;
 
-import java.util.List;
+import java.util.Set;
 
 public interface CommonService<T, I> {
 
@@ -8,7 +8,7 @@ public interface CommonService<T, I> {
 
     T get(I id);
 
-    List<T> getAll(I id);
+    Set<T> getAll(I id);
 
     void update(T object);
 

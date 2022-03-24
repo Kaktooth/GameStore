@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -16,6 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Game {
     private UUID id;
-    private List<GameFile> gameFile;
+    private Set<GameFile> gameFiles;
     private GameProfile gameProfile;
+    private GameGenre genre;
 }

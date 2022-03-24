@@ -8,7 +8,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Slf4j
@@ -21,6 +22,8 @@ public class UploadedGamesRepository extends AbstractRepository<UploadedGame, UU
         "INNER JOIN game_files gf ON uploaded_games.game_id = gf.game_id " +
         "INNER JOIN game_profiles gp ON uploaded_games.game_id = gp.game_id " +
         "INNER JOIN users u ON uploaded_games.user_id = u.id " +
+        "INNER JOIN game_genres gg ON gf.game_id = gg.game_id " +
+        "INNER JOIN genres gn ON gn.id = gg.genre_id " +
         "WHERE user_id = ?";
 
     public UploadedGamesRepository(JdbcTemplate jdbcTemplate) {
@@ -39,8 +42,8 @@ public class UploadedGamesRepository extends AbstractRepository<UploadedGame, UU
     }
 
     @Override
-    public List<UploadedGame> getAll(UUID userId) {
-        return jdbcTemplate.query(getGame, new UploadedGameMapper(), userId);
+    public Set<UploadedGame> getAll(UUID userId) {
+        return new HashSet<>(jdbcTemplate.query(getGame, new UploadedGameMapper(), userId));
     }
 
     @Override
