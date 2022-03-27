@@ -18,8 +18,9 @@ import java.sql.PreparedStatement;
 @Repository
 @Transactional
 public class GameFileRepository extends AbstractRepository<GameFile, Integer> {
-    private static final String saveGame = "INSERT INTO game_files (file_name, object_id, version, game_id) VALUES (?, ?, ?, ?)";
-    private static final String getGame = "SELECT * FROM game_files WHERE id = ?";
+    private static final String saveGameFile = "INSERT INTO game_files (file_name, object_id, version, game_id) VALUES (?, ?, ?, ?)";
+    private static final String getGameFile = "SELECT * FROM game_files WHERE id = ?";
+    private static final String deleteGameFile = "DELETE FROM game_files WHERE id = ?";
 
     @Autowired
     public GameFileRepository(JdbcTemplate jdbcTemplate) {
@@ -31,7 +32,7 @@ public class GameFileRepository extends AbstractRepository<GameFile, Integer> {
         if (gameFile.getMultipartFile().getSize() < Runtime.getRuntime().freeMemory()) {
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(conn -> {
-                PreparedStatement ps = conn.prepareStatement(saveGame, new String[]{"id"});
+                PreparedStatement ps = conn.prepareStatement(saveGameFile, new String[]{"id"});
                 ps.setString(1, gameFile.getMultipartFile().getOriginalFilename());
                 try {
                     ps.setBlob(2, gameFile.getMultipartFile().getInputStream());
@@ -57,16 +58,11 @@ public class GameFileRepository extends AbstractRepository<GameFile, Integer> {
 
     @Override
     public GameFile get(Integer gameId) {
-        return jdbcTemplate.queryForObject(getGame, new BeanPropertyRowMapper<>(GameFile.class), gameId);
-    }
-
-    @Override
-    public void update(GameFile gameFile) {
-
+        return jdbcTemplate.queryForObject(getGameFile, new BeanPropertyRowMapper<>(GameFile.class), gameId);
     }
 
     @Override
     public void delete(Integer gameId) {
-
+        jdbcTemplate.update(deleteGameFile, gameId);
     }
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Upload Game</title>
+    <title>Edit Game</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.css">
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -105,12 +105,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 mx-auto">
-                    <form method="post" th:action="@{/upload}" th:object="${uploadInput}" enctype="multipart/form-data">
-                        <div class="text-white">
-                            <label for="price">Price</label>
-                            <input type="number" id="price" name="price" th:field="*{price}"
-                                   class="bg-gradient-light form-control text-muted" autofocus="">
-
+                    <form class="mb-5" method="post" th:action="@{/uploaded-games/edit/{id}(id = ${uploadedGame.game.id})}"
+                          th:object="${editGameInput}">
+                        <div class="text-white mb-2">
                             <label for="name">Name</label>
                             <input type="text" id="name" name="name" th:field="*{name}"
                                    class="bg-gradient-light form-control text-muted" autofocus="">
@@ -135,6 +132,10 @@
                             <label for="publisher">Publisher</label>
                             <input type="text" id="publisher" name="publisher" th:field="*{publisher}"
                                    class="bg-gradient-light form-control text-muted" autofocus="">
+
+                            <label for="price">Price</label>
+                            <input type="number" id="price" name="price" th:field="*{price}"
+                                   class="bg-gradient-light form-control text-muted" autofocus="">
                         </div>
 
                         <h4 class="text-white">Select game genre</h4>
@@ -150,7 +151,7 @@
                                         th:value="${g.id}" th:text="${g.name}"></option>
                             </select>
                         </div>
-                        <div class="text-white">
+                        <div class="text-white mb-2">
                             <h4>Select minimal requirements for your game</h4>
 
                             <select th:field="*{minProcessorId}" name="minProcessorId" id="minProcessorId">
@@ -190,26 +191,21 @@
                             <label for="recStorage">Recommended available space in storage</label>
                             <input type="number" id="recStorage" th:field="*{recStorage}"
                                    name="recStorage" class="bg-gradient-light form-control text-muted" autofocus="">
-
-                            <h4>Game Files</h4>
-                            <ul class="list-group card-body" th:each="file, i : ${uploadedGame.game.gameFiles}">
-                                <li class="list-group-item"
-                                    th:text="${i} + ' file name: ' + ${file.name} + ' version: ' + ${file.version}">
-                                </li>
-                            </ul>
-
-                            <h4>Upload</h4>
-                            <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
-
-                            <div class="form-group row">
-                                <div class="col">
-                                    <input type="file" name="file" class="form-control-file">
-                                </div>
-                                <div class="col">
-                                    <button type="submit" class="btn bg-gradient-light btn-primary">Upload File</button>
-                                </div>
-                            </div>
                         </div>
+
+                        <button type="submit" class="btn bg-gradient-light btn-primary">Save game</button>
+
+                        <a style="background-image: var(--bs-gradient);"
+                           class="btn btn-md btn-primary float-right"
+                           type="button"
+                           th:href="@{/uploaded-games/edit/{id}/files(id =${uploadedGame.game.id.toString()})}"
+                           th:text="'Go to ' + ${uploadedGame.game.gameProfile.name} + ' files'"> </a>
+
+                    </form>
+                    <form method="post" th:action="@{/uploaded-games/edit/{id}/delete(id = ${uploadedGame.game.id})}">
+                        <button type="submit" class="btn bg-danger float-right">
+                            Delete
+                        </button>
                     </form>
                 </div>
             </div>

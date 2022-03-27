@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @ToString
@@ -13,6 +14,7 @@ import java.util.List;
 @Setter
 @Getter
 public class UploadInput {
+
     private BigDecimal price;
     private String name;
     private String developer;
@@ -31,4 +33,5 @@ public class UploadInput {
     private Integer recGraphicCardId;
     private Integer recOSId;
     private List<Integer> genres;
+    private String version;
 }

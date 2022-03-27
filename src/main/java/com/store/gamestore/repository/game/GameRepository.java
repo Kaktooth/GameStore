@@ -21,6 +21,8 @@ public class GameRepository extends AbstractRepository<Game, UUID> {
         "INNER JOIN game_profiles gp ON games.id = gp.game_id " +
         "WHERE games.id = ?";
 
+    private static final String deleteGame = "DELETE FROM games WHERE id = ?";
+
 
     public GameRepository(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
@@ -39,16 +41,11 @@ public class GameRepository extends AbstractRepository<Game, UUID> {
 
     @Override
     public Set<Game> getAll(UUID id) {
-        return new HashSet<>(jdbcTemplate.query(getGame,  new GameMapper(), id));
-    }
-
-    @Override
-    public void update(Game game) {
-
+        return new HashSet<>(jdbcTemplate.query(getGame, new GameMapper(), id));
     }
 
     @Override
     public void delete(UUID gameId) {
-
+        jdbcTemplate.update(deleteGame, gameId);
     }
 }

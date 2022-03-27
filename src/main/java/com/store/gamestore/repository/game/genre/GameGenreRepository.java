@@ -19,6 +19,8 @@ public class GameGenreRepository extends AbstractRepository<GameGenre, UUID> {
         "INNER JOIN genres gn ON game_genres.genre_id = gn.id " +
         "WHERE game_id = ?";
 
+    private static final String deleteGameGenres = "DELETE FROM game_genres WHERE game_id = ?";
+
     public GameGenreRepository(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
     }
@@ -34,5 +36,16 @@ public class GameGenreRepository extends AbstractRepository<GameGenre, UUID> {
     @Override
     public GameGenre get(UUID gameId) {
         return jdbcTemplate.queryForObject(getGameGenres, new GameGenreMapper(), gameId);
+    }
+
+    @Override
+    public void update(GameGenre genres) {
+        delete(genres.getGameId());
+        save(genres);
+    }
+
+    @Override
+    public void delete(UUID gameId) {
+        jdbcTemplate.update(deleteGameGenres, gameId);
     }
 }

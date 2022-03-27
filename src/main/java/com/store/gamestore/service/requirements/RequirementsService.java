@@ -1,19 +1,16 @@
 package com.store.gamestore.service.requirements;
 
-import com.store.gamestore.model.ComputerComponent;
+import com.store.gamestore.model.Requirements;
+import com.store.gamestore.repository.CommonRepository;
+import com.store.gamestore.service.AbstractService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Set;
+@Service
+@Transactional
+public class RequirementsService extends AbstractService<Requirements, Integer> {
 
-public interface RequirementsService {
-    Set<ComputerComponent> getProcessorNames();
-
-    Integer getProcessorId(String processor);
-
-    Set<ComputerComponent> getGraphicsCardNames();
-
-    Integer getGraphicCardId(String graphicCard);
-
-    Set<ComputerComponent> getOSNames();
-
-    Integer getOSId(String OS);
+    public RequirementsService(CommonRepository<Requirements, Integer> repository) {
+        super(repository);
+    }
 }

@@ -23,21 +23,15 @@ public class UploadedGameMapper implements RowMapper<UploadedGame> {
         UUID gameId = (UUID) rs.getObject("game_id");
         UploadedGame uploadedGame = uploadMap.get(gameId);
         if (uploadedGame == null) {
+            gameFiles = new HashSet<>();
             genre = new HashSet<>();
             uploadedGame = new UploadedGame();
             Game game = new Game();
             game.setId(gameId);
             uploadedGame.setGame(game);
-            GameFile gameFile = new GameFile();
-            gameFile.setGameId(gameId);
-            gameFile.setObjectId(rs.getInt("object_id"));
-            gameFile.setVersion(rs.getString("version"));
-            gameFile.setId(rs.getInt("id"));
-            gameFile.setName(rs.getString("file_name"));
-            gameFiles.add(gameFile);
-            game.setGameFiles(gameFiles);
 
             GameProfile gameProfile = new GameProfile();
+            gameProfile.setId(rs.getInt("id"));
             gameProfile.setGameId(gameId);
             gameProfile.setPrice(rs.getBigDecimal("price"));
             gameProfile.setName(rs.getString("name"));
@@ -62,12 +56,24 @@ public class UploadedGameMapper implements RowMapper<UploadedGame> {
             uploadMap.put(gameId, uploadedGame);
         }
 
-        Genre newGenre = new Genre();
-        newGenre.setId(rs.getInt("genre_id"));
-        newGenre.setName(rs.getString("genre"));
-        genre.add(newGenre);
-        uploadedGame.getGame().setGenre(new GameGenre(genre, gameId));
+        GameFile gameFile = new GameFile();
+        gameFile.setGameId(gameId);
+        gameFile.setObjectId(rs.getInt("object_id"));
+        gameFile.setVersion(rs.getString("version"));
+        gameFile.setId(rs.getInt("id"));
+        gameFile.setName(rs.getString("file_name"));
+        gameFiles.add(gameFile);
+        uploadedGame.getGame().setGameFiles(gameFiles);
 
+        if (gameFiles.size() <= 1) {
+            Genre newGenre = new Genre();
+            newGenre.setId(rs.getInt("genre_id"));
+            newGenre.setName(rs.getString("genre"));
+            genre.add(newGenre);
+            uploadedGame.getGame().setGenre(new GameGenre(genre, gameId));
+        }
+
+        log.info(uploadedGame.toString());
         return uploadedGame;
     }
 }

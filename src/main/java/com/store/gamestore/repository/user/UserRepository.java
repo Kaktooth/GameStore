@@ -75,11 +75,6 @@ public class UserRepository extends AbstractRepository<User, UUID> implements Us
     }
 
     @Override
-    public void update(User object) {
-
-    }
-
-    @Override
     public void delete(UUID userId) {
 
     }

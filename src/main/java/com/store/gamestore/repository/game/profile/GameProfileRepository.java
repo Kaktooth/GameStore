@@ -20,6 +20,12 @@ public class GameProfileRepository extends AbstractRepository<GameProfile, Integ
         " developer, publisher, rating, release_date, description, brief_description," +
         " game_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String getGameProfile = "SELECT * FROM game_profiles WHERE id = ?";
+    private static final String updateGameProfile = "UPDATE game_profiles " +
+        "SET price             = ?, name              = ?, " +
+        "    developer         = ?, publisher         = ?, " +
+        "    description       = ?, brief_description = ? " +
+        "WHERE id = ?";
+    private static final String deleteGameProfile = "DELETE FROM game_profiles WHERE id = ?";
 
     public GameProfileRepository(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
@@ -54,11 +60,15 @@ public class GameProfileRepository extends AbstractRepository<GameProfile, Integ
 
     @Override
     public void update(GameProfile gameProfile) {
+        log.info("game profile: " + gameProfile.getId());
 
+        jdbcTemplate.update(updateGameProfile, gameProfile.getPrice(), gameProfile.getName(),
+            gameProfile.getDeveloper(), gameProfile.getPublisher(), gameProfile.getDescription(),
+            gameProfile.getBriefDescription(), gameProfile.getId());
     }
 
     @Override
     public void delete(Integer id) {
-
+        jdbcTemplate.update(deleteGameProfile, id);
     }
 }

@@ -36,8 +36,7 @@
                 <div th:if="${#httpServletRequest.remoteUser}!=null">
                     <a class="nav-link dropdown-toggle l text-white"
                        data-toggle="dropdown" href="#" role="button"
-                       aria-haspopup="true"
-                       aria-expanded="false">
+                       aria-haspopup="true" aria-expanded="false">
                         <label th:inline="text">[[${#httpServletRequest.remoteUser}]]</label>
                     </a>
                     <div class="dropdown-menu shadow" aria-labelledby="dropdownUser2"
@@ -63,35 +62,44 @@
 </header>
 <main role="main" class="shadow text-white mb-4">
     <div class="container-md text-white mb-4 bg-dark-2">
-        <div th:each="upload: ${uploadedGames}" th:if="${upload} != null"
-             class="row shadow border border-dark rounded-5 border-2 mb-2">
-            <div class="col">
-                <img style="width:120px;height:120px" src="" class="d-block w-100" alt=""/>
-            </div>
-            <div class="col-5 text-left">
-                <h6 th:text="${upload.game.gameProfile.name}"></h6>
-                <p class="text-info" th:text="'Developer: ' + ${upload.game.gameProfile.developer}"></p>
-                <p th:if="${upload.game.gameProfile.developer} != ${upload.game.gameProfile.publisher}"
-                   class="md-2 text-info" th:text="'Publisher: ' + ${upload.game.gameProfile.publisher}"></p>
-                <label class="text-info" th:text="${upload.game.genre.toString()}"></label>
-            </div>
-            <div class="col text-right">
-                <p th:if="${upload.game.gameProfile.price} > 0" th:text="${upload.game.gameProfile.price} + ' $'"></p>
-                <p th:if="${upload.game.gameProfile.price} == 0" th:text="'Free'"></p>
-                <div class="text-right">
-                    <a style="background-image: var(--bs-gradient);"
-                            class="btn btn-sm btn-success align-content-center"
-                            type="button" th:href="@{/uploaded-games/edit/{id}(id =${upload.game.id.toString()})}">
-                        Details
-                    </a>
-                    <a style="background-image: var(--bs-gradient);"
-                       class="btn btn-sm btn-primary align-content-center"
-                       type="button" th:href="@{/uploaded-games/edit/{id}(id =${upload.game.id.toString()})}">
-                        Visit
-                    </a>
+        <h4>Game Files</h4>
+        <div class="text-dark">
+            <ul class="list-group card-body" th:each="file, i : ${uploadedGame.game.gameFiles}">
+                <form th:action="@{/uploaded-games/edit/{id}/files/{fileId}/delete(id = ${uploadedGame.game.id},fileId = ${file.id})}"
+                      method="post">
+                    <li class="list-group-item border">
+                        <label th:text="${i.count} + '. file name: ' + ${file.name} + ' version: ' + ${file.version}"></label>
+                        <button type="submit" class="btn bg-danger text-end">
+                            Delete
+                        </button>
+                    </li>
+                </form>
+            </ul>
+        </div>
+
+
+        <form method="post" th:action="@{/uploaded-games/edit/{id}/files(id = ${uploadedGame.game.id})}"
+              enctype="multipart/form-data">
+
+            <h4>Upload</h4>
+            <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
+
+            <label for="version">Version | example: 1.2.3.4 ([major].[minor].[release].[build])</label>
+            <input type="text" id="version" pattern="^[\d]+.[\d]+.[\d]+.[\d]+$"
+                   th:required="required" name="version" autofocus=""
+                   class="bg-gradient-light form-control text-muted">
+
+            <div class="form-group row">
+                <div class="col">
+                    <input type="file" name="file" class="form-control-file">
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn bg-gradient-light btn-primary">
+                        Upload new game version
+                    </button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </main>
 

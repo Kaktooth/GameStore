@@ -13,11 +13,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Requirements {
     private Integer id;
-    private Integer gameProfileId;
     private Integer minimalMemory;
     private Integer recommendedMemory;
     private Integer minimalStorage;
     private Integer recommendedStorage;
+    private Integer gameProfileId;
     private Integer minimalProcessorId;
     private Integer recommendedProcessorId;
     private Integer minimalGraphicCardId;

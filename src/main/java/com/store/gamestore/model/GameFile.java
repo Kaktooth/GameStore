@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Size;
 import java.util.UUID;
 
 @Data
