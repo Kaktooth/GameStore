@@ -14,6 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addRedirectViewController("/", "/layout?store");
         registry.addViewController("/upload/**").setViewName("upload");
         registry.addViewController("/uploaded-games/**").setViewName("uploaded-games");
+        registry.addViewController("/game/**").setViewName("game");
         registry.addViewController("/**").setViewName("layout");
     }
 }

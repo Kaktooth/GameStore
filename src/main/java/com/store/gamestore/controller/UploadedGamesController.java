@@ -91,13 +91,11 @@ public class UploadedGamesController {
 
     @GetMapping("/edit/{id}/files")
     public String gameFilesPage(@PathVariable String id,
-                                RedirectAttributes attributes,
                                 Model model) {
         log.info(id);
         UUID gameId = UUID.fromString(id);
         UploadedGame uploadedGame = uploadedGameService.get(gameId);
         model.addAttribute("uploadedGame", uploadedGame);
-        attributes.addFlashAttribute("uploadedGame", uploadedGame);
         model.addAttribute("version", "");
 
         return "files";
@@ -106,8 +104,7 @@ public class UploadedGamesController {
     @PostMapping("/edit/{id}/files")
     public String postGameFile(@PathVariable String id,
                                @RequestParam("version") String version,
-                               @RequestParam("file") MultipartFile file,
-                               RedirectAttributes attributes) {
+                               @RequestParam("file") MultipartFile file) {
         GameFile gameFile = new GameFile(0, 1000, "", version, file, UUID.fromString(id));
         gameFileService.save(gameFile);
 
@@ -135,8 +132,7 @@ public class UploadedGamesController {
     @PostMapping("/edit/{id}")
     public String editGame(@ModelAttribute EditGameInput editGameInput,
                            BindingResult bindingResult,
-                           @PathVariable String id,
-                           Model model) {
+                           @PathVariable String id) {
 
         UploadedGame game = uploadedGameService.get(UUID.fromString(id));
         LocalDateTime releaseDate = LocalDateTime.parse(editGameInput.getRelease(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
