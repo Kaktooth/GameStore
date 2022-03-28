@@ -18,7 +18,7 @@ import java.util.UUID;
 public class GameProfile {
     private Integer id;
     private BigDecimal price;
-    private String name;
+    private String title;
     private String developer;
     private String publisher;
     private Integer rating;

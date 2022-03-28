@@ -1,7 +1,13 @@
 package com.store.gamestore.controller;
 
+import com.store.gamestore.model.ConvertedRequirements;
+import com.store.gamestore.model.GraphicsCard;
+import com.store.gamestore.model.OperatingSystem;
+import com.store.gamestore.model.Processor;
+import com.store.gamestore.model.Requirements;
 import com.store.gamestore.model.UploadedGame;
 import com.store.gamestore.service.CommonService;
+import com.store.gamestore.service.enumeration.CommonEnumerationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,17 +22,46 @@ import java.util.UUID;
 public class GameController {
 
     private final CommonService<UploadedGame, UUID> uploadedGameService;
+    private final CommonService<Requirements, Integer> requirementsService;
+    private final CommonEnumerationService<Processor, Integer> processorService;
+    private final CommonEnumerationService<GraphicsCard, Integer> graphicsCardService;
+    private final CommonEnumerationService<OperatingSystem, Integer> operatingSystemService;
 
     @Autowired
-    public GameController(CommonService<UploadedGame, UUID> uploadedGameService) {
+    public GameController(CommonService<UploadedGame, UUID> uploadedGameService,
+                          CommonService<Requirements, Integer> requirementsService,
+                          CommonEnumerationService<Processor, Integer> processorService,
+                          CommonEnumerationService<GraphicsCard, Integer> graphicsCardService,
+                          CommonEnumerationService<OperatingSystem, Integer> operatingSystemService) {
         this.uploadedGameService = uploadedGameService;
+        this.requirementsService = requirementsService;
+        this.processorService = processorService;
+        this.graphicsCardService = graphicsCardService;
+        this.operatingSystemService = operatingSystemService;
     }
 
     @GetMapping("/{id}")
     public String getGamePage(@PathVariable("id") String id,
                               Model model) {
+
         UploadedGame uploadedGame = uploadedGameService.get(UUID.fromString(id));
-        model.addAttribute("uploadGame", uploadedGame);
+        Requirements requirements = requirementsService.get(uploadedGame.getGame().getGameProfile().getId());
+
+        Processor minimumProcessor = processorService.get(requirements.getMinimalProcessorId());
+        Processor recProcessor = processorService.get(requirements.getRecommendedProcessorId());
+        GraphicsCard minimumGraphicsCard = graphicsCardService.get(requirements.getMinimalGraphicCardId());
+        GraphicsCard recGraphicsCard = graphicsCardService.get(requirements.getRecommendedGraphicCardId());
+        OperatingSystem minimumOS = operatingSystemService.get(requirements.getMinimalOperatingSystemId());
+        OperatingSystem recOS = operatingSystemService.get(requirements.getRecommendedOperatingSystemId());
+        ConvertedRequirements convertedRequirements = new ConvertedRequirements(requirements.getId(),
+            requirements.getMinimalMemory(), requirements.getRecommendedMemory(), requirements.getMinimalStorage(),
+            requirements.getRecommendedStorage(), uploadedGame.getGame().getGameProfile(),
+            minimumProcessor, recProcessor, minimumGraphicsCard,
+            recGraphicsCard, minimumOS, recOS);
+
+        model.addAttribute("uploadedGame", uploadedGame);
+        model.addAttribute("requirements", convertedRequirements);
+
         return "game";
     }
 }

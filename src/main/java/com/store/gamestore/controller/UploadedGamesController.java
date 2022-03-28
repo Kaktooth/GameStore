@@ -138,7 +138,7 @@ public class UploadedGamesController {
         LocalDateTime releaseDate = LocalDateTime.parse(editGameInput.getRelease(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
         GameProfile gameProfile = new GameProfile(game.getGame().getGameProfile().getId(),
-            editGameInput.getPrice(), editGameInput.getName(), editGameInput.getDeveloper(),
+            editGameInput.getPrice(), editGameInput.getTitle(), editGameInput.getDeveloper(),
             editGameInput.getPublisher(), 0, releaseDate, editGameInput.getDescription(),
             editGameInput.getSmallDescription(), UUID.fromString(id));
         gameProfileService.update(gameProfile);

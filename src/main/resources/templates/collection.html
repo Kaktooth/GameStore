@@ -4,61 +4,148 @@
     <title>Collection</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+            crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --bs-dark-rgb: rgb(33, 37, 41);
+            --bs-gradient: linear-gradient(75deg, rgba(255, 255, 25, 0.25), rgba(255, 25, 255, 0));
+            --bg-gradient: linear-gradient(65deg, rgba(0, 12, 15, 0.15), rgba(255, 144, 200, 0));
+            --bg-gradient2: linear-gradient(123deg, rgba(254, 0, 0, 0.38), rgba(0, 12, 15, 0.15), rgba(0, 12, 15, 0.15), rgba(255, 144, 200, 0), rgba(2, 180, 210, 0.24));
+            --bg-gradient3: linear-gradient(36deg, rgba(241, 244, 0, 0.02), rgba(0, 2, 15, 0.13), rgba(2, 180, 210, 0.09));
+            --night-gradient: linear-gradient(180deg, rgba(243, 145, 137, 0.39), rgba(113, 114, 161, 0.39),
+            rgba(187, 128, 130, 0.24), rgba(110, 117, 130, 0.19), rgba(4, 101, 130, 0.11));
+            --night-gradient-2: linear-gradient(180deg, rgba(15, 44, 103, 0.39),
+            rgba(205, 24, 24, 0.24), rgba(243, 149, 13, 0.19), rgba(244, 225, 133, 0.11));
+            --night-gradient-3: linear-gradient(180deg, rgba(15, 44, 103, 0.19),
+            rgba(14, 25, 33, 0.11));
+        }
+
+        .gradient-button .btn {
+            background-image: linear-gradient(to bottom, rgba(251, 253, 255, 0.3), rgba(255, 255, 255, 0.2) 49%, rgba(0, 0, 0, 0.15) 51%, rgba(0, 0, 0, 0.05));
+        }
+
+        .bg-dark-2 {
+            background: #212529;
+            color: aliceblue;
+        }
+    </style>
 </head>
-<body>
-<div class="container p-5">
-    <div class="row mx-md-n5 row-cols-1 row-cols-lg-4 row-cols-l align-items-stretch g-4 py-5">
-        <div class="col">
-            <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
-                 style="width: 16rem; background-image: url('/static/img/400x200.png');">
-                <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
+<body class="bg-dark-2" style="background-image: var(--bg-gradient2);">
+
+<header class="masthead special-color-dark mb-4">
+    <nav class="navbar shadow navbar-dark p-3 bg-dark-2 text-white" aria-label="Main navigation">
+        <div class="container-fluid d-grid gap-3 align-items-center">
+            <ul class="nav col col-lg-auto me-lg-auto mb-2 justify-content-left mb-md-0">
+                <a class="font-weight-bold navbar-brand" href="/">Game Store</a>
+                <li><a class="nav-link px-2 text-white" href="/?store">Store</a></li>
+                <li><a th:if="${#httpServletRequest.remoteUser}!=null" class="nav-link px-2 text-white"
+                       href="/?collection">Collection</a></li>
+            </ul>
+            <div class="d-flex justify-content-end text-white">
+                <div th:if="${#httpServletRequest.remoteUser}!=null">
+                    <a class="nav-link dropdown-toggle l text-white"
+                       data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true"
+                       aria-expanded="false">
+                        <label th:inline="text">[[${#httpServletRequest.remoteUser}]]</label>
+                    </a>
+                    <div class="dropdown-menu shadow" aria-labelledby="dropdownUser2"
+                         style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(-0.00172424px, 56px, 0px);">
+                        <a class="dropdown-item" href="/account?account">Account</a>
+                        <a class="dropdown-item" href="/profile?profile">Profile</a>
+                        <a class="dropdown-item" href="/support?support">Contact support</a>
+                        <a class="dropdown-item" href="/upload">Upload game</a>
+
+                        <hr class="dropdown-divider">
+                        <form class="dropdown-item" th:action="@{/logout}" method="post">
+                            <button class="btn btn-md btn-light text-dark" type="submit">Log out</button>
+                        </form>
+
+                    </div>
+                </div>
+                <div th:if="${#httpServletRequest.remoteUser}==null">
+                    <a class="text-end text-white" href="/log-in?login" th:text="'login'"></a>
+                </div>
             </div>
         </div>
-        <div class="col">
-            <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
-                 style="width: 16rem; background-image: url('/static/img/400x200.png');">
-                <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
+    </nav>
+</header>
+
+<main role="main" class="shadow mb-4">
+    <div class="container p-5">
+        <div class="row mx-md-n5 row-cols-1 row-cols-lg-4 row-cols-l align-items-stretch g-4 py-5">
+            <div class="col">
+                <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
+                     style="width: 16rem; background-image: url('/static/img/400x200.png');">
+                    <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
+                     style="width: 16rem; background-image: url('/static/img/400x200.png');">
+                    <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
+                     style="width: 16rem; background-image: url('/static/img/400x200.png');">
+                    <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
+                     style="width: 16rem; background-image: url('/static/img/400x200.png');">
+                    <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
+                </div>
             </div>
         </div>
-        <div class="col">
-            <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
-                 style="width: 16rem; background-image: url('/static/img/400x200.png');">
-                <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
+        <div class="row mx-md-n5 row-cols-1 row-cols-lg-4 row-cols-l align-items-stretch g-4 py-5">
+            <div class="col">
+                <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
+                     style="width: 16rem; background-image: url('/static/img/400x200.png');">
+                    <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
+                </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
-                 style="width: 16rem; background-image: url('/static/img/400x200.png');">
-                <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
+            <div class="col">
+                <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
+                     style="width: 16rem; background-image: url('/static/img/400x200.png');">
+                    <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
+                     style="width: 16rem; background-image: url('/static/img/400x200.png');">
+                    <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
+                     style="width: 16rem; background-image: url('/static/img/400x200.png');">
+                    <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row mx-md-n5 row-cols-1 row-cols-lg-4 row-cols-l align-items-stretch g-4 py-5">
-        <div class="col">
-            <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
-                 style="width: 16rem; background-image: url('/static/img/400x200.png');">
-                <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
-                 style="width: 16rem; background-image: url('/static/img/400x200.png');">
-                <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
-                 style="width: 16rem; background-image: url('/static/img/400x200.png');">
-                <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
-                 style="width: 16rem; background-image: url('/static/img/400x200.png');">
-                <img style="width:300px;height:240px" src="" class="d-block w-100" alt=""/>
-            </div>
-        </div>
+</main>
+
+<footer style="background-image: var(--bg-gradient);" class="footer-10 bg-dark-2
+justify-content-center special-color-dark font-small text-muted shadow">
+    <div class="container text-center">
+        <p>
+            All rights reserved. All trademarks are property of their respective owners in the US and other
+            countries.
+        </p>
+        <a href="">Privacy Policy</a>
+        <a href="">Agreement</a>
     </div>
-</div>
+</footer>
 </body>
 </html>

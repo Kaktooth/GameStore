@@ -109,7 +109,7 @@
                           th:object="${editGameInput}">
                         <div class="text-white mb-2">
                             <label for="name">Name</label>
-                            <input type="text" id="name" name="name" th:field="*{name}"
+                            <input type="text" id="name" name="name" th:field="*{title}"
                                    class="bg-gradient-light form-control text-muted" autofocus="">
 
                             <label for="description">Description</label>
@@ -148,20 +148,20 @@
                                     data-placeholder="Select a genre" tabindex="-1"
                                     aria-hidden="true">
                                 <option class="select-gradient-bg" th:each="g: ${genreList}"
-                                        th:value="${g.id}" th:text="${g.name}"></option>
+                                        th:value="${g.id}" th:text="${g.title}"></option>
                             </select>
                         </div>
                         <div class="text-white mb-2">
                             <h4>Select minimal requirements for your game</h4>
 
                             <select th:field="*{minProcessorId}" name="minProcessorId" id="minProcessorId">
-                                <option th:each="p: ${processors}" th:value="${p.id}" th:text="${p.name}"></option>
+                                <option th:each="p: ${processors}" th:value="${p.id}" th:text="${p.title}"></option>
                             </select>
                             <select th:field="*{minGraphicCardId}" name="minGraphicCardId" id="minGraphicCardId">
-                                <option th:each="c: ${graphicCards}" th:value="${c.id}" th:text="${c.name}"></option>
+                                <option th:each="c: ${graphicCards}" th:value="${c.id}" th:text="${c.title}"></option>
                             </select>
                             <select th:field="*{minOSId}" name="minOSId" id="minOSId">
-                                <option th:each="os: ${osList}" th:value="${os.id}" th:text="${os.name}"></option>
+                                <option th:each="os: ${osList}" th:value="${os.id}" th:text="${os.title}"></option>
                             </select>
 
                             <label for="minMemory">Minimal memory</label>
@@ -199,7 +199,7 @@
                            class="btn btn-md btn-primary float-right"
                            type="button"
                            th:href="@{/uploaded-games/edit/{id}/files(id =${uploadedGame.game.id.toString()})}"
-                           th:text="'Go to ' + ${uploadedGame.game.gameProfile.name} + ' files'"> </a>
+                           th:text="'Go to ' + ${uploadedGame.game.gameProfile.title} + ' files'"> </a>
 
                     </form>
                     <form method="post" th:action="@{/uploaded-games/edit/{id}/delete(id = ${uploadedGame.game.id})}">

@@ -2,7 +2,7 @@ CREATE TABLE game_profiles
 (
     id                SERIAL    PRIMARY KEY,
     price             DECIMAL   NOT NULL,
-    name              VARCHAR   NOT NULL,
+    title             VARCHAR   NOT NULL,
     developer         VARCHAR   NOT NULL,
     publisher         VARCHAR   NOT NULL,
     rating            INTEGER   NOT NULL,

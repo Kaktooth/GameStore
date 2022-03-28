@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <style>
         :root {
-            --bg-gradient2: linear-gradient(123deg, rgba(241, 12, 0, 0.28), rgba(0, 12, 15, 0.15), rgba(255, 144, 200, 0), rgba(2, 180, 210, 0.24));
+            --bg-gradient2: linear-gradient(123deg, rgba(254, 0, 0, 0.38), rgba(0, 12, 15, 0.15), rgba(0, 12, 15, 0.15), rgba(255, 144, 200, 0), rgba(2, 180, 210, 0.24));
             --bg-gradient3: linear-gradient(36deg, rgba(241, 244, 0, 0.02), rgba(0, 2, 15, 0.13), rgba(2, 180, 210, 0.09));
         }
 
@@ -39,14 +39,6 @@
         .select-gradient-bg {
             background: linear-gradient(to right, #FFFFFF, #432444)
         }
-
-        /*body {*/
-        /*    background: #00B4DB;*/
-        /*    background: -webkit-linear-gradient(to right, #0083B0, #00B4DB);*/
-        /*    background: linear-gradient(to right, #0083B0, #00B4DB);*/
-        /*    color: #514B64;*/
-        /*    min-height: 100vh*/
-        /*}*/
     </style>
 
     <script>
@@ -59,6 +51,25 @@
                 maximumSelectionLength: 4
             });
         });
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
     </script>
 </head>
 <body class="bg-dark-2" style="background-image: var(--bg-gradient2);">
@@ -81,9 +92,9 @@
                     </a>
                     <div class="dropdown-menu shadow" aria-labelledby="dropdownUser2"
                          style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(-0.00172424px, 56px, 0px);">
-                        <a class="dropdown-item" href="/account?account">Account</a>
-                        <a class="dropdown-item" href="/profile?profile">Profile</a>
-                        <a class="dropdown-item" href="/support?support">Contact support</a>
+                        <a class="dropdown-item" href="/account">Account</a>
+                        <a class="dropdown-item" href="/profile">Profile</a>
+                        <a class="dropdown-item" href="/support">Contact support</a>
                         <a class="dropdown-item" href="/upload">Upload game</a>
 
                         <hr class="dropdown-divider">
@@ -107,32 +118,32 @@
                 <div class="col-md-8 mx-auto">
                     <form method="post" th:action="@{/upload}" th:object="${uploadInput}" enctype="multipart/form-data">
                         <div class="text-white">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" th:field="*{name}"
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" id="name" name="name" th:field="*{title}"
                                    class="bg-gradient-light form-control text-muted" autofocus="">
 
-                            <label for="description">Description</label>
+                            <label for="description" class="form-label">Description</label>
                             <textarea type="text" id="description" name="description" th:field="*{description}"
                                       class="bg-gradient-light form-control text-muted" autofocus=""></textarea>
 
-                            <label for="smallDescription">Small description</label>
+                            <label for="smallDescription" class="form-label">Small description</label>
                             <textarea type="text" id="smallDescription"
                                       name="smallDescription" th:field="*{smallDescription}"
                                       class="bg-gradient-light form-control text-muted" autofocus=""></textarea>
 
-                            <label for="release">Release date</label>
+                            <label for="release" class="form-label">Release date</label>
                             <input type="datetime-local" id="release" name="release" th:field="*{release}"
                                    class="bg-gradient-light form-control text-muted" autofocus="">
 
-                            <label for="developer">Developer</label>
+                            <label for="developer" class="form-label">Developer</label>
                             <input type="text" id="developer" name="developer" th:field="*{developer}"
                                    class="bg-gradient-light form-control text-muted" autofocus="">
 
-                            <label for="publisher">Publisher</label>
+                            <label for="publisher" class="form-label">Publisher</label>
                             <input type="text" id="publisher" name="publisher" th:field="*{publisher}"
                                    class="bg-gradient-light form-control text-muted" autofocus="">
 
-                            <label for="price">Price</label>
+                            <label for="price" class="form-label">Price</label>
                             <input type="number" id="price" name="price" th:field="*{price}"
                                    class="bg-gradient-light form-control text-muted" autofocus="">
                         </div>
@@ -163,11 +174,11 @@
                                 <option th:each="os: ${osList}" th:value="${os.id}" th:text="${os.name}"></option>
                             </select>
 
-                            <label for="minMemory">Minimal memory</label>
+                            <label for="minMemory" class="form-label">Minimal memory</label>
                             <input type="number" th:field="*{minMemory}" id="minMemory" name="minMemory"
                                    class="bg-gradient-light form-control text-muted" autofocus="">
 
-                            <label for="minStorage">Minimal available space in storage</label>
+                            <label for="minStorage" class="form-label">Minimal available space in storage</label>
                             <input type="number" id="minStorage" th:field="*{minStorage}" th:required="required"
                                    name="minStorage" class="bg-gradient-light form-control text-muted" autofocus="">
 
@@ -183,11 +194,11 @@
                                 <option th:each="os: ${osList}" th:value="${os.id}" th:text="${os.getName()}"></option>
                             </select>
 
-                            <label for="recMemory">Recommended memory</label>
+                            <label for="recMemory" class="form-label">Recommended memory</label>
                             <input type="number" id="recMemory" name="recMemory" th:field="*{recMemory}" th:required="required"
                                    class="bg-gradient-light form-control text-muted" autofocus="">
 
-                            <label for="recStorage">Recommended available space in storage</label>
+                            <label for="recStorage" class="form-label">Recommended available space in storage</label>
                             <input type="number" id="recStorage" th:field="*{recStorage}" th:required="required"
                                    name="recStorage" class="bg-gradient-light form-control text-muted" autofocus="">
 

@@ -17,7 +17,7 @@ public class EditGameInput {
 
     public EditGameInput(UploadedGame game, Requirements requirements) {
         this.setPrice(game.getGame().getGameProfile().getPrice());
-        this.setName(game.getGame().getGameProfile().getName());
+        this.setTitle(game.getGame().getGameProfile().getTitle());
         this.setDeveloper(game.getGame().getGameProfile().getDeveloper());
         this.setPublisher(game.getGame().getGameProfile().getPublisher());
         this.setDescription(game.getGame().getGameProfile().getDescription());
@@ -41,7 +41,7 @@ public class EditGameInput {
     }
 
     private BigDecimal price;
-    private String name;
+    private String title;
     private String developer;
     private String publisher;
     private String description;

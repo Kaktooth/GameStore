@@ -15,7 +15,7 @@ import java.util.Set;
 @Repository
 public class GenreRepository extends AbstractEnumerationRepository<Genre, Integer> {
     private static final String getGenre = "SELECT * FROM genres WHERE id = ?";
-    private static final String getGenres = "SELECT * FROM genres";
+    private static final String getGenres = "SELECT * FROM genres ORDER BY genre";
 
     public GenreRepository(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);

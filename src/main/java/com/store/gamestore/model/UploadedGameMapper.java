@@ -34,7 +34,7 @@ public class UploadedGameMapper implements RowMapper<UploadedGame> {
             gameProfile.setId(rs.getInt("id"));
             gameProfile.setGameId(gameId);
             gameProfile.setPrice(rs.getBigDecimal("price"));
-            gameProfile.setName(rs.getString("name"));
+            gameProfile.setTitle(rs.getString("title"));
             gameProfile.setDeveloper(rs.getString("developer"));
             gameProfile.setPublisher(rs.getString("publisher"));
             gameProfile.setRating(rs.getInt("rating"));

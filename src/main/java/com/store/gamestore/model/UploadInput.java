@@ -5,8 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @ToString
@@ -16,10 +16,16 @@ import java.util.List;
 public class UploadInput {
 
     private BigDecimal price;
-    private String name;
+    @Size(message = "Invalid size, game title must be from 1200 to 6000 characters",
+        min = 1200, max = 6000)
+    private String title;
     private String developer;
     private String publisher;
+    @Size(message = "Invalid size, description must be from 1200 to 6000 characters",
+        min = 1200, max = 6000)
     private String description;
+    @Size(message = "Invalid size, description must be from 50 to 200 characters",
+        min = 50, max = 200)
     private String smallDescription;
     private String release;
     private Integer minMemory;

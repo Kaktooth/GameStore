@@ -6,7 +6,7 @@
 
     <style>
         :root {
-            --bg-gradient2: linear-gradient(123deg, rgba(241, 12, 0, 0.28), rgba(0, 12, 15, 0.15), rgba(255, 144, 200, 0), rgba(2, 180, 210, 0.24));
+            --bg-gradient2: linear-gradient(123deg, rgba(254, 0, 0, 0.38), rgba(0, 12, 15, 0.15), rgba(0, 12, 15, 0.15), rgba(255, 144, 200, 0), rgba(2, 180, 210, 0.24));
             --bg-gradient3: linear-gradient(36deg, rgba(241, 244, 0, 0.02), rgba(0, 2, 15, 0.13), rgba(2, 180, 210, 0.09));
         }
 
@@ -42,9 +42,9 @@
                     </a>
                     <div class="dropdown-menu shadow" aria-labelledby="dropdownUser2"
                          style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(-0.00172424px, 56px, 0px);">
-                        <a class="dropdown-item" href="/account?account">Account</a>
-                        <a class="dropdown-item" href="/profile?profile">Profile</a>
-                        <a class="dropdown-item" href="/support?support">Contact support</a>
+                        <a class="dropdown-item" href="/account">Account</a>
+                        <a class="dropdown-item" href="/profile">Profile</a>
+                        <a class="dropdown-item" href="/support">Contact support</a>
                         <a class="dropdown-item" href="/upload">Upload game</a>
 
                         <hr class="dropdown-divider">
@@ -69,7 +69,7 @@
                 <img style="width:120px;height:120px" src="" class="d-block w-100" alt=""/>
             </div>
             <div class="col-5 text-left">
-                <h6 th:text="${upload.game.gameProfile.name}"></h6>
+                <h6 th:text="${upload.game.gameProfile.title}"></h6>
                 <p class="text-info" th:text="'Developer: ' + ${upload.game.gameProfile.developer}"></p>
                 <p th:if="${upload.game.gameProfile.developer} != ${upload.game.gameProfile.publisher}"
                    class="md-2 text-info" th:text="'Publisher: ' + ${upload.game.gameProfile.publisher}"></p>

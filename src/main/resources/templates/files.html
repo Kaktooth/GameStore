@@ -6,7 +6,7 @@
 
     <style>
         :root {
-            --bg-gradient2: linear-gradient(123deg, rgba(241, 12, 0, 0.28), rgba(0, 12, 15, 0.15), rgba(255, 144, 200, 0), rgba(2, 180, 210, 0.24));
+            --bg-gradient2: linear-gradient(123deg, rgba(254, 0, 0, 0.38), rgba(0, 12, 15, 0.15), rgba(0, 12, 15, 0.15), rgba(255, 144, 200, 0), rgba(2, 180, 210, 0.24));
             --bg-gradient3: linear-gradient(36deg, rgba(241, 244, 0, 0.02), rgba(0, 2, 15, 0.13), rgba(2, 180, 210, 0.09));
         }
 
@@ -68,7 +68,7 @@
                 <form th:action="@{/uploaded-games/edit/{id}/files/{fileId}/delete(id = ${uploadedGame.game.id},fileId = ${file.id})}"
                       method="post">
                     <li class="list-group-item border">
-                        <label th:text="${i.count} + '. file name: ' + ${file.name} + ' version: ' + ${file.version}"></label>
+                        <label th:text="${i.count} + '. file title: ' + ${file.title} + ' version: ' + ${file.version}"></label>
                         <button type="submit" class="btn bg-danger text-end">
                             Delete
                         </button>

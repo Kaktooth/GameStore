@@ -16,12 +16,12 @@ import java.sql.Timestamp;
 @Repository
 public class GameProfileRepository extends AbstractRepository<GameProfile, Integer> {
 
-    private static final String saveGameProfile = "INSERT INTO game_profiles(price, name," +
+    private static final String saveGameProfile = "INSERT INTO game_profiles(price, title," +
         " developer, publisher, rating, release_date, description, brief_description," +
         " game_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String getGameProfile = "SELECT * FROM game_profiles WHERE id = ?";
     private static final String updateGameProfile = "UPDATE game_profiles " +
-        "SET price             = ?, name              = ?, " +
+        "SET price             = ?, title             = ?, " +
         "    developer         = ?, publisher         = ?, " +
         "    description       = ?, brief_description = ? " +
         "WHERE id = ?";
@@ -37,7 +37,7 @@ public class GameProfileRepository extends AbstractRepository<GameProfile, Integ
         jdbcTemplate.update(con -> {
             PreparedStatement ps = con.prepareStatement(saveGameProfile, new String[]{"id"});
             ps.setBigDecimal(1, gameProfile.getPrice());
-            ps.setString(2, gameProfile.getName());
+            ps.setString(2, gameProfile.getTitle());
             ps.setString(3, gameProfile.getDeveloper());
             ps.setString(4, gameProfile.getPublisher());
             ps.setInt(5, gameProfile.getRating());
@@ -62,7 +62,7 @@ public class GameProfileRepository extends AbstractRepository<GameProfile, Integ
     public void update(GameProfile gameProfile) {
         log.info("game profile: " + gameProfile.getId());
 
-        jdbcTemplate.update(updateGameProfile, gameProfile.getPrice(), gameProfile.getName(),
+        jdbcTemplate.update(updateGameProfile, gameProfile.getPrice(), gameProfile.getTitle(),
             gameProfile.getDeveloper(), gameProfile.getPublisher(), gameProfile.getDescription(),
             gameProfile.getBriefDescription(), gameProfile.getId());
     }
