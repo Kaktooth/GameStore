@@ -1,8 +1,6 @@
 package com.store.gamestore.model;
 
-
 import com.store.gamestore.util.DateConverter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -13,22 +11,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-@Slf4j
-public class UploadedGameMapper implements RowMapper<UploadedGame> {
+public class StoreBannerItemMapper implements RowMapper<StoreBannerItem> {
     Set<GameFile> gameFiles = new HashSet<>();
     Set<Genre> genre = new HashSet<>();
-    Map<UUID, UploadedGame> uploadMap = new HashMap<>();
+    Map<UUID, StoreBannerItem> uploadMap = new HashMap<>();
 
-    public UploadedGame mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public StoreBannerItem mapRow(ResultSet rs, int rowNum) throws SQLException {
         UUID gameId = (UUID) rs.getObject("game_id");
-        UploadedGame uploadedGame = uploadMap.get(gameId);
-        if (uploadedGame == null) {
+        StoreBannerItem storeBannerItem = uploadMap.get(gameId);
+        if (storeBannerItem == null) {
             gameFiles = new HashSet<>();
             genre = new HashSet<>();
-            uploadedGame = new UploadedGame();
+            storeBannerItem = new StoreBannerItem();
             Game game = new Game();
             game.setId(gameId);
-            uploadedGame.setGame(game);
+            storeBannerItem.setGame(game);
 
             GameProfile gameProfile = new GameProfile();
             gameProfile.setId(rs.getInt("id"));
@@ -38,9 +35,6 @@ public class UploadedGameMapper implements RowMapper<UploadedGame> {
             gameProfile.setDeveloper(rs.getString("developer"));
             gameProfile.setPublisher(rs.getString("publisher"));
             gameProfile.setRating(rs.getInt("rating"));
-            gameProfile.setViews(rs.getInt("views_count"));
-            gameProfile.setPurchase(rs.getInt("purchase_count"));
-            gameProfile.setFavorite(rs.getInt("favorite_count"));
             gameProfile.setDescription(rs.getString("description"));
             gameProfile.setBriefDescription(rs.getString("brief_description"));
             gameProfile.setReleaseDate(DateConverter.localDateFromTimestamp(
@@ -55,8 +49,8 @@ public class UploadedGameMapper implements RowMapper<UploadedGame> {
             user.setEnabled(rs.getBoolean("enabled"));
             user.setEmail(rs.getString("email"));
             user.setPhone(rs.getString("phone_number"));
-            uploadedGame.setUser(user);
-            uploadMap.put(gameId, uploadedGame);
+            storeBannerItem.setUser(user);
+            uploadMap.put(gameId, storeBannerItem);
         }
 
         GameFile gameFile = new GameFile();
@@ -66,17 +60,17 @@ public class UploadedGameMapper implements RowMapper<UploadedGame> {
         gameFile.setId(rs.getInt("id"));
         gameFile.setName(rs.getString("file_name"));
         gameFiles.add(gameFile);
-        uploadedGame.getGame().setGameFiles(gameFiles);
+        storeBannerItem.getGame().setGameFiles(gameFiles);
 
         if (gameFiles.size() <= 1) {
             Genre newGenre = new Genre();
             newGenre.setId(rs.getInt("genre_id"));
             newGenre.setName(rs.getString("genre"));
             genre.add(newGenre);
-            uploadedGame.getGame().setGenre(new GameGenre(genre, gameId));
+            storeBannerItem.getGame().setGenre(new GameGenre(genre, gameId));
         }
 
-        log.info(uploadedGame.toString());
-        return uploadedGame;
+        storeBannerItem.setDescription(rs.getString("banner_description"));
+        return storeBannerItem;
     }
 }

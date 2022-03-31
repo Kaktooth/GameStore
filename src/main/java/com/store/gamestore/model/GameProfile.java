@@ -22,6 +22,9 @@ public class GameProfile {
     private String developer;
     private String publisher;
     private Integer rating;
+    private Integer views;
+    private Integer purchase;
+    private Integer favorite;
     private LocalDateTime releaseDate;
     private String description;
     private String briefDescription;

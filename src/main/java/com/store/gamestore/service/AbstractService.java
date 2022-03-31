@@ -2,7 +2,7 @@ package com.store.gamestore.service;
 
 import com.store.gamestore.repository.CommonRepository;
 
-import java.util.Set;
+import java.util.List;
 
 public class AbstractService<T, I> implements CommonService<T, I> {
 
@@ -23,8 +23,13 @@ public class AbstractService<T, I> implements CommonService<T, I> {
     }
 
     @Override
-    public Set<T> getAll(I id) {
+    public List<T> getAll(I id) {
         return repository.getAll(id);
+    }
+
+    @Override
+    public List<T> getAll() {
+        return repository.getAll();
     }
 
     @Override

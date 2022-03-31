@@ -17,6 +17,7 @@ import com.store.gamestore.service.enumeration.CommonEnumerationService;
 import com.store.gamestore.service.user.UserDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -29,11 +30,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -59,7 +60,8 @@ public class UploadedGamesController {
                                    CommonService<Game, UUID> gameService,
                                    CommonService<GameGenre, UUID> gameGenreService,
                                    CommonService<GameFile, Integer> gameFileService,
-                                   CommonService<UploadedGame, UUID> uploadedGameService,
+                                   @Qualifier("uploadedGameService")
+                                       CommonService<UploadedGame, UUID> uploadedGameService,
                                    CommonService<GameProfile, Integer> gameProfileService,
                                    CommonService<Requirements, Integer> requirementsService,
                                    CommonEnumerationService<Genre, Integer> genreService,
@@ -85,7 +87,8 @@ public class UploadedGamesController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         User user = ((UserDetailsService) userService).get(name);
-        model.addAttribute("uploadedGames", uploadedGameService.getAll(user.getId()));
+        List<UploadedGame> uploadedGames = uploadedGameService.getAll(user.getId());
+        model.addAttribute("uploadedGames", uploadedGames);
         return "uploaded-games";
     }
 
@@ -139,7 +142,8 @@ public class UploadedGamesController {
 
         GameProfile gameProfile = new GameProfile(game.getGame().getGameProfile().getId(),
             editGameInput.getPrice(), editGameInput.getTitle(), editGameInput.getDeveloper(),
-            editGameInput.getPublisher(), 0, releaseDate, editGameInput.getDescription(),
+            editGameInput.getPublisher(), 0, 0, 0, 0,
+            releaseDate, editGameInput.getDescription(),
             editGameInput.getSmallDescription(), UUID.fromString(id));
         gameProfileService.update(gameProfile);
 

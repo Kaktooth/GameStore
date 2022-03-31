@@ -16,6 +16,7 @@ import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.enumeration.CommonEnumerationService;
 import com.store.gamestore.service.user.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -59,11 +60,11 @@ public class GameUploadController {
         CommonService<GameFile, Integer> gameFileService,
         CommonService<GameProfile, Integer> gameProfileService,
         CommonService<Requirements, Integer> requirementsService,
-        CommonService<UploadedGame, UUID> uploadedGameService,
         CommonEnumerationService<Genre, Integer> genreService,
         CommonEnumerationService<Processor, Integer> processorService,
         CommonEnumerationService<GraphicsCard, Integer> graphicsCardService,
-        CommonEnumerationService<OperatingSystem, Integer> operatingSystemService) {
+        CommonEnumerationService<OperatingSystem, Integer> operatingSystemService,
+        @Qualifier("uploadedGameService") CommonService<UploadedGame, UUID> uploadedGameService) {
 
         this.userService = userService;
         this.gameService = gameService;
@@ -110,7 +111,7 @@ public class GameUploadController {
         LocalDateTime releaseDate = LocalDateTime.parse(uploadInput.getRelease(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
         GameProfile gameProfile = new GameProfile(0, uploadInput.getPrice(), uploadInput.getTitle(),
-            uploadInput.getDeveloper(), uploadInput.getPublisher(), 0,
+            uploadInput.getDeveloper(), uploadInput.getPublisher(), 0, 0, 0, 0,
             releaseDate, uploadInput.getDescription(), uploadInput.getSmallDescription(),
             game.getId());
         GameProfile savedGameProfile = gameProfileService.save(gameProfile);

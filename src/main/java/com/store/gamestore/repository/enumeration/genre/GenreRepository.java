@@ -8,8 +8,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 
 @Slf4j
 @Repository
@@ -27,7 +28,7 @@ public class GenreRepository extends AbstractEnumerationRepository<Genre, Intege
     }
 
     @Override
-    public Set<Genre> getAll() {
-        return new HashSet<>(jdbcTemplate.query(getGenres, new GenreMapper()));
+    public List<Genre> getAll() {
+        return new ArrayList<>(new LinkedHashSet<>(jdbcTemplate.query(getGenres, new GenreMapper())));
     }
 }

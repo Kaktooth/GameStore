@@ -140,27 +140,29 @@
              style="height:40px; background-image: var(--bs-gray-dark);">
             <h5 class="font-weight-normal text-center">Favorites</h5>
         </div>
-
-        <div class="container-md text-white mb-4"
-             style="background-image: var(--bs-gray-dark);">
-            <div class="row shadow border border-dark rounded-5 mb-2">
+        <div class="container-md text-white mb-4 bg-dark-2">
+            <div th:each="favorite: ${favoriteGames}" th:if="${favorite} != null"
+                 class="row shadow border border-dark rounded-5 border-2 mb-2">
                 <div class="col">
                     <img style="width:120px;height:120px" src="" class="d-block w-100" alt=""/>
                 </div>
-                <div class="col"></div>
-                <div class="col text-center">
-                    <h6>Game title</h6>
+                <div class="col-5 text-left">
+                    <h6 th:text="${favorite.game.gameProfile.title}"></h6>
+                    <p class="text-info" th:text="'Developer: ' + ${favorite.game.gameProfile.developer}"></p>
+                    <p th:if="${favorite.game.gameProfile.developer} != ${favorite.game.gameProfile.publisher}"
+                       class="md-2 text-info" th:text="'Publisher: ' + ${favorite.game.gameProfile.publisher}"></p>
+                    <label class="text-info" th:text="${favorite.game.genre.toString()}"></label>
                 </div>
-            </div>
-
-            <div class="row shadow border border-dark rounded-5 mb-2">
-                <div class="col">
-                    <img style="width:120px;height:120px" src="" class="d-block w-100" alt=""/>
-                </div>
-                <div class="col"></div>
-                <div class="col text-center">
-                    <h6>Game title</h6>
-                    <p>300$</p>
+                <div class="col text-right">
+                    <p th:if="${favorite.game.gameProfile.price} > 0" th:text="${favorite.game.gameProfile.price} + ' $'"></p>
+                    <p th:if="${favorite.game.gameProfile.price} == 0" th:text="'Free'"></p>
+                    <div class="text-right">
+                        <a style="background-image: var(--bs-gradient);"
+                           class="btn btn-sm btn-primary align-content-center"
+                           type="button" th:href="@{/game/{id}(id =${favorite.game.id.toString()})}">
+                            Visit
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

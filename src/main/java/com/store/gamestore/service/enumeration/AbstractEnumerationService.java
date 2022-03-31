@@ -2,7 +2,7 @@ package com.store.gamestore.service.enumeration;
 
 import com.store.gamestore.repository.enumeration.CommonEnumerationRepository;
 
-import java.util.Set;
+import java.util.List;
 
 public class AbstractEnumerationService<T, I> implements CommonEnumerationService<T, I> {
 
@@ -23,7 +23,7 @@ public class AbstractEnumerationService<T, I> implements CommonEnumerationServic
     }
 
     @Override
-    public Set<T> getAll() {
+    public List<T> getAll() {
         return repository.getAll();
     }
 }

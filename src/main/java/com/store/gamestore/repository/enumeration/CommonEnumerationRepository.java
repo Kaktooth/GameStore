@@ -1,6 +1,6 @@
 package com.store.gamestore.repository.enumeration;
 
-import java.util.Set;
+import java.util.List;
 
 public interface CommonEnumerationRepository<T, I> {
 
@@ -8,5 +8,5 @@ public interface CommonEnumerationRepository<T, I> {
 
     I getId(String name);
 
-    Set<T> getAll();
+    List<T> getAll();
 }

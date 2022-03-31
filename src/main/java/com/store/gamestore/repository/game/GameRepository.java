@@ -8,8 +8,10 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -40,8 +42,8 @@ public class GameRepository extends AbstractRepository<Game, UUID> {
     }
 
     @Override
-    public Set<Game> getAll(UUID id) {
-        return new HashSet<>(jdbcTemplate.query(getGame, new GameMapper(), id));
+    public List<Game> getAll(UUID id) {
+        return new ArrayList<>(new LinkedHashSet<>(jdbcTemplate.query(getGame, new GameMapper(), id)));
     }
 
     @Override

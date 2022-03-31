@@ -2,8 +2,8 @@ package com.store.gamestore.repository.enumeration;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AbstractEnumerationRepository<T, I> implements CommonEnumerationRepository<T, I> {
 
@@ -24,7 +24,7 @@ public class AbstractEnumerationRepository<T, I> implements CommonEnumerationRep
     }
 
     @Override
-    public Set<T> getAll() {
-        return new HashSet<>();
+    public List<T> getAll() {
+        return new ArrayList<>();
     }
 }

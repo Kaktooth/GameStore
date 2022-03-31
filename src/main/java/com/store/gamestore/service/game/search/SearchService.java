@@ -1,4 +1,4 @@
-package com.store.gamestore.service.game.uploaded;
+package com.store.gamestore.service.game.search;
 
 import com.store.gamestore.model.UploadedGame;
 import com.store.gamestore.repository.CommonRepository;
@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @Transactional
-@Qualifier("uploadedGameService")
-public class UploadedGamesService extends AbstractService<UploadedGame, UUID> {
-    public UploadedGamesService(CommonRepository<UploadedGame, UUID> repository) {
+@Qualifier("searchService")
+public class SearchService extends AbstractService<UploadedGame, UUID> implements GameSearcher<UploadedGame> {
+    public SearchService(CommonRepository<UploadedGame, UUID> repository) {
         super(repository);
     }
 
@@ -31,5 +31,13 @@ public class UploadedGamesService extends AbstractService<UploadedGame, UUID> {
     @Override
     public List<UploadedGame> getAll() {
         return super.getAll();
+    }
+
+    @Override
+    public List<UploadedGame> searchGames(String searchString, Integer count) {
+        return getAll()
+            .stream()
+            .filter(upload -> upload.getGame().getGameProfile().getTitle().contains(searchString))
+            .limit(count).collect(Collectors.toList());
     }
 }

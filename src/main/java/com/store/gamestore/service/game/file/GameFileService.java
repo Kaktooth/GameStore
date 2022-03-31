@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class GameFileService extends AbstractService<GameFile, Integer> {
-
     public GameFileService(CommonRepository<GameFile, Integer> gameRepository) {
         super(gameRepository);
     }

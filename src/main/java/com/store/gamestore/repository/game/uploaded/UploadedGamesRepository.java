@@ -7,8 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -26,7 +28,7 @@ public class UploadedGamesRepository extends AbstractRepository<UploadedGame, UU
         "INNER JOIN genres gn ON gn.id = gg.genre_id " +
         "WHERE uploaded_games.game_id = ?";
 
-    private static final String getGames = "SELECT * FROM uploaded_games " +
+    private static final String getUserUploadedGames = "SELECT * FROM uploaded_games " +
         "INNER JOIN game_files gf ON uploaded_games.game_id = gf.game_id " +
         "INNER JOIN game_profiles gp ON uploaded_games.game_id = gp.game_id " +
         "INNER JOIN users u ON uploaded_games.user_id = u.id " +
@@ -34,6 +36,14 @@ public class UploadedGamesRepository extends AbstractRepository<UploadedGame, UU
         "INNER JOIN game_genres gg ON gf.game_id = gg.game_id " +
         "INNER JOIN genres gn ON gn.id = gg.genre_id " +
         "WHERE user_id = ?";
+
+    private static final String getGames = "SELECT * FROM uploaded_games " +
+        "INNER JOIN game_files gf ON uploaded_games.game_id = gf.game_id " +
+        "INNER JOIN game_profiles gp ON uploaded_games.game_id = gp.game_id " +
+        "INNER JOIN users u ON uploaded_games.user_id = u.id " +
+        "INNER JOIN system_requirements sr on gp.id = sr.game_profile_id " +
+        "INNER JOIN game_genres gg ON gf.game_id = gg.game_id " +
+        "INNER JOIN genres gn ON gn.id = gg.genre_id ";
 
     public UploadedGamesRepository(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
@@ -47,12 +57,17 @@ public class UploadedGamesRepository extends AbstractRepository<UploadedGame, UU
 
     @Override
     public UploadedGame get(UUID gameId) {
-        return jdbcTemplate.query(getGame,  new UploadedGameMapper(), gameId).iterator().next();
+        return jdbcTemplate.query(getGame, new UploadedGameMapper(), gameId).iterator().next();
     }
 
     @Override
-    public Set<UploadedGame> getAll(UUID userId) {
-        return new HashSet<>(jdbcTemplate.query(getGames, new UploadedGameMapper(), userId));
+    public List<UploadedGame> getAll(UUID userId) {
+        return new ArrayList<>(new LinkedHashSet<>(jdbcTemplate.query(getUserUploadedGames, new UploadedGameMapper(), userId)));
+    }
+
+    @Override
+    public List<UploadedGame> getAll() {
+        return new ArrayList<>(new LinkedHashSet<>(jdbcTemplate.query(getGames, new UploadedGameMapper())));
     }
 
     @Override

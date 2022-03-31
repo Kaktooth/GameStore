@@ -17,8 +17,8 @@ import java.sql.Timestamp;
 public class GameProfileRepository extends AbstractRepository<GameProfile, Integer> {
 
     private static final String saveGameProfile = "INSERT INTO game_profiles(price, title," +
-        " developer, publisher, rating, release_date, description, brief_description," +
-        " game_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        " developer, publisher, rating, views_count, purchase_count, favorite_count, release_date," +
+        " description, brief_description, game_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String getGameProfile = "SELECT * FROM game_profiles WHERE id = ?";
     private static final String updateGameProfile = "UPDATE game_profiles " +
         "SET price             = ?, title             = ?, " +
@@ -41,10 +41,13 @@ public class GameProfileRepository extends AbstractRepository<GameProfile, Integ
             ps.setString(3, gameProfile.getDeveloper());
             ps.setString(4, gameProfile.getPublisher());
             ps.setInt(5, gameProfile.getRating());
-            ps.setTimestamp(6, Timestamp.valueOf(gameProfile.getReleaseDate()));
-            ps.setString(7, gameProfile.getDescription());
-            ps.setString(8, gameProfile.getBriefDescription());
-            ps.setObject(9, gameProfile.getGameId());
+            ps.setInt(6, gameProfile.getRating());
+            ps.setInt(7, gameProfile.getRating());
+            ps.setInt(8, gameProfile.getRating());
+            ps.setTimestamp(9, Timestamp.valueOf(gameProfile.getReleaseDate()));
+            ps.setString(10, gameProfile.getDescription());
+            ps.setString(11, gameProfile.getBriefDescription());
+            ps.setObject(12, gameProfile.getGameId());
             return ps;
         }, keyHolder);
 

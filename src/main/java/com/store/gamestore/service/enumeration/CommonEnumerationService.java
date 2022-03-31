@@ -1,11 +1,11 @@
 package com.store.gamestore.service.enumeration;
 
-import java.util.Set;
+import java.util.List;
 
 public interface CommonEnumerationService<T, I> {
     T get(I id);
 
     I getId(String name);
 
-    Set<T> getAll();
+    List<T> getAll();
 }

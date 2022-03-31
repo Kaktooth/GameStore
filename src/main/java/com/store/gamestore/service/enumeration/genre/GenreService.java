@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class GenreService extends AbstractEnumerationService<Genre, Integer> {
-
     public GenreService(CommonEnumerationRepository<Genre, Integer> repository) {
         super(repository);
     }
