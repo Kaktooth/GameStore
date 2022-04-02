@@ -116,36 +116,65 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 mx-auto">
-                    <form method="post" th:action="@{/upload}" th:object="${uploadInput}" enctype="multipart/form-data">
+                    <form th:method="post" th:action="@{/upload}" th:object="${uploadInput}"
+                          class="needs-validation mb-4" enctype="multipart/form-data" novalidate>
                         <div class="text-white">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" id="name" name="name" th:field="*{title}"
-                                   class="bg-gradient-light form-control text-muted" autofocus="">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" id="title" name="title" th:field="*{title}"
+                                   class="bg-gradient-light form-control text-muted" autofocus=""
+                                   minlength="5" maxlength="45" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid name.
+                                Name must be at least 5 letters and no more than 70
+                            </div>
 
                             <label for="description" class="form-label">Description</label>
                             <textarea type="text" id="description" name="description" th:field="*{description}"
-                                      class="bg-gradient-light form-control text-muted" autofocus=""></textarea>
+                                      class="bg-gradient-light form-control text-muted" autofocus=""
+                                      maxlength="700" minlength="450" style="word-wrap:break-word;" required></textarea>
+                            <div class="invalid-feedback">
+                                Game description must be at least 450 chars and no more than 700
+                            </div>
 
                             <label for="smallDescription" class="form-label">Small description</label>
-                            <textarea type="text" id="smallDescription"
+                            <textarea type="text" id="smallDescription" style="word-wrap:break-word;"
                                       name="smallDescription" th:field="*{smallDescription}"
-                                      class="bg-gradient-light form-control text-muted" autofocus=""></textarea>
+                                      class="bg-gradient-light form-control text-muted" autofocus=""
+                                      maxlength="440" minlength="140" required></textarea>
+                            <div class="invalid-feedback">
+                                Small game description must be at least 140 chars and no more than 440
+                            </div>
 
                             <label for="release" class="form-label">Release date</label>
                             <input type="datetime-local" id="release" name="release" th:field="*{release}"
-                                   class="bg-gradient-light form-control text-muted" autofocus="">
+                                   class="bg-gradient-light form-control text-muted" autofocus="" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid release date.
+                            </div>
 
                             <label for="developer" class="form-label">Developer</label>
                             <input type="text" id="developer" name="developer" th:field="*{developer}"
-                                   class="bg-gradient-light form-control text-muted" autofocus="">
+                                   class="bg-gradient-light form-control text-muted" autofocus=""
+                                   minlength="3" maxlength="140" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid name for developer.
+                            </div>
 
                             <label for="publisher" class="form-label">Publisher</label>
                             <input type="text" id="publisher" name="publisher" th:field="*{publisher}"
-                                   class="bg-gradient-light form-control text-muted" autofocus="">
+                                   class="bg-gradient-light form-control text-muted" autofocus=""
+                                   minlength="3" maxlength="140" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid name for publisher.
+                            </div>
 
                             <label for="price" class="form-label">Price</label>
                             <input type="number" id="price" name="price" th:field="*{price}"
-                                   class="bg-gradient-light form-control text-muted" autofocus="">
+                                   class="bg-gradient-light form-control text-muted" autofocus=""
+                                   max="9999" required>
+                            <div class="invalid-feedback">
+
+                            </div>
                         </div>
 
                         <h4 class="text-white">Select game genre</h4>
@@ -176,11 +205,19 @@
 
                             <label for="minMemory" class="form-label">Minimal memory</label>
                             <input type="number" th:field="*{minMemory}" id="minMemory" name="minMemory"
-                                   class="bg-gradient-light form-control text-muted" autofocus="">
+                                   class="bg-gradient-light form-control text-muted" autofocus=""
+                                   min="1" required>
+                            <div class="invalid-feedback">
+                                Cant be zero
+                            </div>
 
                             <label for="minStorage" class="form-label">Minimal available space in storage</label>
                             <input type="number" id="minStorage" th:field="*{minStorage}" th:required="required"
-                                   name="minStorage" class="bg-gradient-light form-control text-muted" autofocus="">
+                                   name="minStorage" class="bg-gradient-light form-control text-muted" autofocus=""
+                                   min="1" required>
+                            <div class="invalid-feedback">
+                                Cant be zero
+                            </div>
 
                             <h4>Select maximal requirements for your game</h4>
                             <select th:field="*{recProcessorId}" name="recProcessorId" id="recProcessorId">
@@ -190,29 +227,43 @@
                                 <option th:each="c: ${graphicCards}" th:value="${c.id}"
                                         th:text="${c.getName()}"></option>
                             </select>
-                            <select th:field="*{recOSId}" name="recOSId" id="recOSId" >
+                            <select th:field="*{recOSId}" name="recOSId" id="recOSId">
                                 <option th:each="os: ${osList}" th:value="${os.id}" th:text="${os.getName()}"></option>
                             </select>
 
                             <label for="recMemory" class="form-label">Recommended memory</label>
-                            <input type="number" id="recMemory" name="recMemory" th:field="*{recMemory}" th:required="required"
-                                   class="bg-gradient-light form-control text-muted" autofocus="">
+                            <input type="number" id="recMemory" name="recMemory" th:field="*{recMemory}"
+                                   th:required="required"
+                                   class="bg-gradient-light form-control text-muted" autofocus=""
+                                   min="1" required>
+                            <div class="invalid-feedback">
+                                Cant be zero
+                            </div>
 
                             <label for="recStorage" class="form-label">Recommended available space in storage</label>
                             <input type="number" id="recStorage" th:field="*{recStorage}" th:required="required"
-                                   name="recStorage" class="bg-gradient-light form-control text-muted" autofocus="">
+                                   name="recStorage" class="bg-gradient-light form-control text-muted" autofocus=""
+                                   min="1" required>
+                            <div class="invalid-feedback">
+                                Cant be zero
+                            </div>
 
-                            <label for="version">Version | example: 1.2.3.4 ([major].[minor].[release].[build])</label>
+                            <label for="version">Version</label>
                             <input type="text" id="version" pattern="^[\d]+.[\d]+.[\d]+.[\d]+$"
                                    name="version" autofocus=""
-                                   class="bg-gradient-light form-control text-muted" th:field="*{version}">
+                                   class="bg-gradient-light form-control text-muted" th:field="*{version}"
+                                   maxlength="30" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid version number.
+                                Example: 0.0.0.0 [major].[minor].[release].[build]
+                            </div>
 
                             <h4>Upload gameFile in zip archive</h4>
                             <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
 
                             <div class="form-group row">
                                 <div class="col">
-                                    <input type="file" name="file" class="form-control-file">
+                                    <input type="file" name="file" class="form-control-file" required>
                                 </div>
                                 <div class="col">
                                     <button type="submit" class="btn bg-gradient-light btn-primary">Upload File</button>
@@ -220,6 +271,24 @@
                             </div>
                         </div>
                     </form>
+                    <script>
+                        (function () {
+                            'use strict';
+                            window.addEventListener('load', function () {
+                                var forms = document.getElementsByClassName('needs-validation');
+
+                                var validation = Array.prototype.filter.call(forms, function (form) {
+                                    form.addEventListener('submit', function (event) {
+                                        if (form.checkValidity() === false) {
+                                            event.preventDefault();
+                                            event.stopPropagation();
+                                        }
+                                        form.classList.add('was-validated');
+                                    }, false);
+                                });
+                            }, false);
+                        })();
+                    </script>
                 </div>
             </div>
         </div>

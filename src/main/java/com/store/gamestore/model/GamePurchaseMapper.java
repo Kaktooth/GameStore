@@ -1,7 +1,6 @@
 package com.store.gamestore.model;
 
 import com.store.gamestore.util.DateConverter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -12,22 +11,25 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-@Slf4j
-public class UploadedGameMapper implements RowMapper<UploadedGame> {
+public class GamePurchaseMapper implements RowMapper<GamePurchase> {
     Set<GameFile> gameFiles = new HashSet<>();
     Set<Genre> genre = new HashSet<>();
-    Map<UUID, UploadedGame> uploadMap = new HashMap<>();
+    Map<UUID, GamePurchase> uploadMap = new HashMap<>();
 
-    public UploadedGame mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public GamePurchase mapRow(ResultSet rs, int rowNum) throws SQLException {
         UUID gameId = (UUID) rs.getObject("game_id");
-        UploadedGame uploadedGame = uploadMap.get(gameId);
-        if (uploadedGame == null) {
+        GamePurchase purchasedGame = uploadMap.get(gameId);
+        if (purchasedGame == null) {
             gameFiles = new HashSet<>();
             genre = new HashSet<>();
-            uploadedGame = new UploadedGame();
+            purchasedGame = new GamePurchase();
+            UserGame userGame = new UserGame();
             Game game = new Game();
             game.setId(gameId);
-            uploadedGame.setGame(game);
+            userGame.setGame(game);
+
+            purchasedGame.setAmount(rs.getBigDecimal("amount"));
+            purchasedGame.setDate(rs.getTimestamp("purchase_date").toLocalDateTime());
 
             GameProfile gameProfile = new GameProfile();
             gameProfile.setId(rs.getInt("id"));
@@ -54,8 +56,9 @@ public class UploadedGameMapper implements RowMapper<UploadedGame> {
             user.setEnabled(rs.getBoolean("enabled"));
             user.setEmail(rs.getString("email"));
             user.setPhone(rs.getString("phone_number"));
-            uploadedGame.setUser(user);
-            uploadMap.put(gameId, uploadedGame);
+            userGame.setUser(user);
+            purchasedGame.setUserGame(userGame);
+            uploadMap.put(gameId, purchasedGame);
         }
 
         GameFile gameFile = new GameFile();
@@ -65,17 +68,16 @@ public class UploadedGameMapper implements RowMapper<UploadedGame> {
         gameFile.setId(rs.getInt("id"));
         gameFile.setName(rs.getString("file_name"));
         gameFiles.add(gameFile);
-        uploadedGame.getGame().setGameFiles(gameFiles);
+        purchasedGame.getUserGame().getGame().setGameFiles(gameFiles);
 
         if (gameFiles.size() <= 1) {
             Genre newGenre = new Genre();
             newGenre.setId(rs.getInt("genre_id"));
             newGenre.setName(rs.getString("genre"));
             genre.add(newGenre);
-            uploadedGame.getGame().setGenre(new GameGenre(genre, gameId));
+            purchasedGame.getUserGame().getGame().setGenre(new GameGenre(genre, gameId));
         }
 
-        log.info(uploadedGame.toString());
-        return uploadedGame;
+        return purchasedGame;
     }
 }

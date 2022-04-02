@@ -1,7 +1,7 @@
 package com.store.gamestore.controller;
 
-import com.store.gamestore.model.FavoriteGame;
 import com.store.gamestore.model.User;
+import com.store.gamestore.model.UserGame;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.user.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,28 +16,28 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/profile")
-public class UserProfileController {
+@RequestMapping("/collection")
+public class CollectionController {
+
     private final CommonService<User, UUID> userService;
-    private final CommonService<FavoriteGame, UUID> favoriteGameService;
+    private final CommonService<UserGame, UUID> userGamesRepository;
 
     @Autowired
-    public UserProfileController(CommonService<User, UUID> userService,
-                                 CommonService<FavoriteGame, UUID> favoriteGameService) {
+    public CollectionController(CommonService<User, UUID> userService,
+                                CommonService<UserGame, UUID> userGamesRepository) {
         this.userService = userService;
-        this.favoriteGameService = favoriteGameService;
+        this.userGamesRepository = userGamesRepository;
     }
 
     @GetMapping
-    public String userProfilePage(Model model) {
-
+    public String getCollectionPage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         User user = ((UserDetailsService) userService).get(name);
-        List<FavoriteGame> favoriteGames = favoriteGameService.getAll(user.getId());
-        model.addAttribute("user", user);
-        model.addAttribute("favoriteGames", favoriteGames);
 
-        return "profile";
+        List<UserGame> collection = userGamesRepository.getAll(user.getId());
+        model.addAttribute("collection", collection);
+
+        return "collection";
     }
 }

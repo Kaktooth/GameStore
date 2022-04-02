@@ -25,13 +25,13 @@ public class Pagination<T> {
     }
 
     public List<Integer> getPageNumbers(int pageCount) {
-        return IntStream.rangeClosed(1, pageCount)
+        return IntStream.rangeClosed(1, pageCount + 1)
             .boxed()
             .collect(Collectors.toList());
     }
 
     public int getPageCount(int pageSize) {
-        return games.size() / pageSize;
+        return (games.size() - 1) / pageSize;
     }
 
     public Map<Integer, List<T>> toMap(Integer size, Integer pages) {

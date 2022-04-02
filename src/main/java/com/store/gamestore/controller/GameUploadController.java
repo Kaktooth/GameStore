@@ -81,6 +81,9 @@ public class GameUploadController {
 
     @GetMapping
     public String homepage(Model model) {
+        final String onlyLetters = "^[a-zA-Z]+$";
+        final String onlyDigits = "^[\\d]+$";
+
         model.addAttribute("uploadInput", new UploadInput());
         model.addAttribute("genreList", genreService.getAll());
 
@@ -88,6 +91,8 @@ public class GameUploadController {
         model.addAttribute("graphicCards", graphicsCardService.getAll());
         model.addAttribute("osList", operatingSystemService.getAll());
 
+        model.addAttribute("onlyLetters", onlyLetters);
+        model.addAttribute("onlyDigits", onlyDigits);
         return "upload";
     }
 
@@ -96,7 +101,6 @@ public class GameUploadController {
                              @RequestParam("file") MultipartFile file,
                              BindingResult bindingResult,
                              RedirectAttributes attributes) {
-
         if (file.isEmpty()) {
             attributes.addFlashAttribute("message", "Please select a file to upload.");
             return "redirect:/";

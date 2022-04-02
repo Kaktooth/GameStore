@@ -7,22 +7,28 @@ import com.store.gamestore.model.OperatingSystem;
 import com.store.gamestore.model.Processor;
 import com.store.gamestore.model.Requirements;
 import com.store.gamestore.model.UploadedGame;
+import com.store.gamestore.model.User;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.enumeration.CommonEnumerationService;
+import com.store.gamestore.service.user.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/game")
+@RequestMapping("/game/{id}")
 public class GameController {
 
+    private final CommonService<User, UUID> userService;
     private final CommonService<UploadedGame, UUID> uploadedGameService;
     private final CommonService<FavoriteGame, UUID> favoriteGameService;
     private final CommonService<Requirements, Integer> requirementsService;
@@ -31,14 +37,15 @@ public class GameController {
     private final CommonEnumerationService<OperatingSystem, Integer> operatingSystemService;
 
     @Autowired
-    public GameController(@Qualifier("uploadedGameService")
+    public GameController(CommonService<User, UUID> userService,
+                          @Qualifier("uploadedGameService")
                               CommonService<UploadedGame, UUID> uploadedGameService,
                           CommonService<FavoriteGame, UUID> favoriteGameService,
                           CommonService<Requirements, Integer> requirementsService,
                           CommonEnumerationService<Processor, Integer> processorService,
                           CommonEnumerationService<GraphicsCard, Integer> graphicsCardService,
                           CommonEnumerationService<OperatingSystem, Integer> operatingSystemService) {
-
+        this.userService = userService;
         this.uploadedGameService = uploadedGameService;
         this.favoriteGameService = favoriteGameService;
         this.requirementsService = requirementsService;
@@ -47,13 +54,18 @@ public class GameController {
         this.operatingSystemService = operatingSystemService;
     }
 
-    @GetMapping("/{id}/add-favorite")
+    @PostMapping("/add-favorite")
     public String gameFilesPage(@PathVariable String id,
                                 Model model) {
 
         UUID gameId = UUID.fromString(id);
         UploadedGame uploadedGame = uploadedGameService.get(gameId);
-        FavoriteGame favoriteGame = new FavoriteGame(uploadedGame.getUser(), uploadedGame.getGame());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        User user = ((UserDetailsService) userService).get(name);
+
+        FavoriteGame favoriteGame = new FavoriteGame(user, uploadedGame.getGame());
         favoriteGameService.save(favoriteGame);
         getGamePage(id, model);
 
@@ -61,7 +73,7 @@ public class GameController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping
     public String getGamePage(@PathVariable("id") String id,
                               Model model) {
 
