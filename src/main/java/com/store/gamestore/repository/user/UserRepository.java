@@ -23,7 +23,7 @@ public class UserRepository extends AbstractRepository<User, UUID> implements Us
     private static final String deleteUser = "DELETE FROM users WHERE id = ?";
     private static final String getUser = "SELECT users.id, username, password, enabled, email, phone_number, public_username FROM users, user_profiles WHERE users.id = :id";
     private static final String getUserWithPhone = "SELECT id, username, password, enabled, email, phone_number FROM users WHERE id = ?";
-    private static final String getUserId = "SELECT id FROM users WHERE username = ?";
+    private static final String getUserId = "SELECT * FROM users WHERE username = ?";
 
     @Autowired
     public UserRepository(JdbcTemplate jdbcTemplate) {

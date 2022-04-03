@@ -18,10 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/purchase/{id}")
+@RequestMapping("/purchase")
 public class PurchaseController {
 
     private final CommonService<User, UUID> userService;
@@ -41,7 +42,7 @@ public class PurchaseController {
         this.purchaseHistoryService = purchaseHistoryService;
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public String getPurchasePage(@PathVariable String id,
                                   Model model) {
 
@@ -50,7 +51,7 @@ public class PurchaseController {
         return "purchase";
     }
 
-    @PostMapping
+    @PostMapping("/{id}")
     public String purchaseGame(@PathVariable String id,
                                Model model) {
 
@@ -68,7 +69,19 @@ public class PurchaseController {
         return "redirect:/collection";
     }
 
-    @PostMapping("/get-free")
+    @GetMapping("/history")
+    public String getPurchaseHistoryPage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        User user = ((UserDetailsService) userService).get(name);
+
+        List<GamePurchase> gamePurchaseList = purchaseHistoryService.getAll(user.getId());
+        model.addAttribute("gamePurchaseList", gamePurchaseList);
+
+        return "purchase-history";
+    }
+
+    @PostMapping("/{id}/get-free")
     public String getFreeGame(@PathVariable String id,
                               Model model) {
 

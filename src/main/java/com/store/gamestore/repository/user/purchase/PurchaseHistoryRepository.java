@@ -37,7 +37,7 @@ public class PurchaseHistoryRepository extends AbstractRepository<GamePurchase, 
         "INNER JOIN system_requirements sr on gp.id = sr.game_profile_id " +
         "INNER JOIN game_genres gg ON gf.game_id = gg.game_id " +
         "INNER JOIN genres gn ON gn.id = gg.genre_id " +
-        "WHERE user_id = ?";
+        "WHERE user_games.user_id = ?";
 
 
     public PurchaseHistoryRepository(JdbcTemplate jdbcTemplate) {

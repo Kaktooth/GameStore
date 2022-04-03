@@ -20,10 +20,10 @@ public class User {
 
     private UUID id;
     private String username;
-    private String profileUsername;
     private String password;
     private Boolean enabled;
     private String email;
     private String phone;
+    private String profileUsername;
 }
 

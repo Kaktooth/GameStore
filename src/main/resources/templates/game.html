@@ -102,11 +102,18 @@
                 </button>
             </div>
             <div class="mb-4">
-                <form method="post" th:action="@{/game/{id}/add-favorite(id =${uploadedGame.game.id.toString()})}">
+                <form th:if="${favorite==false}" method="post" th:action="@{/game/{id}/add-favorite(id =${uploadedGame.game.id.toString()})}">
                     <button style="background-image: var(--bs-gradient);"
                        class="btn btn-sm btn-primary btn-outline-light mb-4"
                        type="submit">
                         Add to favorites
+                    </button>
+                </form>
+                <form th:if="${favorite==true}"  th:method="delete" th:action="@{/game/{id}/remove-favorite(id =${uploadedGame.game.id.toString()})}">
+                    <button style="background-image: var(--bs-gradient);"
+                            class="btn btn-sm btn-primary btn-outline-light mb-4"
+                            type="submit">
+                        Delete from favorites
                     </button>
                 </form>
             </div>

@@ -17,11 +17,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Controller
@@ -55,18 +58,25 @@ public class GameController {
     }
 
     @PostMapping("/add-favorite")
-    public String gameFilesPage(@PathVariable String id,
+    public String addToFavorite(@PathVariable String id,
                                 Model model) {
 
         UUID gameId = UUID.fromString(id);
         UploadedGame uploadedGame = uploadedGameService.get(gameId);
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String name = authentication.getName();
-        User user = ((UserDetailsService) userService).get(name);
-
+        User user = getUser();
         FavoriteGame favoriteGame = new FavoriteGame(user, uploadedGame.getGame());
         favoriteGameService.save(favoriteGame);
+        getGamePage(id, model);
+
+        return "game";
+    }
+
+    @PostMapping("/remove-favorite")
+    public String deleteFavorite(@PathVariable String id,
+                                 Model model) {
+
+        UUID gameId = UUID.fromString(id);
+        favoriteGameService.delete(gameId);
         getGamePage(id, model);
 
         return "game";
@@ -92,9 +102,29 @@ public class GameController {
             minimumProcessor, recProcessor, minimumGraphicsCard,
             recGraphicsCard, minimumOS, recOS);
 
+        User user = getUser();
+
+        List<FavoriteGame> favoriteGameList = favoriteGameService.getAll(user.getId());
+//        FavoriteGame favoriteGame = new FavoriteGame(user, uploadedGame.getGame());
+//        boolean favorite = favoriteGameList.contains(favoriteGame);
+        boolean favorite = false;
+        for (FavoriteGame favoriteGame : favoriteGameList) {
+            if (favoriteGame.getGame().getId().toString().equals(id)) {
+                favorite = true;
+                break;
+            }
+        }
+
+        model.addAttribute("favorite", favorite);
         model.addAttribute("uploadedGame", uploadedGame);
         model.addAttribute("requirements", convertedRequirements);
 
         return "game";
+    }
+
+    private User getUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        return ((UserDetailsService) userService).get(name);
     }
 }
