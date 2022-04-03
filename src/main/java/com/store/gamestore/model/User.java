@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.awt.image.BufferedImage;
 import java.util.UUID;
 
 
@@ -24,6 +25,8 @@ public class User {
     private Boolean enabled;
     private String email;
     private String phone;
-    private String profileUsername;
+    private String publicUsername;
+    private String resume;
+    private BufferedImage image;
 }
 

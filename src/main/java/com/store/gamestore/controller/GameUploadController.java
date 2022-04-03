@@ -83,6 +83,10 @@ public class GameUploadController {
     public String homepage(Model model) {
         final String onlyLetters = "^[a-zA-Z]+$";
         final String onlyDigits = "^[\\d]+$";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        User user = ((UserDetailsService) userService).get(name);
+        model.addAttribute("user", user);
 
         model.addAttribute("uploadInput", new UploadInput());
         model.addAttribute("genreList", genreService.getAll());

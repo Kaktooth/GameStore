@@ -41,13 +41,13 @@ class UserController {
             .builder()
             .id(UUID.randomUUID())
             .username(username)
-            .profileUsername(profileUsername)
+            .publicUsername(profileUsername)
             .password(encodedPassword)
             .enabled(true)
             .email(email)
             .build();
 
-        userService.save(user);
+       userService.save(user);
 
         return "redirect:/log-in";
     }

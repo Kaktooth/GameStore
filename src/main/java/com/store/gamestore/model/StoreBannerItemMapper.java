@@ -49,6 +49,8 @@ public class StoreBannerItemMapper implements RowMapper<StoreBannerItem> {
             user.setEnabled(rs.getBoolean("enabled"));
             user.setEmail(rs.getString("email"));
             user.setPhone(rs.getString("phone_number"));
+            user.setPublicUsername(rs.getString("public_username"));
+            user.setResume(rs.getString("resume"));
             storeBannerItem.setUser(user);
             uploadMap.put(gameId, storeBannerItem);
         }

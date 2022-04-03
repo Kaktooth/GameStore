@@ -2,13 +2,17 @@ package com.store.gamestore.controller;
 
 import com.store.gamestore.model.StoreBannerItem;
 import com.store.gamestore.model.UploadedGame;
+import com.store.gamestore.model.User;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.game.recommended.Recommendations;
 import com.store.gamestore.service.game.search.GameSearcher;
+import com.store.gamestore.service.user.UserDetailsService;
 import com.store.gamestore.util.Pagination;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,17 +27,17 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/store")
 public class StoreController {
-
+    private final CommonService<User, UUID> userService;
     private final GameSearcher<UploadedGame> gameSearchService;
     private final Recommendations<UploadedGame> gameRecommendationService;
     private final CommonService<StoreBannerItem, UUID> storeBannerService;
 
     @Autowired
-    public StoreController(
-        GameSearcher<UploadedGame> gameSearchService,
-        CommonService<StoreBannerItem, UUID> storeBannerService,
-        @Qualifier("gameRecommendationService") Recommendations<UploadedGame> gameRecommendationService) {
-
+    public StoreController(CommonService<User, UUID> userService,
+                           GameSearcher<UploadedGame> gameSearchService,
+                           CommonService<StoreBannerItem, UUID> storeBannerService,
+                           @Qualifier("gameRecommendationService") Recommendations<UploadedGame> gameRecommendationService) {
+        this.userService = userService;
         this.gameSearchService = gameSearchService;
         this.storeBannerService = storeBannerService;
         this.gameRecommendationService = gameRecommendationService;
@@ -42,6 +46,11 @@ public class StoreController {
     @GetMapping
     public String getStorePage(@RequestParam(value = "searchString", required = false) String searchString,
                                Model model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        User user = ((UserDetailsService) userService).get(name);
+        model.addAttribute("user", user);
 
         Integer size = 3;
         Integer pages = 4;

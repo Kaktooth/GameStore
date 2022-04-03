@@ -2,9 +2,13 @@ package com.store.gamestore.controller;
 
 import com.store.gamestore.model.PaymentInfoInput;
 import com.store.gamestore.model.UploadedGame;
+import com.store.gamestore.model.User;
 import com.store.gamestore.service.CommonService;
+import com.store.gamestore.service.user.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,11 +25,14 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/payment-info/{id}")
 public class PaymentController {
+    private final CommonService<User, UUID> userService;
     private final CommonService<UploadedGame, UUID> uploadedGameService;
 
     @Autowired
-    public PaymentController(@Qualifier("uploadedGameService")
+    public PaymentController(CommonService<User, UUID> userService,
+                             @Qualifier("uploadedGameService")
                                  CommonService<UploadedGame, UUID> uploadedGameService) {
+        this.userService = userService;
         this.uploadedGameService = uploadedGameService;
     }
 
@@ -34,6 +41,10 @@ public class PaymentController {
     public String getPaymentInformationPage(@PathVariable String id, Model model) {
         final String onlyLetters = "^[a-zA-Z\\s]+$";
         final String onlyDigits = "^[\\d]+$";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        User user = ((UserDetailsService) userService).get(name);
+        model.addAttribute("user", user);
 
         model.addAttribute("paymentInfoInput", new PaymentInfoInput());
         UploadedGame uploadedGame = uploadedGameService.get(UUID.fromString(id));

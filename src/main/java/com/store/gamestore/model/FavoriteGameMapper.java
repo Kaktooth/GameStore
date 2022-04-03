@@ -49,6 +49,8 @@ public class FavoriteGameMapper implements RowMapper<FavoriteGame> {
             user.setEnabled(rs.getBoolean("enabled"));
             user.setEmail(rs.getString("email"));
             user.setPhone(rs.getString("phone_number"));
+            user.setPublicUsername(rs.getString("public_username"));
+            user.setResume(rs.getString("resume"));
             favoriteGame.setUser(user);
             uploadMap.put(gameId, favoriteGame);
         }

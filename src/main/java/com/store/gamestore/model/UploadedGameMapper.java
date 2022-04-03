@@ -1,6 +1,7 @@
 package com.store.gamestore.model;
 
 import com.store.gamestore.util.DateConverter;
+import com.store.gamestore.util.ImageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -54,6 +55,8 @@ public class UploadedGameMapper implements RowMapper<UploadedGame> {
             user.setEnabled(rs.getBoolean("enabled"));
             user.setEmail(rs.getString("email"));
             user.setPhone(rs.getString("phone_number"));
+            user.setPublicUsername(rs.getString("public_username"));
+            user.setResume(rs.getString("resume"));
             uploadedGame.setUser(user);
             uploadMap.put(gameId, uploadedGame);
         }

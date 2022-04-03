@@ -37,6 +37,7 @@ public class CollectionController {
 
         List<UserGame> collection = userGamesRepository.getAll(user.getId());
         model.addAttribute("collection", collection);
+        model.addAttribute("user", user);
 
         return "collection";
     }

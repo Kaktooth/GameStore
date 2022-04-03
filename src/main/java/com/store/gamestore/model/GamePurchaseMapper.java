@@ -56,6 +56,8 @@ public class GamePurchaseMapper implements RowMapper<GamePurchase> {
             user.setEnabled(rs.getBoolean("enabled"));
             user.setEmail(rs.getString("email"));
             user.setPhone(rs.getString("phone_number"));
+            user.setPublicUsername(rs.getString("public_username"));
+            user.setResume(rs.getString("resume"));
             userGame.setUser(user);
             purchasedGame.setUserGame(userGame);
             uploadMap.put(gameId, purchasedGame);

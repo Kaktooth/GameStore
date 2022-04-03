@@ -1,6 +1,7 @@
 package com.store.gamestore.repository.user;
 
 import com.store.gamestore.model.User;
+import com.store.gamestore.model.UserMapper;
 import com.store.gamestore.repository.AbstractRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,13 @@ public class UserRepository extends AbstractRepository<User, UUID> implements Us
     private static final String deleteUser = "DELETE FROM users WHERE id = ?";
     private static final String getUser = "SELECT users.id, username, password, enabled, email, phone_number, public_username FROM users, user_profiles WHERE users.id = :id";
     private static final String getUserWithPhone = "SELECT id, username, password, enabled, email, phone_number FROM users WHERE id = ?";
-    private static final String getUserId = "SELECT * FROM users WHERE username = ?";
+    private static final String getUserId = "SELECT * FROM users" +
+        " INNER JOIN user_profiles up on users.id = up.user_id " +
+        " WHERE username = ?";
+
+    private static final String updateUser = "UPDATE user_profiles " +
+        "SET  public_username  = ?, resume = ? " +
+        "     WHERE user_profiles.user_id = ?; ";
 
     @Autowired
     public UserRepository(JdbcTemplate jdbcTemplate) {
@@ -33,13 +40,12 @@ public class UserRepository extends AbstractRepository<User, UUID> implements Us
     @Override
     public User save(User user) {
         jdbcTemplate.update(con -> {
-            PreparedStatement ps = con.prepareStatement(newUserWithPhone);
+            PreparedStatement ps = con.prepareStatement(newUser);
             ps.setObject(1, user.getId());
             ps.setString(2, user.getUsername());
             ps.setString(3, user.getPassword());
             ps.setBoolean(4, user.getEnabled());
             ps.setString(5, user.getEmail());
-            ps.setString(6, user.getPhone());
 
             return ps;
         });
@@ -55,7 +61,7 @@ public class UserRepository extends AbstractRepository<User, UUID> implements Us
 
         jdbcTemplate.update(con -> {
             PreparedStatement ps = con.prepareStatement(newUserProfile);
-            ps.setString(1, user.getProfileUsername());
+            ps.setString(1, user.getPublicUsername());
             ps.setObject(2, user.getId());
             return ps;
         });
@@ -75,6 +81,11 @@ public class UserRepository extends AbstractRepository<User, UUID> implements Us
     }
 
     @Override
+    public void update(User user) {
+        jdbcTemplate.update(updateUser, user.getPublicUsername(), user.getResume(), user.getId());
+    }
+
+    @Override
     public void delete(UUID userId) {
 
     }
@@ -83,7 +94,7 @@ public class UserRepository extends AbstractRepository<User, UUID> implements Us
     public User get(String username) {
         return jdbcTemplate.queryForObject(
             getUserId,
-            new BeanPropertyRowMapper<>(User.class),
+            new UserMapper(),
             username
         );
     }

@@ -17,14 +17,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @Controller
@@ -103,10 +101,10 @@ public class GameController {
             recGraphicsCard, minimumOS, recOS);
 
         User user = getUser();
+        model.addAttribute("user", user);
 
         List<FavoriteGame> favoriteGameList = favoriteGameService.getAll(user.getId());
-//        FavoriteGame favoriteGame = new FavoriteGame(user, uploadedGame.getGame());
-//        boolean favorite = favoriteGameList.contains(favoriteGame);
+
         boolean favorite = false;
         for (FavoriteGame favoriteGame : favoriteGameList) {
             if (favoriteGame.getGame().getId().toString().equals(id)) {

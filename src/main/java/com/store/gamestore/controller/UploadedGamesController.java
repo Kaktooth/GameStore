@@ -84,9 +84,9 @@ public class UploadedGamesController {
 
     @GetMapping
     public String uploadedGamesPage(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String name = authentication.getName();
-        User user = ((UserDetailsService) userService).get(name);
+
+        User user = getUser();
+        model.addAttribute("user", user);
         List<UploadedGame> uploadedGames = uploadedGameService.getAll(user.getId());
         model.addAttribute("uploadedGames", uploadedGames);
         return "uploaded-games";
@@ -95,6 +95,9 @@ public class UploadedGamesController {
     @GetMapping("/edit/{id}/files")
     public String gameFilesPage(@PathVariable String id,
                                 Model model) {
+
+        User user = getUser();
+        model.addAttribute("user", user);
         log.info(id);
         UUID gameId = UUID.fromString(id);
         UploadedGame uploadedGame = uploadedGameService.get(gameId);
@@ -102,6 +105,12 @@ public class UploadedGamesController {
         model.addAttribute("version", "");
 
         return "files";
+    }
+
+    private User getUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        return ((UserDetailsService) userService).get(name);
     }
 
     @PostMapping("/edit/{id}/files")
@@ -170,6 +179,8 @@ public class UploadedGamesController {
     @GetMapping("/edit/{id}")
     public String uploadedGamePage(@PathVariable String id,
                                    Model model) {
+        User user = getUser();
+        model.addAttribute("user", user);
         log.info(id);
         UUID gameId = UUID.fromString(id);
         UploadedGame uploadedGame = uploadedGameService.get(gameId);
