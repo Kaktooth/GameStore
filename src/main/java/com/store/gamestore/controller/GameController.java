@@ -2,8 +2,10 @@ package com.store.gamestore.controller;
 
 import com.store.gamestore.model.ConvertedRequirements;
 import com.store.gamestore.model.FavoriteGame;
+import com.store.gamestore.model.GameImage;
 import com.store.gamestore.model.GraphicsCard;
 import com.store.gamestore.model.OperatingSystem;
+import com.store.gamestore.model.PictureType;
 import com.store.gamestore.model.Processor;
 import com.store.gamestore.model.Requirements;
 import com.store.gamestore.model.UploadedGame;
@@ -11,6 +13,7 @@ import com.store.gamestore.model.User;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.enumeration.CommonEnumerationService;
 import com.store.gamestore.service.user.UserDetailsService;
+import com.store.gamestore.util.GamePicturesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,6 +34,7 @@ import java.util.UUID;
 public class GameController {
 
     private final CommonService<User, UUID> userService;
+    private final CommonService<GameImage, UUID> gameImageService;
     private final CommonService<UploadedGame, UUID> uploadedGameService;
     private final CommonService<FavoriteGame, UUID> favoriteGameService;
     private final CommonService<Requirements, Integer> requirementsService;
@@ -39,6 +44,7 @@ public class GameController {
 
     @Autowired
     public GameController(CommonService<User, UUID> userService,
+                          CommonService<GameImage, UUID> gameImageService,
                           @Qualifier("uploadedGameService")
                               CommonService<UploadedGame, UUID> uploadedGameService,
                           CommonService<FavoriteGame, UUID> favoriteGameService,
@@ -46,7 +52,9 @@ public class GameController {
                           CommonEnumerationService<Processor, Integer> processorService,
                           CommonEnumerationService<GraphicsCard, Integer> graphicsCardService,
                           CommonEnumerationService<OperatingSystem, Integer> operatingSystemService) {
+
         this.userService = userService;
+        this.gameImageService = gameImageService;
         this.uploadedGameService = uploadedGameService;
         this.favoriteGameService = favoriteGameService;
         this.requirementsService = requirementsService;
@@ -85,6 +93,7 @@ public class GameController {
     public String getGamePage(@PathVariable("id") String id,
                               Model model) {
 
+        UUID gameId = UUID.fromString(id);
         UploadedGame uploadedGame = uploadedGameService.get(UUID.fromString(id));
         Requirements requirements = requirementsService.get(uploadedGame.getGame().getGameProfile().getId());
 
@@ -112,6 +121,14 @@ public class GameController {
                 break;
             }
         }
+
+        List<GameImage> gameImages = gameImageService.getAll(gameId);
+
+        GameImage gamePageImage = GamePicturesUtil.getGamePicture(gameImages, PictureType.GAMEPAGE);
+        model.addAttribute("gamePagePicture", gamePageImage);
+
+        List<GameImage> gameplayPictures = GamePicturesUtil.getGameplayPictures(gameImages);
+        model.addAttribute("gameplayPictures", gameplayPictures);
 
         model.addAttribute("favorite", favorite);
         model.addAttribute("uploadedGame", uploadedGame);

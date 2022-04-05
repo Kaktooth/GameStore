@@ -3,10 +3,13 @@ package com.store.gamestore.controller;
 import com.store.gamestore.model.Game;
 import com.store.gamestore.model.GameFile;
 import com.store.gamestore.model.GameGenre;
+import com.store.gamestore.model.GameImage;
 import com.store.gamestore.model.GameProfile;
+import com.store.gamestore.model.GameplayImagesDto;
 import com.store.gamestore.model.Genre;
 import com.store.gamestore.model.GraphicsCard;
 import com.store.gamestore.model.OperatingSystem;
+import com.store.gamestore.model.PictureType;
 import com.store.gamestore.model.Processor;
 import com.store.gamestore.model.Requirements;
 import com.store.gamestore.model.UploadInput;
@@ -26,10 +29,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
@@ -42,6 +44,7 @@ public class GameUploadController {
 
     private final CommonService<User, UUID> userService;
     private final CommonService<Game, UUID> gameService;
+    private final CommonService<GameImage, UUID> gameImageService;
     private final CommonService<GameGenre, UUID> gameGenreService;
     private final CommonService<GameFile, Integer> gameFileService;
     private final CommonService<GameProfile, Integer> gameProfileService;
@@ -56,6 +59,7 @@ public class GameUploadController {
     public GameUploadController(
         CommonService<User, UUID> userService,
         CommonService<Game, UUID> gameService,
+        CommonService<GameImage, UUID> gameImageService,
         CommonService<GameGenre, UUID> gameGenreService,
         CommonService<GameFile, Integer> gameFileService,
         CommonService<GameProfile, Integer> gameProfileService,
@@ -70,6 +74,7 @@ public class GameUploadController {
         this.gameService = gameService;
         this.genreService = genreService;
         this.gameFileService = gameFileService;
+        this.gameImageService = gameImageService;
         this.gameGenreService = gameGenreService;
         this.gameProfileService = gameProfileService;
         this.requirementsService = requirementsService;
@@ -89,6 +94,7 @@ public class GameUploadController {
         model.addAttribute("user", user);
 
         model.addAttribute("uploadInput", new UploadInput());
+        model.addAttribute("gameplayImages", new GameplayImagesDto());
         model.addAttribute("genreList", genreService.getAll());
 
         model.addAttribute("processors", processorService.getAll());
@@ -102,10 +108,10 @@ public class GameUploadController {
 
     @PostMapping
     public String uploadFile(@ModelAttribute UploadInput uploadInput,
-                             @RequestParam("file") MultipartFile file,
                              BindingResult bindingResult,
-                             RedirectAttributes attributes) {
-        if (file.isEmpty()) {
+                             RedirectAttributes attributes) throws IOException {
+
+        if (uploadInput.getFile().isEmpty()) {
             attributes.addFlashAttribute("message", "Please select a file to upload.");
             return "redirect:/";
         }
@@ -114,9 +120,9 @@ public class GameUploadController {
             new GameProfile(), new GameGenre()));
 
         gameFileService.save(new GameFile(0, 1000, "",
-            uploadInput.getVersion(), file, game.getId()));
+            uploadInput.getVersion(), uploadInput.getFile(), game.getId()));
 
-        LocalDateTime releaseDate = LocalDateTime.parse(uploadInput.getRelease(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        LocalDateTime releaseDate = LocalDateTime.parse(LocalDateTime.now().toString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
         GameProfile gameProfile = new GameProfile(0, uploadInput.getPrice(), uploadInput.getTitle(),
             uploadInput.getDeveloper(), uploadInput.getPublisher(), 0, 0, 0, 0,
@@ -147,8 +153,24 @@ public class GameUploadController {
         GameGenre gameGenre = new GameGenre(genres, game.getId());
         gameGenreService.save(gameGenre);
 
+        GameImage storeImage = new GameImage(uploadedGame.getGame().getId(), PictureType.STORE.toString(),
+            uploadInput.getGameImages().getStoreImage().getInputStream().readAllBytes());
+        GameImage gamePageImage = new GameImage(uploadedGame.getGame().getId(), PictureType.GAMEPAGE.toString(),
+            uploadInput.getGameImages().getStoreImage().getInputStream().readAllBytes());
+        GameImage collectionImage = new GameImage(uploadedGame.getGame().getId(), PictureType.COLLECTION.toString(),
+            uploadInput.getGameImages().getStoreImage().getInputStream().readAllBytes());
+        gameImageService.save(storeImage);
+        gameImageService.save(gamePageImage);
+        gameImageService.save(collectionImage);
+
+        for (var image : uploadInput.getGameImages().getGameplayImages()) {
+            GameImage gameImage = new GameImage(uploadedGame.getGame().getId(),
+                PictureType.GAMEPLAY.getType(), image.getBytes());
+            gameImageService.save(gameImage);
+        }
+
         attributes.addFlashAttribute("message", "Your file successfully uploaded "
-            + file.getOriginalFilename() + '!');
+            + uploadInput.getFile().getOriginalFilename() + '!');
 
         return "redirect:/uploaded-games";
     }

@@ -46,6 +46,11 @@ public class PurchaseController {
     public String getPurchasePage(@PathVariable String id,
                                   Model model) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        User user = ((UserDetailsService) userService).get(name);
+        model.addAttribute("user", user);
+
         UploadedGame uploadedGame = uploadedGameService.get(UUID.fromString(id));
         model.addAttribute("uploadedGame", uploadedGame);
         return "purchase";
@@ -58,6 +63,7 @@ public class PurchaseController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         User user = ((UserDetailsService) userService).get(name);
+        model.addAttribute("user", user);
 
         UploadedGame uploadedGame = uploadedGameService.get(UUID.fromString(id));
         UserGame userGame = new UserGame(user, uploadedGame.getGame());
@@ -74,6 +80,7 @@ public class PurchaseController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         User user = ((UserDetailsService) userService).get(name);
+        model.addAttribute("user", user);
 
         List<GamePurchase> gamePurchaseList = purchaseHistoryService.getAll(user.getId());
         model.addAttribute("gamePurchaseList", gamePurchaseList);

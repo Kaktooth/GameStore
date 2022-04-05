@@ -1,7 +1,6 @@
 package com.store.gamestore.model;
 
 import com.store.gamestore.util.DateConverter;
-import com.store.gamestore.util.ImageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -78,7 +77,6 @@ public class UploadedGameMapper implements RowMapper<UploadedGame> {
             uploadedGame.getGame().setGenre(new GameGenre(genre, gameId));
         }
 
-        log.info(uploadedGame.toString());
         return uploadedGame;
     }
 }

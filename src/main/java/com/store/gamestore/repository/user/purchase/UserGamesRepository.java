@@ -23,6 +23,7 @@ public class UserGamesRepository extends AbstractRepository<UserGame, UUID> {
         "INNER JOIN game_files gf ON user_games.game_id = gf.game_id " +
         "INNER JOIN game_profiles gp ON user_games.game_id = gp.game_id " +
         "INNER JOIN users u ON user_games.user_id = u.id " +
+        "INNER JOIN user_profiles up ON user_games.user_id = up.user_id " +
         "INNER JOIN system_requirements sr on gp.id = sr.game_profile_id " +
         "INNER JOIN game_genres gg ON gf.game_id = gg.game_id " +
         "INNER JOIN genres gn ON gn.id = gg.genre_id " +
@@ -32,10 +33,11 @@ public class UserGamesRepository extends AbstractRepository<UserGame, UUID> {
         "INNER JOIN game_files gf ON user_games.game_id = gf.game_id " +
         "INNER JOIN game_profiles gp ON user_games.game_id = gp.game_id " +
         "INNER JOIN users u ON user_games.user_id = u.id " +
+        "INNER JOIN user_profiles up ON user_games.user_id = up.user_id " +
         "INNER JOIN system_requirements sr on gp.id = sr.game_profile_id " +
         "INNER JOIN game_genres gg ON gf.game_id = gg.game_id " +
         "INNER JOIN genres gn ON gn.id = gg.genre_id " +
-        "WHERE user_id = ?";
+        "WHERE user_games.user_id = ?";
 
 
     public UserGamesRepository(JdbcTemplate jdbcTemplate) {

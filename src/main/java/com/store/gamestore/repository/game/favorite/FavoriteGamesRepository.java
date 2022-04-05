@@ -27,6 +27,7 @@ public class FavoriteGamesRepository extends AbstractRepository<FavoriteGame, UU
         "INNER JOIN game_files gf ON favorite_games.game_id = gf.game_id " +
         "INNER JOIN game_profiles gp ON favorite_games.game_id = gp.game_id " +
         "INNER JOIN users u ON favorite_games.user_id = u.id " +
+        "INNER JOIN user_profiles up ON favorite_games.user_id = up.user_id " +
         "INNER JOIN system_requirements sr on gp.id = sr.game_profile_id " +
         "INNER JOIN game_genres gg ON gf.game_id = gg.game_id " +
         "INNER JOIN genres gn ON gn.id = gg.genre_id " +
@@ -36,10 +37,11 @@ public class FavoriteGamesRepository extends AbstractRepository<FavoriteGame, UU
         "INNER JOIN game_files gf ON favorite_games.game_id = gf.game_id " +
         "INNER JOIN game_profiles gp ON favorite_games.game_id = gp.game_id " +
         "INNER JOIN users u ON favorite_games.user_id = u.id " +
+        "INNER JOIN user_profiles up ON favorite_games.user_id = up.user_id " +
         "INNER JOIN system_requirements sr on gp.id = sr.game_profile_id " +
         "INNER JOIN game_genres gg ON gf.game_id = gg.game_id " +
         "INNER JOIN genres gn ON gn.id = gg.genre_id " +
-        "WHERE user_id = ?";
+        "WHERE favorite_games.user_id = ?";
 
     private static final String deleteFavorite = "DELETE FROM favorite_games WHERE user_id = ? AND game_id = ?";
 

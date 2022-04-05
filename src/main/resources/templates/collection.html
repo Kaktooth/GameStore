@@ -82,11 +82,13 @@
 <main role="main" class="shadow mb-4">
     <div class="container p-5">
         <div class="row mx-md-n5 row-cols-1 row-cols-lg-5 row-cols-l align-items-stretch g-4 py-5">
-            <div class="col py-5" th:each="userGame : ${collection}">
+            <div class="col py-5" th:each="userGame, i : ${collection}">
                 <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
                      style="width: 16rem;">
                     <a th:href="@{/game/{id}/(id =${userGame.game.id.toString()})}">
-                        <img style="width:300px;height:240px" src="" class="d-block w-100"/>
+                        <img th:id="'image' + ${i.index}" style="width:300px;height:240px"
+                             th:src="'data:image/png;base64,'+ ${gameCollectionImages.get(i.index).getBase64ImageData()}"
+                             class="d-block w-100 img-fluid image-uploaded" alt=""/>
                     </a>
                 </div>
             </div>

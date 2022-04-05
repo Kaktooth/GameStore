@@ -20,16 +20,4 @@ public class UploadedGamesService extends AbstractService<UploadedGame, UUID> {
     public UploadedGamesService(CommonRepository<UploadedGame, UUID> repository) {
         super(repository);
     }
-
-    @Override
-    public List<UploadedGame> getAll(UUID id) {
-        List<UploadedGame> uploadedGames = super.getAll(id);
-        log.info(uploadedGames.toString());
-        return uploadedGames;
-    }
-
-    @Override
-    public List<UploadedGame> getAll() {
-        return super.getAll();
-    }
 }

@@ -54,10 +54,8 @@
         (function () {
             'use strict'
 
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
             var forms = document.querySelectorAll('.needs-validation')
 
-            // Loop over them and prevent submission
             Array.prototype.slice.call(forms)
                 .forEach(function (form) {
                     form.addEventListener('submit', function (event) {
@@ -145,17 +143,10 @@
                                 Small game description must be at least 140 chars and no more than 440
                             </div>
 
-                            <label for="release" class="form-label">Release date</label>
-                            <input type="datetime-local" id="release" name="release" th:field="*{release}"
-                                   class="bg-gradient-light form-control text-muted" autofocus="" required>
-                            <div class="invalid-feedback">
-                                Please provide a valid release date.
-                            </div>
-
                             <label for="developer" class="form-label">Developer</label>
                             <input type="text" id="developer" name="developer" th:field="*{developer}"
                                    class="bg-gradient-light form-control text-muted" autofocus=""
-                                   minlength="3" maxlength="140" required>
+                                   minlength="3" maxlength="90" required>
                             <div class="invalid-feedback">
                                 Please provide a valid name for developer.
                             </div>
@@ -163,7 +154,7 @@
                             <label for="publisher" class="form-label">Publisher</label>
                             <input type="text" id="publisher" name="publisher" th:field="*{publisher}"
                                    class="bg-gradient-light form-control text-muted" autofocus=""
-                                   minlength="3" maxlength="140" required>
+                                   minlength="3" maxlength="90" required>
                             <div class="invalid-feedback">
                                 Please provide a valid name for publisher.
                             </div>
@@ -189,6 +180,33 @@
                                 <option class="select-gradient-bg" th:each="g: ${genreList}"
                                         th:value="${g.id}" th:text="${g.name}"></option>
                             </select>
+                        </div>
+
+                        <h4 class="text-white">Upload pictures</h4>
+                        <div>
+                            <label for="storeImage" class="form-label">Main image for store</label>
+                            <input type="file" class="bg-gradient-light text-muted"
+                                   th:field="*{gameImages.storeImage}" name="storeImage" id="storeImage"
+                                   accept="image/png, image/jpeg" required/>
+                        </div>
+                        <div>
+                            <label for="gamePageImage" class="form-label">Image for game page</label>
+                            <input type="file" class="bg-gradient-light text-muted"
+                                   th:field="*{gameImages.gamePageImage}" name="gamePageImage" id="gamePageImage"
+                                   accept="image/png, image/jpeg" required/>
+                        </div>
+                        <div>
+                            <label for="collectionImage" class="form-label">Image for collection page</label>
+                            <input type="file" class="bg-gradient-light text-muted"
+                                   th:field="*{gameImages.collectionImage}" name="collectionImage" id="collectionImage"
+                                   accept="image/png, image/jpeg" required/>
+                        </div>
+                        <div>
+                            <h5 class="text-white">Upload pictures of gameplay</h5>
+                            <label for="gameplayImages" class="form-label">Pictures with gameplay</label>
+                            <input type="file" class="bg-gradient-light text-muted"
+                                   th:field="*{gameImages.gameplayImages}" name="gameplayImages" id="gameplayImages"
+                                   accept="image/png, image/jpeg" multiple/>
                         </div>
                         <div class="text-white">
                             <h4>Select minimal requirements for your game</h4>
@@ -258,12 +276,13 @@
                                 Example: 0.0.0.0 [major].[minor].[release].[build]
                             </div>
 
-                            <h4>Upload gameFile in zip archive</h4>
+                            <h4>Upload game file in zip archive</h4>
                             <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
 
                             <div class="form-group row">
                                 <div class="col">
-                                    <input type="file" name="file" class="form-control-file" required>
+                                    <input type="file" name="file" th:field="*{file}" class="form-control-file"
+                                           required>
                                 </div>
                                 <div class="col">
                                     <button type="submit" class="btn bg-gradient-light btn-primary">Upload File</button>

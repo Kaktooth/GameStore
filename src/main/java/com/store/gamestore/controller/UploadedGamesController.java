@@ -147,7 +147,8 @@ public class UploadedGamesController {
                            @PathVariable String id) {
 
         UploadedGame game = uploadedGameService.get(UUID.fromString(id));
-        LocalDateTime releaseDate = LocalDateTime.parse(editGameInput.getRelease(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        LocalDateTime releaseDate = LocalDateTime.parse(game.getGame().getGameProfile().getReleaseDate().toString(),
+            DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
         GameProfile gameProfile = new GameProfile(game.getGame().getGameProfile().getId(),
             editGameInput.getPrice(), editGameInput.getTitle(), editGameInput.getDeveloper(),

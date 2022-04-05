@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
@@ -38,6 +38,25 @@
             color: aliceblue;
         }
     </style>
+    <script>
+        (function () {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
 </head>
 <body class="bg-dark-2" style="background-image: var(--bg-gradient2);">
 
@@ -45,10 +64,10 @@
     <nav class="navbar shadow navbar-dark p-3 bg-dark-2 text-white" aria-label="Main navigation">
         <div class="container-fluid d-grid gap-3 align-items-center">
             <ul class="nav col col-lg-auto me-lg-auto mb-2 justify-content-left mb-md-0">
-                <a class="font-weight-bold navbar-brand" href="/">Game Store</a>
-                <li><a class="nav-link px-2 text-white" href="/store">Store</a></li>
-                <li><a th:if="${#httpServletRequest.remoteUser}!=null" class="nav-link px-2 text-white"
-                       href="/collection">Collection</a></li>
+                <a class="font-weight-bold navbar-brand" href="/">Upload Game</a>
+                <li><a class="nav-link px-2 text-white" href="/documentation">Documentation</a></li>
+                <li><a class="nav-link px-2 text-white" href="/faq">FAQ</a></li>
+                <li><a class="nav-link px-2 text-white" href="/uploaded-games">Uploaded Games</a></li>
             </ul>
             <div class="d-flex justify-content-end text-white">
                 <div th:if="${#httpServletRequest.remoteUser}!=null">
@@ -81,26 +100,29 @@
 </header>
 
 <main role="main" class="shadow mb-4">
-    <div class="container-lg shadow mb-4 text-left bg-dark-2">
-        <div class="mb-2 shadow" style="height:40px;">
-            <h5 class="font-weight-normal text-center mb-2">Purchase History</h5>
-        </div>
-        <table class="table mb-4 table-dark table-striped">
-            <thead>
-            <tr>
-                <th scope="col-2">Date</th>
-                <th scope="col">Game</th>
-                <th scope="col-3">Price</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="purchase : ${gamePurchaseList}">
-                <th scope="row" th:text="${purchase.date.toLocalDate()}"></th>
-                <td th:text="${purchase.userGame.game.gameProfile.title}"></td>
-                <td th:text="${purchase.amount}+'$'"></td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="container-lg text-white bg-dark-2 shadow">
+        <form th:method="post" th:action="@{/banners/upload}" th:object="${gameBanner}"
+              class="needs-validation mb-4" enctype="multipart/form-data" novalidate>
+            <label for="description" class="form-label">Description</label>
+            <textarea type="text" id="description" name="description" th:field="*{description}"
+                      class="bg-gradient-light form-control text-muted" autofocus=""
+                      maxlength="30" minlength="10" style="word-wrap:break-word;" required></textarea>
+            <div class="invalid-feedback">
+                Game description must be at least 10 chars and no more than 30
+            </div>
+            <div>
+                <label for="image" class="form-label">Upload image</label>
+                <input type="file" class="bg-gradient-light text-muted"
+                       th:field="*{image}" name="image" id="image"
+                       accept="image/png, image/jpeg" required/>
+            </div>
+            <label for="gameId" class="form-label">Select your game</label>
+            <select class="mb-4" th:field="*{gameId}" name="gameId" id="gameId">
+                <option th:each="game: ${uploadedGames}" th:value="${game.getGame().gameProfile.gameId}" th:text="${game.getGame().gameProfile.title}"></option>
+            </select>
+
+            <button type="submit" class="btn bg-gradient-light btn-primary">Upload</button>
+        </form>
     </div>
 </main>
 

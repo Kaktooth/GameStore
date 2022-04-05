@@ -27,6 +27,5 @@ public class User {
     private String phone;
     private String publicUsername;
     private String resume;
-    private BufferedImage image;
 }
 

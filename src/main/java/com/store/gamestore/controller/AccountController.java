@@ -29,7 +29,7 @@ public class AccountController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         User user = ((UserDetailsService) userService).get(name);
-        System.out.println(user.toString());
+
         model.addAttribute("user", user);
         return "account";
     }

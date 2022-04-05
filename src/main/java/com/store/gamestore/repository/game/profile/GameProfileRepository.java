@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Slf4j
 @Repository
@@ -41,10 +42,10 @@ public class GameProfileRepository extends AbstractRepository<GameProfile, Integ
             ps.setString(3, gameProfile.getDeveloper());
             ps.setString(4, gameProfile.getPublisher());
             ps.setInt(5, gameProfile.getRating());
-            ps.setInt(6, gameProfile.getRating());
-            ps.setInt(7, gameProfile.getRating());
-            ps.setInt(8, gameProfile.getRating());
-            ps.setTimestamp(9, Timestamp.valueOf(gameProfile.getReleaseDate()));
+            ps.setInt(6, gameProfile.getViews());
+            ps.setInt(7, gameProfile.getPurchase());
+            ps.setInt(8, gameProfile.getFavorite());
+            ps.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
             ps.setString(10, gameProfile.getDescription());
             ps.setString(11, gameProfile.getBriefDescription());
             ps.setObject(12, gameProfile.getGameId());

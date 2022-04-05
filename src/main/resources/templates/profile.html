@@ -84,8 +84,9 @@
              style="height: 125px;">
             <div class="col">
                 <div class="col">
-                    <img style="width:120px;height:120px" src="" class="border-dark float-right rounded d-block"
-                         alt=""/>
+                    <img style="width:120px;height:120px" src="" th:if="${userImage}!=null"
+                         class="border-dark float-right rounded img-fluid d-block"
+                         alt="" th:src="'data:image/png;base64,'+ ${userImage.getBase64ImageData()}"/>
                 </div>
             </div>
             <div class="col">
@@ -149,10 +150,12 @@
             <h5 class="font-weight-normal text-center">Favorites</h5>
         </div>
         <div class="container-md text-white mb-4 bg-dark-2">
-            <div th:each="favorite: ${favoriteGames}" th:if="${favorite} != null"
+            <div th:each="favorite, i : ${favoriteGames}" th:if="${favorite} != null"
                  class="row shadow border border-dark rounded-5 border-2 mb-2">
                 <div class="col">
-                    <img style="width:120px;height:120px" src="" class="d-block w-100" alt=""/>
+                    <img th:id="'image' + ${i.index}" style="width:300px;height:240px"
+                         th:src="'data:image/png;base64,'+ ${favoriteGamesImages.get(i.index).getBase64ImageData()}"
+                         class="d-block w-100 img-fluid"/>
                 </div>
                 <div class="col-5 text-left">
                     <h6 th:text="${favorite.game.gameProfile.title}"></h6>
@@ -231,6 +234,7 @@
         </div>
     </div>
 </main>
+
 <footer class="footer-10 bg-dark-2 justify-content-center special-color-dark
 font-small text-muted shadow">
     <div class="container text-center">

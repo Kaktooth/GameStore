@@ -57,7 +57,6 @@
                         <form class="dropdown-item" th:action="@{/logout}" method="post">
                             <button class="btn btn-md btn-light text-dark" type="submit">Log out</button>
                         </form>
-
                     </div>
                 </div>
                 <div th:if="${#httpServletRequest.remoteUser}==null">
@@ -74,22 +73,20 @@
             <h5 th:text="${uploadedGame.game.gameProfile.title}"></h5></div>
         <div class="col">
             <div id="carousel1" class="carousel slide row mb-4" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel1" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel1" data-slide-to="1"></li>
+                <ol class="carousel-indicators" th:each="image, i : *{gameplayPictures}">
+                    <li data-target="#carousel1" th:data-slide-to="${i}" class="active" th:if="${i}==1"></li>
+                    <li data-target="#carousel1" th:data-slide-to="${i}" th:if="${i}!=1"></li>
                 </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img style="width:1200px;height:360px" src="" class="rounded d-block w-100 img-fluid">
-                        <div class="carousel-caption d-none d-md-block text-left">
-                            <h5>First slide label</h5>
-                        </div>
+                <div class="carousel-inner" th:each="image, i : *{gameplayPictures}">
+                    <div class="carousel-item active" th:if="${i.count}==1">
+                        <img th:id="'image' + ${i.index}" style="width:1200px;height:360px"
+                             th:src="'data:image/png;base64,'+ ${gameplayPictures.get(i.index).getBase64ImageData()}"
+                             alt="" class="rounded d-block w-100 img-fluid image-uploaded">
                     </div>
-                    <div class="carousel-item">
-                        <img style="width:1200px;height:360px" src="" class="rounded d-block w-100 img-fluid">
-                        <div class="carousel-caption d-none d-md-block text-left">
-                            <h5>First slide label</h5>
-                        </div>
+                    <div class="carousel-item" th:if="${i.count}!=1">
+                        <img th:id="'image' + ${i.index}" style="width:1200px;height:360px"
+                             th:src="'data:image/png;base64,'+ ${gameplayPictures.get(i.index).getBase64ImageData()}"
+                             alt="" class="rounded d-block w-100 img-fluid image-uploaded">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-target="#carousel1" data-slide="prev">
@@ -184,8 +181,10 @@
 
     <div class="container-sm col-5 text-left">
         <div class="container">
-            <div class="row">
-                <img style="height: 125px;" src="" class="rounded img-fluid" alt=""/>
+            <div>
+                <img style="height: 165px; width: 385px;"
+                     th:src="'data:image/png;base64,'+ ${gamePagePicture.getBase64ImageData()}"
+                     id="gamePageImage" class="img-fluid" alt=""/>
             </div>
             <p class="lead text-muted" style="word-wrap:break-word;"
                th:text="${uploadedGame.game.gameProfile.briefDescription}"></p>

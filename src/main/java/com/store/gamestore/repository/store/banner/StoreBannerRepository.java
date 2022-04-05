@@ -5,11 +5,12 @@ import com.store.gamestore.model.StoreBannerItemMapper;
 import com.store.gamestore.repository.AbstractRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.io.ByteArrayInputStream;
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,47 +18,40 @@ import java.util.UUID;
 @Repository
 public class StoreBannerRepository extends AbstractRepository<StoreBannerItem, UUID> {
 
-    private static final String saveUploadedGame = "INSERT INTO store_banner VALUES (?, ?)";
-
-    private static final String getGame = "SELECT * FROM store_banner " +
-        "INNER JOIN game_files gf ON store_banner.game_id = gf.game_id " +
-        "INNER JOIN game_profiles gp ON store_banner.game_id = gp.game_id " +
-        "INNER JOIN users u ON store_banner.user_id = u.id " +
-        "INNER JOIN system_requirements sr on gp.id = sr.game_profile_id " +
-        "INNER JOIN game_genres gg ON gf.game_id = gg.game_id " +
-        "INNER JOIN genres gn ON gn.id = gg.genre_id " +
-        "WHERE store_banner.game_id = ?";
-
-    private static final String getGames = "SELECT * FROM store_banner " +
-        "INNER JOIN game_files gf ON store_banner.game_id = gf.game_id " +
-        "INNER JOIN game_profiles gp ON store_banner.game_id = gp.game_id " +
-        "INNER JOIN users u ON store_banner.user_id = u.id " +
-        "INNER JOIN system_requirements sr on gp.id = sr.game_profile_id " +
-        "INNER JOIN game_genres gg ON gf.game_id = gg.game_id " +
-        "INNER JOIN genres gn ON gn.id = gg.genre_id";
+    private static final String saveBanner = "INSERT INTO store_banner VALUES (?, ?, ?, ?)";
+    private static final String saveImage = "INSERT INTO images (image) VALUES (?)";
+    private static final String getBanner = "SELECT * FROM store_banner " +
+        "INNER JOIN images i on store_banner.image_id = i.image_id " +
+        "WHERE game_id = ?;";
+    private static final String getBanners = "SELECT * FROM store_banner " +
+        "INNER JOIN images i on store_banner.image_id = i.image_id ";
 
     public StoreBannerRepository(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
     }
 
     @Override
-    public StoreBannerItem save(StoreBannerItem game) {
-        jdbcTemplate.update(saveUploadedGame, game.getUser().getId(), game.getGame().getId());
-        return game;
-    }
+    public StoreBannerItem save(StoreBannerItem banner) {
 
-    @Override
-    public StoreBannerItem get(UUID gameId) {
-        return jdbcTemplate.query(getGame, new StoreBannerItemMapper(), gameId).iterator().next();
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(saveImage, new String[]{"image_id"});
+            ps.setBinaryStream(1, new ByteArrayInputStream(banner.getImageData()));
+            return ps;
+        }, keyHolder);
+        Integer imageId = (Integer) keyHolder.getKey();
+        jdbcTemplate.update(saveBanner, banner.getUserId(), banner.getGameId(),
+            imageId, banner.getDescription());
+        return banner;
     }
 
     @Override
     public List<StoreBannerItem> getAll() {
-        return new ArrayList<>(new LinkedHashSet<>(jdbcTemplate.query(getGames, new StoreBannerItemMapper())));
+        return jdbcTemplate.query(getBanners, new StoreBannerItemMapper());
     }
 
     @Override
-    public void delete(UUID id) {
-
+    public StoreBannerItem get(UUID gameId) {
+        return jdbcTemplate.query(getBanner, new StoreBannerItemMapper(), gameId).iterator().next();
     }
 }

@@ -1,6 +1,5 @@
 package com.store.gamestore.model;
 
-import com.store.gamestore.util.ImageUtil;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
