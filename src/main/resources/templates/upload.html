@@ -127,9 +127,10 @@
                             </div>
 
                             <label for="description" class="form-label">Description</label>
-                            <textarea type="text" id="description" name="description" th:field="*{description}"
+                            <textarea type="text" id="description" style="word-wrap:break-word;"
+                                      name="description" th:field="*{description}"
                                       class="bg-gradient-light form-control text-muted" autofocus=""
-                                      maxlength="700" minlength="450" style="word-wrap:break-word;" required></textarea>
+                                      maxlength="700" minlength="450" required></textarea>
                             <div class="invalid-feedback">
                                 Game description must be at least 450 chars and no more than 700
                             </div>
@@ -170,7 +171,7 @@
 
                         <h4 class="text-white">Select game genre</h4>
 
-                        <div class="text-dark">
+                        <div class="text-dark mb-4">
                             <select class="js-example-basic-multiple js-example-basic-multiple-limit-4"
                                     name="genres" id="genres" th:field="*{genres}"
                                     multiple="multiple"
@@ -195,13 +196,13 @@
                                    th:field="*{gameImages.gamePageImage}" name="gamePageImage" id="gamePageImage"
                                    accept="image/png, image/jpeg" required/>
                         </div>
-                        <div>
+                        <div class="mb-2">
                             <label for="collectionImage" class="form-label">Image for collection page</label>
                             <input type="file" class="bg-gradient-light text-muted"
                                    th:field="*{gameImages.collectionImage}" name="collectionImage" id="collectionImage"
                                    accept="image/png, image/jpeg" required/>
                         </div>
-                        <div>
+                        <div class="mb-4">
                             <h5 class="text-white">Upload pictures of gameplay</h5>
                             <label for="gameplayImages" class="form-label">Pictures with gameplay</label>
                             <input type="file" class="bg-gradient-light text-muted"

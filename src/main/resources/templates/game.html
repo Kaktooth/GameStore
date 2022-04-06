@@ -69,24 +69,27 @@
 
 <main role="main" class="shadow d-flex justify-content-center container-lg text-white mb-4">
     <div class="container-lg row bg-dark-2" style="width:780px">
-        <div class="container align-items-center mb-2">
+        <div class="container align-items-center mb-4">
             <h5 th:text="${uploadedGame.game.gameProfile.title}"></h5></div>
         <div class="col">
-            <div id="carousel1" class="carousel slide row mb-4" data-ride="carousel">
-                <ol class="carousel-indicators" th:each="image, i : *{gameplayPictures}">
-                    <li data-target="#carousel1" th:data-slide-to="${i}" class="active" th:if="${i}==1"></li>
-                    <li data-target="#carousel1" th:data-slide-to="${i}" th:if="${i}!=1"></li>
+            <div id="carousel1" class="carousel slide mb-4" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel1" th:each="image, i : *{gameplayPictures}"
+                        th:data-slide-to="${i.index}"></li>
                 </ol>
-                <div class="carousel-inner" th:each="image, i : *{gameplayPictures}">
-                    <div class="carousel-item active" th:if="${i.count}==1">
-                        <img th:id="'image' + ${i.index}" style="width:1200px;height:360px"
-                             th:src="'data:image/png;base64,'+ ${gameplayPictures.get(i.index).getBase64ImageData()}"
-                             alt="" class="rounded d-block w-100 img-fluid image-uploaded">
-                    </div>
-                    <div class="carousel-item" th:if="${i.count}!=1">
-                        <img th:id="'image' + ${i.index}" style="width:1200px;height:360px"
-                             th:src="'data:image/png;base64,'+ ${gameplayPictures.get(i.index).getBase64ImageData()}"
-                             alt="" class="rounded d-block w-100 img-fluid image-uploaded">
+                <div class="carousel-inner">
+                        <div class="carousel-item active" th:each="image, i : *{gameplayPictures}"
+                             th:if="${i.count}==1">
+                            <img th:id="'image' + ${i.index}" style="width:1200px;height:360px"
+                                 th:src="'data:image/png;base64,'+ ${gameplayPictures.get(i.index).getBase64ImageData()}"
+                                 alt="" class="rounded d-block w-100 img-fluid image-uploaded">
+                        </div>
+                        <div class="carousel-item" th:each="image, i : *{gameplayPictures}"
+                        th:if="${i.count}!=1">
+                            <img th:id="'image' + ${i.index}" style="width:1200px;height:360px"
+                                 th:src="'data:image/png;base64,'+ ${gameplayPictures.get(i.index).getBase64ImageData()}"
+                                 alt="" class="rounded d-block w-100 img-fluid image-uploaded">
+                        </div>
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-target="#carousel1" data-slide="prev">
@@ -98,7 +101,7 @@
                     <span class="sr-only">Next</span>
                 </button>
             </div>
-            <div class="mb-4">
+            <div class="container mb-4">
                 <form th:if="${favorite == false}" method="post"
                       th:action="@{/game/{id}/add-favorite(id =${uploadedGame.game.id.toString()})}">
                     <button style="background-image: var(--bs-gradient);"

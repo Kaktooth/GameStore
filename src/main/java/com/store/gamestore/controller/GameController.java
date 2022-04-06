@@ -11,6 +11,7 @@ import com.store.gamestore.model.Requirements;
 import com.store.gamestore.model.UploadedGame;
 import com.store.gamestore.model.User;
 import com.store.gamestore.service.CommonService;
+import com.store.gamestore.service.counting.CounterService;
 import com.store.gamestore.service.enumeration.CommonEnumerationService;
 import com.store.gamestore.service.user.UserDetailsService;
 import com.store.gamestore.util.GamePicturesUtil;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,12 +39,18 @@ public class GameController {
     private final CommonService<FavoriteGame, UUID> favoriteGameService;
     private final CommonService<Requirements, Integer> requirementsService;
     private final CommonEnumerationService<Processor, Integer> processorService;
+    private final CounterService<UUID> favoriteCounterService;
+    private final CounterService<UUID> viewsCounterService;
     private final CommonEnumerationService<GraphicsCard, Integer> graphicsCardService;
     private final CommonEnumerationService<OperatingSystem, Integer> operatingSystemService;
 
     @Autowired
     public GameController(CommonService<User, UUID> userService,
                           CommonService<GameImage, UUID> gameImageService,
+                          @Qualifier("gameFavoriteCounterService")
+                              CounterService<UUID> favoriteCounterService,
+                          @Qualifier("gameViewsCounterService")
+                              CounterService<UUID> viewsCounterService,
                           @Qualifier("uploadedGameService")
                               CommonService<UploadedGame, UUID> uploadedGameService,
                           CommonService<FavoriteGame, UUID> favoriteGameService,
@@ -55,6 +61,8 @@ public class GameController {
 
         this.userService = userService;
         this.gameImageService = gameImageService;
+        this.favoriteCounterService = favoriteCounterService;
+        this.viewsCounterService = viewsCounterService;
         this.uploadedGameService = uploadedGameService;
         this.favoriteGameService = favoriteGameService;
         this.requirementsService = requirementsService;
@@ -72,6 +80,7 @@ public class GameController {
         User user = getUser();
         FavoriteGame favoriteGame = new FavoriteGame(user, uploadedGame.getGame());
         favoriteGameService.save(favoriteGame);
+        favoriteCounterService.count(gameId);
         getGamePage(id, model);
 
         return "game";
@@ -83,6 +92,7 @@ public class GameController {
 
         UUID gameId = UUID.fromString(id);
         favoriteGameService.delete(gameId);
+        favoriteCounterService.decreaseCount(gameId);
         getGamePage(id, model);
 
         return "game";
@@ -133,6 +143,8 @@ public class GameController {
         model.addAttribute("favorite", favorite);
         model.addAttribute("uploadedGame", uploadedGame);
         model.addAttribute("requirements", convertedRequirements);
+
+        viewsCounterService.count(gameId);
 
         return "game";
     }
