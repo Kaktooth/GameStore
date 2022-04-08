@@ -1,4 +1,4 @@
-package com.store.gamestore.controller;
+package com.store.gamestore.controller.common;
 
 import com.store.gamestore.model.FavoriteGame;
 import com.store.gamestore.model.GameImage;

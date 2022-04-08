@@ -1,7 +1,7 @@
-package com.store.gamestore.controller;
+package com.store.gamestore.controller.common;
 
 import com.store.gamestore.model.StoreBannerItem;
-import com.store.gamestore.model.StoreBannerItemDto;
+import com.store.gamestore.model.StoreBannerItemDTO;
 import com.store.gamestore.model.UploadedGame;
 import com.store.gamestore.model.User;
 import com.store.gamestore.service.CommonService;
@@ -45,13 +45,13 @@ public class UserBannerController {
         User user = getUser();
         List<UploadedGame> uploadedGames = uploadedGameService.getAll(user.getId());
         model.addAttribute("user", user);
-        model.addAttribute("gameBanner", new StoreBannerItemDto());
+        model.addAttribute("gameBanner", new StoreBannerItemDTO());
         model.addAttribute("uploadedGames", uploadedGames);
         return "banner-upload";
     }
 
     @PostMapping("/upload")
-    public String uploadBanner(@ModelAttribute StoreBannerItemDto gameBanner,
+    public String uploadBanner(@ModelAttribute StoreBannerItemDTO gameBanner,
                                Model model) throws IOException {
         User user = getUser();
         gameBanner.setUserId(user.getId());

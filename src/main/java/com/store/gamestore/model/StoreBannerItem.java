@@ -31,7 +31,7 @@ public class StoreBannerItem extends Image {
         this.setImageData(imageData);
     }
 
-    public StoreBannerItem(StoreBannerItemDto dto) throws IOException {
+    public StoreBannerItem(StoreBannerItemDTO dto) throws IOException {
         this.setUserId(dto.getUserId());
         this.setGameId(dto.getGameId());
         this.setDescription(dto.getDescription());

@@ -1,10 +1,10 @@
-package com.store.gamestore.controller;
+package com.store.gamestore.controller.common;
 
 import com.store.gamestore.model.GameImage;
 import com.store.gamestore.model.PictureType;
 import com.store.gamestore.model.StoreBannerItem;
 import com.store.gamestore.model.UploadedGame;
-import com.store.gamestore.model.UploadedGameDto;
+import com.store.gamestore.model.UploadedGameDTO;
 import com.store.gamestore.model.User;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.game.recommended.Recommendations;
@@ -71,36 +71,36 @@ public class StoreController {
         model.addAttribute("bannerItems", bannerItems);
 
         List<UploadedGame> popularGames = gameRecommendationService.getPopularGames(itemsCount);
-        List<UploadedGameDto> popularGamesDto = new ArrayList<>();
+        List<UploadedGameDTO> popularGamesDto = new ArrayList<>();
         for (var game : popularGames) {
             List<GameImage> gameImages = gameImageService.getAll(game.getGame().getId());
             GameImage gameImage = GamePicturesUtil.getGamePicture(gameImages,
                 PictureType.STORE);
-            popularGamesDto.add(new UploadedGameDto(game, gameImage));
+            popularGamesDto.add(new UploadedGameDTO(game, gameImage));
         }
-        Pagination<UploadedGameDto> pagination = new Pagination<>(popularGamesDto);
-        Map<Integer, List<UploadedGameDto>> popularGamesMap = pagination.toMap(size, pagination.getPageCount(size));
+        Pagination<UploadedGameDTO> pagination = new Pagination<>(popularGamesDto);
+        Map<Integer, List<UploadedGameDTO>> popularGamesMap = pagination.toMap(size, pagination.getPageCount(size));
 
         List<UploadedGame> bestSellerGames = gameRecommendationService.getBestSellerGames(itemsCount);
-        List<UploadedGameDto> bestSellerGamesDto = new ArrayList<>();
+        List<UploadedGameDTO> bestSellerGamesDto = new ArrayList<>();
         for (var game : bestSellerGames) {
             List<GameImage> gameImages = gameImageService.getAll(game.getGame().getId());
             GameImage gameImage = GamePicturesUtil.getGamePicture(gameImages,
                 PictureType.STORE);
-            bestSellerGamesDto.add(new UploadedGameDto(game, gameImage));
+            bestSellerGamesDto.add(new UploadedGameDTO(game, gameImage));
         }
         pagination = new Pagination<>(bestSellerGamesDto);
-        Map<Integer, List<UploadedGameDto>> bestSellerGamesMap = pagination.toMap(size, pagination.getPageCount(size));
+        Map<Integer, List<UploadedGameDTO>> bestSellerGamesMap = pagination.toMap(size, pagination.getPageCount(size));
         List<UploadedGame> mostFavoriteGames = gameRecommendationService.getMostFavoriteGames(itemsCount);
-        List<UploadedGameDto> mostFavoriteGamesDto = new ArrayList<>();
+        List<UploadedGameDTO> mostFavoriteGamesDto = new ArrayList<>();
         for (var game : mostFavoriteGames) {
             List<GameImage> gameImages = gameImageService.getAll(game.getGame().getId());
             GameImage gameImage = GamePicturesUtil.getGamePicture(gameImages,
                 PictureType.STORE);
-            mostFavoriteGamesDto.add(new UploadedGameDto(game, gameImage));
+            mostFavoriteGamesDto.add(new UploadedGameDTO(game, gameImage));
         }
         pagination = new Pagination<>(mostFavoriteGamesDto);
-        Map<Integer, List<UploadedGameDto>> mostFavoriteGamesMap = pagination.toMap(size, pagination.getPageCount(size));
+        Map<Integer, List<UploadedGameDTO>> mostFavoriteGamesMap = pagination.toMap(size, pagination.getPageCount(size));
         model.addAttribute("popularGamesMap", popularGamesMap);
         model.addAttribute("bestSellerGamesMap", bestSellerGamesMap);
         model.addAttribute("mostFavoriteGamesMap", mostFavoriteGamesMap);
@@ -109,12 +109,12 @@ public class StoreController {
             model.addAttribute("search", false);
         } else {
             List<UploadedGame> searchedGames = gameSearchService.searchGames(searchString, searchRange);
-            List<UploadedGameDto> searchedGamesDto = new ArrayList<>();
+            List<UploadedGameDTO> searchedGamesDto = new ArrayList<>();
             for (var game : searchedGames) {
                 List<GameImage> gameImages = gameImageService.getAll(game.getGame().getId());
                 GameImage gameImage = GamePicturesUtil.getGamePicture(gameImages,
                     PictureType.GAMEPAGE);
-                searchedGamesDto.add(new UploadedGameDto(game, gameImage));
+                searchedGamesDto.add(new UploadedGameDTO(game, gameImage));
             }
 
             model.addAttribute("search", true);

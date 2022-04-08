@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .jdbcAuthentication()
             .dataSource(dataSource)
             .passwordEncoder(passwordEncoder)
-            .usersByUsernameQuery("SELECT username, email, password, enabled FROM users WHERE username = ?")
+            .usersByUsernameQuery("SELECT username, email, password, enabled, phone_number FROM users WHERE username = ?")
             .authoritiesByUsernameQuery("SELECT username, email, authority FROM authorities WHERE username = ?");
     }
 
@@ -57,8 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
             .csrf()
-            .csrfTokenRepository(new CookieCsrfTokenRepository())
-            .and()
+            .disable()
+
             .headers()
             .frameOptions()
             .sameOrigin()
@@ -74,16 +74,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .loginProcessingUrl(logInPage)
             .usernameParameter("user")
             .passwordParameter("password")
-            .defaultSuccessUrl("/profile", true)
-            .failureUrl(logInPage + "?error&login")
-            .permitAll()
-            .and()
-            .logout()
-            .invalidateHttpSession(true)
-            .deleteCookies("JSESSIONID")
-            .logoutUrl("/logout")
-            .logoutSuccessUrl(logInPage + "?logout")
+            .defaultSuccessUrl("/account", true)
+            .failureUrl(logInPage + "?error")
             .permitAll();
+
 
     }
 }

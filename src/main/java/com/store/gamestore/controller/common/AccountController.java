@@ -1,4 +1,4 @@
-package com.store.gamestore.controller;
+package com.store.gamestore.controller.common;
 
 import com.store.gamestore.model.User;
 import com.store.gamestore.service.CommonService;

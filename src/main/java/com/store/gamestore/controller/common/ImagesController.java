@@ -1,7 +1,7 @@
-package com.store.gamestore.controller;
+package com.store.gamestore.controller.common;
 
 import com.store.gamestore.model.EditGameInput;
-import com.store.gamestore.model.GameplayImagesDto;
+import com.store.gamestore.model.GameplayImagesDTO;
 import com.store.gamestore.model.Genre;
 import com.store.gamestore.model.GraphicsCard;
 import com.store.gamestore.model.OperatingSystem;
@@ -56,7 +56,7 @@ public class ImagesController {
 
     @PostMapping("/add")
     public String addImage(@PathVariable("id") String id,
-                           @ModelAttribute("gameImages") GameplayImagesDto gameImages,
+                           @ModelAttribute("gameImages") GameplayImagesDTO gameImages,
                            @RequestParam("uploadedImage") MultipartFile image,
                            Model model) {
 

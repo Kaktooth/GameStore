@@ -11,10 +11,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UploadedGameDto extends UploadedGame {
+public class UploadedGameDTO extends UploadedGame {
     private GameImage gameImage;
 
-    public UploadedGameDto(UploadedGame uploadedGame, GameImage gameImage) {
+    public UploadedGameDTO(UploadedGame uploadedGame, GameImage gameImage) {
         this.setGame(uploadedGame.getGame());
         this.setUser(uploadedGame.getUser());
         this.setGameImage(gameImage);

@@ -1,11 +1,11 @@
-package com.store.gamestore.controller;
+package com.store.gamestore.controller.common;
 
 import com.store.gamestore.model.Game;
 import com.store.gamestore.model.GameFile;
 import com.store.gamestore.model.GameGenre;
 import com.store.gamestore.model.GameImage;
 import com.store.gamestore.model.GameProfile;
-import com.store.gamestore.model.GameplayImagesDto;
+import com.store.gamestore.model.GameplayImagesDTO;
 import com.store.gamestore.model.Genre;
 import com.store.gamestore.model.GraphicsCard;
 import com.store.gamestore.model.OperatingSystem;
@@ -94,7 +94,7 @@ public class GameUploadController {
         model.addAttribute("user", user);
 
         model.addAttribute("uploadInput", new UploadInput());
-        model.addAttribute("gameplayImages", new GameplayImagesDto());
+        model.addAttribute("gameplayImages", new GameplayImagesDTO());
         model.addAttribute("genreList", genreService.getAll());
 
         model.addAttribute("processors", processorService.getAll());

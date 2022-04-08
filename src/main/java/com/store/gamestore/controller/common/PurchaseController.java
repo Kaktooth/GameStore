@@ -1,4 +1,4 @@
-package com.store.gamestore.controller;
+package com.store.gamestore.controller.common;
 
 import com.store.gamestore.model.GamePurchase;
 import com.store.gamestore.model.UploadedGame;
