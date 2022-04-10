@@ -1,13 +1,13 @@
 package com.store.gamestore.controller.common;
 
-import com.store.gamestore.model.FavoriteGame;
-import com.store.gamestore.model.GameImage;
-import com.store.gamestore.model.PictureType;
-import com.store.gamestore.model.User;
-import com.store.gamestore.model.UserImage;
+import com.store.gamestore.model.entity.FavoriteGame;
+import com.store.gamestore.model.entity.GameImage;
+import com.store.gamestore.model.entity.PictureType;
+import com.store.gamestore.model.entity.User;
+import com.store.gamestore.model.entity.UserImage;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.user.UserDetailsService;
-import com.store.gamestore.util.GamePicturesUtil;
+import com.store.gamestore.model.util.GamePicturesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

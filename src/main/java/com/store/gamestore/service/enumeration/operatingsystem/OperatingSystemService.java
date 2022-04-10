@@ -1,6 +1,6 @@
 package com.store.gamestore.service.enumeration.operatingsystem;
 
-import com.store.gamestore.model.OperatingSystem;
+import com.store.gamestore.model.entity.OperatingSystem;
 import com.store.gamestore.repository.enumeration.CommonEnumerationRepository;
 import com.store.gamestore.service.enumeration.AbstractEnumerationService;
 import org.springframework.stereotype.Service;

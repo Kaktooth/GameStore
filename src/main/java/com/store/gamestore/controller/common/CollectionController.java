@@ -1,12 +1,12 @@
 package com.store.gamestore.controller.common;
 
-import com.store.gamestore.model.GameImage;
-import com.store.gamestore.model.PictureType;
-import com.store.gamestore.model.User;
-import com.store.gamestore.model.UserGame;
+import com.store.gamestore.model.entity.GameImage;
+import com.store.gamestore.model.entity.PictureType;
+import com.store.gamestore.model.entity.User;
+import com.store.gamestore.model.entity.UserGame;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.user.UserDetailsService;
-import com.store.gamestore.util.GamePicturesUtil;
+import com.store.gamestore.model.util.GamePicturesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,15 +25,15 @@ public class CollectionController {
 
     private final CommonService<User, UUID> userService;
     private final CommonService<GameImage, UUID> gameImageService;
-    private final CommonService<UserGame, UUID> userGamesRepository;
+    private final CommonService<UserGame, UUID> userGamesService;
 
     @Autowired
     public CollectionController(CommonService<User, UUID> userService,
                                 CommonService<GameImage, UUID> gameImageService,
-                                CommonService<UserGame, UUID> userGamesRepository) {
+                                CommonService<UserGame, UUID> userGamesService) {
         this.userService = userService;
         this.gameImageService = gameImageService;
-        this.userGamesRepository = userGamesRepository;
+        this.userGamesService = userGamesService;
     }
 
     @GetMapping
@@ -42,7 +42,7 @@ public class CollectionController {
         String name = authentication.getName();
         User user = ((UserDetailsService) userService).get(name);
 
-        List<UserGame> collection = userGamesRepository.getAll(user.getId());
+        List<UserGame> collection = userGamesService.getAll(user.getId());
         model.addAttribute("collection", collection);
         model.addAttribute("user", user);
 

@@ -1,6 +1,6 @@
 package com.store.gamestore.service.game.genre;
 
-import com.store.gamestore.model.GameGenre;
+import com.store.gamestore.model.entity.GameGenre;
 import com.store.gamestore.repository.CommonRepository;
 import com.store.gamestore.service.AbstractService;
 import org.springframework.stereotype.Service;

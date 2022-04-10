@@ -1,6 +1,6 @@
 package com.store.gamestore.service.requirements;
 
-import com.store.gamestore.model.Requirements;
+import com.store.gamestore.model.entity.Requirements;
 import com.store.gamestore.repository.CommonRepository;
 import com.store.gamestore.service.AbstractService;
 import org.springframework.stereotype.Service;

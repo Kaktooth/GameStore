@@ -1,7 +1,7 @@
 package com.store.gamestore.repository.game.uploaded;
 
-import com.store.gamestore.model.UploadedGame;
-import com.store.gamestore.model.UploadedGameMapper;
+import com.store.gamestore.model.entity.UploadedGame;
+import com.store.gamestore.model.entity.UploadedGameMapper;
 import com.store.gamestore.repository.AbstractRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;

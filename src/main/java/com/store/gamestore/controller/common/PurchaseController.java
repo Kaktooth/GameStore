@@ -1,12 +1,16 @@
 package com.store.gamestore.controller.common;
 
-import com.store.gamestore.model.GamePurchase;
-import com.store.gamestore.model.UploadedGame;
-import com.store.gamestore.model.User;
-import com.store.gamestore.model.UserGame;
+import com.store.gamestore.model.entity.GameImage;
+import com.store.gamestore.model.entity.GamePurchase;
+import com.store.gamestore.model.entity.Image;
+import com.store.gamestore.model.entity.PictureType;
+import com.store.gamestore.model.entity.UploadedGame;
+import com.store.gamestore.model.entity.User;
+import com.store.gamestore.model.entity.UserGame;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.counting.CounterService;
 import com.store.gamestore.service.user.UserDetailsService;
+import com.store.gamestore.model.util.GamePicturesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -28,6 +32,7 @@ public class PurchaseController {
 
     private final CommonService<User, UUID> userService;
     private final CounterService<UUID> purchaseCounterService;
+    private final CommonService<GameImage, UUID> gameImageService;
     private final CommonService<UserGame, UUID> userGamesRepository;
     private final CommonService<UploadedGame, UUID> uploadedGameService;
     private final CommonService<GamePurchase, UUID> purchaseHistoryService;
@@ -37,6 +42,7 @@ public class PurchaseController {
                               @Qualifier("gamePurchaseCounterService")
                                   CounterService<UUID> purchaseCounterService,
                               CommonService<UserGame, UUID> userGamesRepository,
+                              CommonService<GameImage, UUID> gameImageService,
                               @Qualifier("uploadedGameService")
                                   CommonService<UploadedGame, UUID> uploadedGameService,
                               CommonService<GamePurchase, UUID> purchaseHistoryService) {
@@ -45,6 +51,7 @@ public class PurchaseController {
         this.purchaseCounterService = purchaseCounterService;
         this.userGamesRepository = userGamesRepository;
         this.uploadedGameService = uploadedGameService;
+        this.gameImageService = gameImageService;
         this.purchaseHistoryService = purchaseHistoryService;
     }
 
@@ -55,7 +62,12 @@ public class PurchaseController {
         User user = getUser();
         model.addAttribute("user", user);
         UploadedGame uploadedGame = uploadedGameService.get(UUID.fromString(id));
+        List<GameImage> gameImages = gameImageService.getAll(uploadedGame.getGame().getId());
+
+        Image image = GamePicturesUtil.getGamePicture(gameImages, PictureType.GAMEPAGE);
         model.addAttribute("uploadedGame", uploadedGame);
+        model.addAttribute("image", image);
+
         return "purchase";
     }
 

@@ -1,12 +1,12 @@
 package com.store.gamestore.controller.rest;
 
-import com.store.gamestore.model.GameImage;
-import com.store.gamestore.model.Image;
-import com.store.gamestore.model.PictureType;
-import com.store.gamestore.model.UserGame;
-import com.store.gamestore.model.UserGameDTO;
+import com.store.gamestore.model.entity.GameImage;
+import com.store.gamestore.model.entity.Image;
+import com.store.gamestore.model.entity.PictureType;
+import com.store.gamestore.model.entity.UserGame;
+import com.store.gamestore.model.entity.UserGameDTO;
 import com.store.gamestore.service.CommonService;
-import com.store.gamestore.util.GamePicturesUtil;
+import com.store.gamestore.model.util.GamePicturesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

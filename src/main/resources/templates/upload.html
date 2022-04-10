@@ -120,7 +120,7 @@
                             <label for="title" class="form-label">Title</label>
                             <input type="text" id="title" name="title" th:field="*{title}"
                                    class="bg-gradient-light form-control text-muted" autofocus=""
-                                   minlength="5" maxlength="45" required>
+                                   minlength="2" maxlength="45" required>
                             <div class="invalid-feedback">
                                 Please provide a valid name.
                                 Name must be at least 5 letters and no more than 70
@@ -184,28 +184,27 @@
                         </div>
 
                         <h4 class="text-white">Upload pictures</h4>
-                        <div>
+                        <div class="d-flex">
                             <label for="storeImage" class="form-label">Main image for store</label>
-                            <input type="file" class="bg-gradient-light text-muted"
+                            <input type="file" class="bg-gradient-light text-muted ml-auto"
                                    th:field="*{gameImages.storeImage}" name="storeImage" id="storeImage"
                                    accept="image/png, image/jpeg" required/>
                         </div>
-                        <div>
+                        <div class="d-flex">
                             <label for="gamePageImage" class="form-label">Image for game page</label>
-                            <input type="file" class="bg-gradient-light text-muted"
+                            <input type="file" class="bg-gradient-light text-muted ml-auto"
                                    th:field="*{gameImages.gamePageImage}" name="gamePageImage" id="gamePageImage"
                                    accept="image/png, image/jpeg" required/>
                         </div>
-                        <div class="mb-2">
+                        <div class="mb-4 d-flex">
                             <label for="collectionImage" class="form-label">Image for collection page</label>
-                            <input type="file" class="bg-gradient-light text-muted"
+                            <input type="file" class="bg-gradient-light text-muted ml-auto"
                                    th:field="*{gameImages.collectionImage}" name="collectionImage" id="collectionImage"
                                    accept="image/png, image/jpeg" required/>
                         </div>
-                        <div class="mb-4">
-                            <h5 class="text-white">Upload pictures of gameplay</h5>
+                        <div class="mb-4 d-flex">
                             <label for="gameplayImages" class="form-label">Pictures with gameplay</label>
-                            <input type="file" class="bg-gradient-light text-muted"
+                            <input type="file" class="bg-gradient-light text-muted ml-auto"
                                    th:field="*{gameImages.gameplayImages}" name="gameplayImages" id="gameplayImages"
                                    accept="image/png, image/jpeg" multiple/>
                         </div>
@@ -270,7 +269,7 @@
                             <label for="version">Version</label>
                             <input type="text" id="version" pattern="^[\d]+.[\d]+.[\d]+.[\d]+$"
                                    name="version" autofocus=""
-                                   class="bg-gradient-light form-control text-muted" th:field="*{version}"
+                                   class="bg-gradient-light form-control text-muted mb-4" th:field="*{version}"
                                    maxlength="30" required>
                             <div class="invalid-feedback">
                                 Please provide a valid version number.
@@ -286,7 +285,7 @@
                                            required>
                                 </div>
                                 <div class="col">
-                                    <button type="submit" class="btn bg-gradient-light btn-primary">Upload File</button>
+                                    <button type="submit" class="btn bg-gradient-light btn-primary">Upload Game</button>
                                 </div>
                             </div>
                         </div>

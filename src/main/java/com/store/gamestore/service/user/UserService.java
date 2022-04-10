@@ -1,6 +1,6 @@
 package com.store.gamestore.service.user;
 
-import com.store.gamestore.model.User;
+import com.store.gamestore.model.entity.User;
 import com.store.gamestore.repository.CommonRepository;
 import com.store.gamestore.repository.user.UserDetailsRepository;
 import com.store.gamestore.service.AbstractService;

@@ -1,6 +1,6 @@
 package com.store.gamestore.service.user.purchase;
 
-import com.store.gamestore.model.UserGame;
+import com.store.gamestore.model.entity.UserGame;
 import com.store.gamestore.repository.CommonRepository;
 import com.store.gamestore.service.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;

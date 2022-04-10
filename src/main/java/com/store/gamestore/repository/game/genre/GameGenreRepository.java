@@ -1,8 +1,8 @@
 package com.store.gamestore.repository.game.genre;
 
-import com.store.gamestore.model.GameGenre;
-import com.store.gamestore.model.GameGenreMapper;
-import com.store.gamestore.model.Genre;
+import com.store.gamestore.model.entity.GameGenre;
+import com.store.gamestore.model.entity.GameGenreMapper;
+import com.store.gamestore.model.entity.Genre;
 import com.store.gamestore.repository.AbstractRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;

@@ -1,6 +1,6 @@
 package com.store.gamestore.service.enumeration.processor;
 
-import com.store.gamestore.model.Processor;
+import com.store.gamestore.model.entity.Processor;
 import com.store.gamestore.repository.enumeration.CommonEnumerationRepository;
 import com.store.gamestore.service.enumeration.AbstractEnumerationService;
 import org.springframework.stereotype.Service;

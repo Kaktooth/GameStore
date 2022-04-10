@@ -1,6 +1,6 @@
 package com.store.gamestore.service.game.search;
 
-import com.store.gamestore.model.UploadedGame;
+import com.store.gamestore.model.entity.UploadedGame;
 import com.store.gamestore.repository.CommonRepository;
 import com.store.gamestore.service.AbstractService;
 import lombok.extern.slf4j.Slf4j;

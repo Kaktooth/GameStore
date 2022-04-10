@@ -1,7 +1,7 @@
 package com.store.gamestore.repository.game;
 
-import com.store.gamestore.model.Game;
-import com.store.gamestore.model.GameMapper;
+import com.store.gamestore.model.entity.Game;
+import com.store.gamestore.model.entity.GameMapper;
 import com.store.gamestore.repository.AbstractRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.UUID;

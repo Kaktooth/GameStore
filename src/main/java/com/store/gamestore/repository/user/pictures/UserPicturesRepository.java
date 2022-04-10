@@ -1,8 +1,8 @@
 package com.store.gamestore.repository.user.pictures;
 
 
-import com.store.gamestore.model.UserImage;
-import com.store.gamestore.model.UserImageMapper;
+import com.store.gamestore.model.entity.UserImage;
+import com.store.gamestore.model.entity.UserImageMapper;
 import com.store.gamestore.repository.AbstractRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;

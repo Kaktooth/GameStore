@@ -1,6 +1,6 @@
 package com.store.gamestore.service.store.banner;
 
-import com.store.gamestore.model.StoreBannerItem;
+import com.store.gamestore.model.entity.StoreBannerItem;
 import com.store.gamestore.repository.CommonRepository;
 import com.store.gamestore.service.AbstractService;
 import org.springframework.stereotype.Service;

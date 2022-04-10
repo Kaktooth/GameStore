@@ -1,6 +1,6 @@
 package com.store.gamestore.service.user.pictures;
 
-import com.store.gamestore.model.UserImage;
+import com.store.gamestore.model.entity.UserImage;
 import com.store.gamestore.repository.CommonRepository;
 import com.store.gamestore.service.AbstractService;
 import org.springframework.stereotype.Service;

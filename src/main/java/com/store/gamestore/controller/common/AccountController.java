@@ -1,6 +1,6 @@
 package com.store.gamestore.controller.common;
 
-import com.store.gamestore.model.User;
+import com.store.gamestore.model.entity.User;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.user.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;

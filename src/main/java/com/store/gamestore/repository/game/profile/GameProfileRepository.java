@@ -1,6 +1,6 @@
 package com.store.gamestore.repository.game.profile;
 
-import com.store.gamestore.model.GameProfile;
+import com.store.gamestore.model.entity.GameProfile;
 import com.store.gamestore.repository.AbstractRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

@@ -1,14 +1,14 @@
 package com.store.gamestore.controller.common;
 
-import com.store.gamestore.model.EditGameInput;
-import com.store.gamestore.model.GameplayImagesDTO;
-import com.store.gamestore.model.Genre;
-import com.store.gamestore.model.GraphicsCard;
-import com.store.gamestore.model.OperatingSystem;
-import com.store.gamestore.model.Processor;
-import com.store.gamestore.model.Requirements;
-import com.store.gamestore.model.UploadedGame;
-import com.store.gamestore.model.User;
+import com.store.gamestore.model.entity.EditGameInput;
+import com.store.gamestore.model.entity.GameplayImagesDTO;
+import com.store.gamestore.model.entity.Genre;
+import com.store.gamestore.model.entity.GraphicsCard;
+import com.store.gamestore.model.entity.OperatingSystem;
+import com.store.gamestore.model.entity.Processor;
+import com.store.gamestore.model.entity.Requirements;
+import com.store.gamestore.model.entity.UploadedGame;
+import com.store.gamestore.model.entity.User;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.enumeration.CommonEnumerationService;
 import com.store.gamestore.service.user.UserDetailsService;

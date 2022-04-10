@@ -1,6 +1,6 @@
 package com.store.gamestore.service.game.file;
 
-import com.store.gamestore.model.GameFile;
+import com.store.gamestore.model.entity.GameFile;
 import com.store.gamestore.repository.CommonRepository;
 import com.store.gamestore.service.AbstractService;
 import org.springframework.stereotype.Service;

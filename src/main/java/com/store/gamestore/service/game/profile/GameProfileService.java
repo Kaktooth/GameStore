@@ -1,6 +1,6 @@
 package com.store.gamestore.service.game.profile;
 
-import com.store.gamestore.model.GameProfile;
+import com.store.gamestore.model.entity.GameProfile;
 import com.store.gamestore.repository.CommonRepository;
 import com.store.gamestore.service.AbstractService;
 import org.springframework.stereotype.Service;

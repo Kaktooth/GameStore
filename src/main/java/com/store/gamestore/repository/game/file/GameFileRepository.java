@@ -1,6 +1,6 @@
 package com.store.gamestore.repository.game.file;
 
-import com.store.gamestore.model.GameFile;
+import com.store.gamestore.model.entity.GameFile;
 import com.store.gamestore.repository.AbstractRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

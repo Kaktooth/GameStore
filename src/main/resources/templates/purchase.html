@@ -75,7 +75,11 @@
                     Purchase
                 </div>
                 <div class="card-body row mb-4">
-                    <img class="shadow" src="..." height="200" width="360" alt=""/>
+                    <img th:id="'image'"
+                         th:src="'data:image/png;base64,'+ ${image.getBase64ImageData()}"
+                         class="shadow d-block img-fluid image-uploaded"
+                         style="height: 200px; width: 360px"/>
+
                     <div class="col-md-6">
                         <h5 class="card-title mb-2" th:text="${uploadedGame.game.gameProfile.title}"></h5>
                         <p class="card-text mb-2" th:text="${uploadedGame.game.gameProfile.price} +'$'"></p>

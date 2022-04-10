@@ -67,16 +67,15 @@
             <ul class="list-group card-body" th:each="file, i : ${uploadedGame.game.gameFiles}">
                 <form th:action="@{/uploaded-games/edit/{id}/files/{fileId}/delete(id = ${uploadedGame.game.id},fileId = ${file.id})}"
                       method="post">
-                    <li class="list-group-item border">
-                        <label th:text="${i.count} + '. file title: ' + ${file.title} + ' version: ' + ${file.version}"></label>
-                        <button type="submit" class="btn bg-danger text-end">
+                    <li class="list-group-item border d-flex">
+                        <label th:text="${i.count} + '. file title: ' + ${file.name} + ' version: ' + ${file.version}"></label>
+                        <button type="submit" class="btn bg-danger ml-auto text-end">
                             Delete
                         </button>
                     </li>
                 </form>
             </ul>
         </div>
-
 
         <form method="post" th:action="@{/uploaded-games/edit/{id}/files(id = ${uploadedGame.game.id})}"
               enctype="multipart/form-data">

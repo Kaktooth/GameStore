@@ -1,7 +1,7 @@
 package com.store.gamestore.repository.store.banner;
 
-import com.store.gamestore.model.StoreBannerItem;
-import com.store.gamestore.model.StoreBannerItemMapper;
+import com.store.gamestore.model.entity.StoreBannerItem;
+import com.store.gamestore.model.entity.StoreBannerItemMapper;
 import com.store.gamestore.repository.AbstractRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;

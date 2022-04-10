@@ -1,6 +1,6 @@
 package com.store.gamestore.service.game.favorite;
 
-import com.store.gamestore.model.FavoriteGame;
+import com.store.gamestore.model.entity.FavoriteGame;
 import com.store.gamestore.repository.CommonRepository;
 import com.store.gamestore.service.AbstractService;
 import org.springframework.stereotype.Service;

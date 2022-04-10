@@ -3,7 +3,6 @@ package com.store.gamestore.repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class AbstractRepository<T, I> implements CommonRepository<T, I> {

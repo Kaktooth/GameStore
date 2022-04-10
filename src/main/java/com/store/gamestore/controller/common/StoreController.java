@@ -1,17 +1,17 @@
 package com.store.gamestore.controller.common;
 
-import com.store.gamestore.model.GameImage;
-import com.store.gamestore.model.PictureType;
-import com.store.gamestore.model.StoreBannerItem;
-import com.store.gamestore.model.UploadedGame;
-import com.store.gamestore.model.UploadedGameDTO;
-import com.store.gamestore.model.User;
+import com.store.gamestore.model.entity.GameImage;
+import com.store.gamestore.model.entity.PictureType;
+import com.store.gamestore.model.entity.StoreBannerItem;
+import com.store.gamestore.model.entity.UploadedGame;
+import com.store.gamestore.model.entity.UploadedGameDTO;
+import com.store.gamestore.model.entity.User;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.game.recommended.Recommendations;
 import com.store.gamestore.service.game.search.GameSearcher;
 import com.store.gamestore.service.user.UserDetailsService;
-import com.store.gamestore.util.GamePicturesUtil;
-import com.store.gamestore.util.Pagination;
+import com.store.gamestore.model.util.GamePicturesUtil;
+import com.store.gamestore.model.util.Pagination;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

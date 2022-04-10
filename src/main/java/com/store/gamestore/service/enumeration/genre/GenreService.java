@@ -1,6 +1,6 @@
 package com.store.gamestore.service.enumeration.genre;
 
-import com.store.gamestore.model.Genre;
+import com.store.gamestore.model.entity.Genre;
 import com.store.gamestore.repository.enumeration.CommonEnumerationRepository;
 import com.store.gamestore.service.enumeration.AbstractEnumerationService;
 import org.springframework.stereotype.Service;

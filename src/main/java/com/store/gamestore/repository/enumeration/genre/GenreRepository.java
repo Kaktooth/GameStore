@@ -1,7 +1,7 @@
 package com.store.gamestore.repository.enumeration.genre;
 
-import com.store.gamestore.model.Genre;
-import com.store.gamestore.model.GenreMapper;
+import com.store.gamestore.model.entity.Genre;
+import com.store.gamestore.model.entity.GenreMapper;
 import com.store.gamestore.repository.enumeration.AbstractEnumerationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

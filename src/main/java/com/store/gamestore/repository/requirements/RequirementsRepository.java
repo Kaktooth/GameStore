@@ -1,6 +1,6 @@
 package com.store.gamestore.repository.requirements;
 
-import com.store.gamestore.model.Requirements;
+import com.store.gamestore.model.entity.Requirements;
 import com.store.gamestore.repository.AbstractRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

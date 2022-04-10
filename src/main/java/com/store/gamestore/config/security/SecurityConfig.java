@@ -24,6 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     String createAccountPage = "/create-account";
     String accessDeniedPage = "/access-denied-page";
     String storePage = "/store";
+    String authApi = "/api/**";
     String page = "/";
     String webjars = "/webjars/**";
     String resources = "/resources/**";
@@ -48,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .jdbcAuthentication()
             .dataSource(dataSource)
             .passwordEncoder(passwordEncoder)
-            .usersByUsernameQuery("SELECT username, email, password, enabled, phone_number FROM users WHERE username = ?")
+            .usersByUsernameQuery("SELECT username, email, password, enabled FROM users WHERE username = ?")
             .authoritiesByUsernameQuery("SELECT username, email, authority FROM authorities WHERE username = ?");
     }
 
@@ -57,14 +58,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
             .csrf()
-            .disable()
-
+            .csrfTokenRepository(new CookieCsrfTokenRepository())
+            .and()
             .headers()
             .frameOptions()
             .sameOrigin()
             .and()
             .authorizeRequests()
-            .mvcMatchers(errorPage, logInPage, createAccountPage, storePage, page, webjars, resources)
+            .mvcMatchers(errorPage, authApi, logInPage, createAccountPage, storePage, page, webjars, resources)
             .permitAll()
             .anyRequest()
             .authenticated()
@@ -74,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .loginProcessingUrl(logInPage)
             .usernameParameter("user")
             .passwordParameter("password")
-            .defaultSuccessUrl("/account", true)
+            .defaultSuccessUrl("/profile", true)
             .failureUrl(logInPage + "?error")
             .permitAll();
 

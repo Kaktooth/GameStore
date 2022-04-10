@@ -1,10 +1,9 @@
 package com.store.gamestore.repository.game.favorite;
 
-import com.store.gamestore.model.FavoriteGame;
-import com.store.gamestore.model.FavoriteGameMapper;
+import com.store.gamestore.model.entity.FavoriteGame;
+import com.store.gamestore.model.entity.FavoriteGameMapper;
 import com.store.gamestore.repository.AbstractRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -198,7 +198,7 @@
             <p class="text-muted"
                th:text="'Release date:   ' + ${uploadedGame.game.gameProfile.releaseDate.toLocalDate().toString()}">
             </p>
-            <div class="card bg-dark-2">
+            <div class="card bg-dark-2" th:if="!${purchased}">
                 <div class="card-body shadow mb-2">
                     <div th:if="${uploadedGame.game.gameProfile.price} > 0">
                         <div class="">

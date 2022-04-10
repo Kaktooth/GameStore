@@ -1,7 +1,7 @@
 package com.store.gamestore.repository.user.purchase;
 
-import com.store.gamestore.model.GamePurchase;
-import com.store.gamestore.model.GamePurchaseMapper;
+import com.store.gamestore.model.entity.GamePurchase;
+import com.store.gamestore.model.entity.GamePurchaseMapper;
 import com.store.gamestore.repository.AbstractRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
