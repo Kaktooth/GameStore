@@ -94,6 +94,7 @@ public class PurchaseController {
         User user = getUser();
         model.addAttribute("user", user);
         List<GamePurchase> gamePurchaseList = purchaseHistoryService.getAll(user.getId());
+        System.out.println(gamePurchaseList.toString());
         model.addAttribute("gamePurchaseList", gamePurchaseList);
 
         return "purchase-history";

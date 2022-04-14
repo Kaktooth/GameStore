@@ -4,14 +4,18 @@ import com.store.gamestore.model.entity.EditGameInput;
 import com.store.gamestore.model.entity.Game;
 import com.store.gamestore.model.entity.GameFile;
 import com.store.gamestore.model.entity.GameGenre;
+import com.store.gamestore.model.entity.GameImage;
 import com.store.gamestore.model.entity.GameProfile;
 import com.store.gamestore.model.entity.Genre;
 import com.store.gamestore.model.entity.GraphicsCard;
 import com.store.gamestore.model.entity.OperatingSystem;
+import com.store.gamestore.model.entity.PictureType;
 import com.store.gamestore.model.entity.Processor;
 import com.store.gamestore.model.entity.Requirements;
 import com.store.gamestore.model.entity.UploadedGame;
+import com.store.gamestore.model.entity.UploadedGameDTO;
 import com.store.gamestore.model.entity.User;
+import com.store.gamestore.model.util.GamePicturesUtil;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.enumeration.CommonEnumerationService;
 import com.store.gamestore.service.user.UserDetailsService;
@@ -33,6 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,6 +50,7 @@ public class UploadedGamesController {
 
     private final CommonService<User, UUID> userService;
     private final CommonService<Game, UUID> gameService;
+    private final CommonService<GameImage, UUID> gameImageService;
     private final CommonService<GameGenre, UUID> gameGenreService;
     private final CommonService<GameFile, Integer> gameFileService;
     private final CommonService<UploadedGame, UUID> uploadedGameService;
@@ -58,6 +64,7 @@ public class UploadedGamesController {
     @Autowired
     public UploadedGamesController(CommonService<User, UUID> userService,
                                    CommonService<Game, UUID> gameService,
+                                   CommonService<GameImage, UUID> gameImageService,
                                    CommonService<GameGenre, UUID> gameGenreService,
                                    CommonService<GameFile, Integer> gameFileService,
                                    @Qualifier("uploadedGameService")
@@ -71,6 +78,7 @@ public class UploadedGamesController {
     ) {
         this.gameService = gameService;
         this.userService = userService;
+        this.gameImageService = gameImageService;
         this.gameGenreService = gameGenreService;
         this.genreService = genreService;
         this.gameFileService = gameFileService;
@@ -88,7 +96,14 @@ public class UploadedGamesController {
         User user = getUser();
         model.addAttribute("user", user);
         List<UploadedGame> uploadedGames = uploadedGameService.getAll(user.getId());
-        model.addAttribute("uploadedGames", uploadedGames);
+        List<UploadedGameDTO> dtos = new ArrayList<>();
+        for (UploadedGame game : uploadedGames) {
+            List<GameImage> gameImages = gameImageService.getAll(game.getGame().getId());
+            GameImage image = GamePicturesUtil.getGamePicture(gameImages, PictureType.GAMEPAGE);
+            dtos.add(new UploadedGameDTO(game, image));
+        }
+
+        model.addAttribute("uploadedGames", dtos);
         return "uploaded-games";
     }
 

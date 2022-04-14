@@ -105,35 +105,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 mx-auto">
-
-<!--                    <form th:method="post" th:action="@{/images/add}" th:object="${gameplayImages}"-->
-<!--                          enctype="multipart/form-data">-->
-<!--                        <label for="uploadedImage" class="form-label">Images for banner</label>-->
-<!--                        <input type="file" class="bg-gradient-light text-muted"-->
-<!--                               name="uploadedImage" id="uploadedImage" accept="image/png, image/jpeg"/>-->
-
-<!--                        <label for="gamePageImages" class="form-label">Images with gameplay</label>-->
-<!--                        <ul class="list-group" id="gamePageImages"-->
-<!--                            th:name="gamePageImages">-->
-<!--                            <li class="list-group-item" th:each="image, i : *{gamePageImages}">-->
-<!--                                <img th:src="${image}" th:id="image + ${i}" class="img-fluid image-uploaded" alt="">-->
-<!--                            </li>-->
-<!--                            <script>-->
-<!--                                var imgs = document.querySelectorAll('.image-uploaded')-->
-<!--                                imgs.forEach(function (currentValue, index) {-->
-<!--                                        var id = '#' + currentValue;-->
-<!--                                        $(id).attr('src', `data:image/png;base64,${gamePageImages[index].getBase64ImageData()}`);-->
-<!--                                    }-->
-<!--                                );-->
-<!--                            </script>-->
-<!--                        </ul>-->
-
-<!--                        <button type="submit"-->
-<!--                                class="btn bg-gradient-light btn-primary">Upload Images-->
-<!--                        </button>-->
-<!--                    </form>-->
-<!--                    <button type="button" class="btn bg-gradient-light btn-primary">Delete</button>-->
-
                     <form class="mb-5" method="post" th:action="@{/uploaded-games/edit/{id}(id = ${uploadedGame.game.id})}"
                           th:object="${editGameInput}">
                         <div class="text-white mb-2">
@@ -149,7 +120,7 @@
                             <label for="description" class="form-label">Description</label>
                             <textarea type="text" id="description" name="description" th:field="*{description}"
                                       class="bg-gradient-light form-control text-muted" autofocus=""
-                                      maxlength="700" minlength="450" style="word-wrap:break-word;" required></textarea>
+                                      maxlength="3700" minlength="450" style="word-wrap:break-word;" required></textarea>
                             <div class="invalid-feedback">
                                 Game description must be at least 450 chars and no more than 700
                             </div>

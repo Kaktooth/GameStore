@@ -76,7 +76,6 @@
         <div class="container-fluid d-grid gap-3 align-items-center">
             <ul class="nav col col-lg-auto me-lg-auto mb-2 justify-content-left mb-md-0">
                 <a class="font-weight-bold navbar-brand" href="/">Upload Game</a>
-                <li><a class="nav-link px-2 text-white" href="/documentation">Documentation</a></li>
                 <li><a class="nav-link px-2 text-white" href="/faq">FAQ</a></li>
                 <li><a class="nav-link px-2 text-white" href="/uploaded-games">Uploaded Games</a></li>
             </ul>
@@ -130,7 +129,7 @@
                             <textarea type="text" id="description" style="word-wrap:break-word;"
                                       name="description" th:field="*{description}"
                                       class="bg-gradient-light form-control text-muted" autofocus=""
-                                      maxlength="700" minlength="450" required></textarea>
+                                      maxlength="3700" minlength="450" required></textarea>
                             <div class="invalid-feedback">
                                 Game description must be at least 450 chars and no more than 700
                             </div>

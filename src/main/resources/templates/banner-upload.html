@@ -65,7 +65,6 @@
         <div class="container-fluid d-grid gap-3 align-items-center">
             <ul class="nav col col-lg-auto me-lg-auto mb-2 justify-content-left mb-md-0">
                 <a class="font-weight-bold navbar-brand" href="/">Upload Game</a>
-                <li><a class="nav-link px-2 text-white" href="/documentation">Documentation</a></li>
                 <li><a class="nav-link px-2 text-white" href="/faq">FAQ</a></li>
                 <li><a class="nav-link px-2 text-white" href="/uploaded-games">Uploaded Games</a></li>
             </ul>
@@ -105,8 +104,8 @@
               class="needs-validation mb-4" enctype="multipart/form-data" novalidate>
             <label for="description" class="form-label">Description</label>
             <textarea type="text" id="description" name="description" th:field="*{description}"
-                      class="bg-gradient-light form-control text-muted" autofocus=""
-                      maxlength="70" minlength="10" style="word-wrap:break-word;" required></textarea>
+                      class="bg-gradient-light form-control mb-4 text-muted" autofocus=""
+                      maxlength="90" minlength="10" style="word-wrap:break-word;" required></textarea>
             <div class="invalid-feedback">
                 Game description must be at least 10 chars and no more than 30
             </div>

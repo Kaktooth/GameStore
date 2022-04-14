@@ -28,7 +28,6 @@
         <div class="container-fluid d-grid gap-3 align-items-center">
             <ul class="nav col col-lg-auto me-lg-auto mb-2 justify-content-left mb-md-0">
                 <a class="font-weight-bold navbar-brand" href="/">Upload Game</a>
-                <li><a class="nav-link px-2 text-white" href="/documentation">Documentation</a></li>
                 <li><a class="nav-link px-2 text-white" href="/faq">FAQ</a></li>
                 <li><a class="nav-link px-2 text-white" href="/uploaded-games">Uploaded Games</a></li>
             </ul>
@@ -63,10 +62,12 @@
 </header>
 <main role="main" class="shadow text-white mb-4">
     <div class="container-md text-white mb-4 bg-dark-2">
-        <div th:each="upload: ${uploadedGames}" th:if="${upload} != null"
+        <div th:each="upload, i: ${uploadedGames}" th:if="${upload} != null"
              class="row shadow border border-dark rounded-5 border-2 mb-2">
             <div class="col">
-                <img style="width:120px;height:120px" src="" class="d-block w-100" alt=""/>
+                <img style="height: 165px; width: 385px;"
+                     th:src="'data:image/png;base64,'+ ${upload.gameImage.getBase64ImageData()}"
+                     id="gamePicture" class="img-fluid" alt=""/>
             </div>
             <div class="col-5 text-left">
                 <h6 th:text="${upload.game.gameProfile.title}"></h6>

@@ -63,10 +63,10 @@ public class StoreController {
             model.addAttribute("user", user);
         }
 
-        Integer size = 3;
+        Integer size = 4;
         Integer pages = 4;
         Integer itemsCount = size * pages;
-        Integer searchRange = 5;
+        Integer searchRange = 4;
         List<StoreBannerItem> bannerItems = storeBannerService.getAll();
         model.addAttribute("bannerItems", bannerItems);
 

@@ -156,9 +156,9 @@ public class GameUploadController {
         GameImage storeImage = new GameImage(uploadedGame.getGame().getId(), PictureType.STORE.toString(),
             uploadInput.getGameImages().getStoreImage().getInputStream().readAllBytes());
         GameImage gamePageImage = new GameImage(uploadedGame.getGame().getId(), PictureType.GAMEPAGE.toString(),
-            uploadInput.getGameImages().getStoreImage().getInputStream().readAllBytes());
+            uploadInput.getGameImages().getGamePageImage().getInputStream().readAllBytes());
         GameImage collectionImage = new GameImage(uploadedGame.getGame().getId(), PictureType.COLLECTION.toString(),
-            uploadInput.getGameImages().getStoreImage().getInputStream().readAllBytes());
+            uploadInput.getGameImages().getCollectionImage().getInputStream().readAllBytes());
         gameImageService.save(storeImage);
         gameImageService.save(gamePageImage);
         gameImageService.save(collectionImage);
