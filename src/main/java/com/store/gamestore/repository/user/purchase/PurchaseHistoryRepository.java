@@ -20,8 +20,8 @@ public class PurchaseHistoryRepository extends AbstractRepository<GamePurchase, 
     private static final String savePurchaseHistory = "INSERT INTO purchase_history VALUES (?, ?, ?, ?)";
 
     private static final String getPurchasedGame = "SELECT * FROM user_games " +
-        "INNER JOIN game_files gf ON user_games.game_id = gf.game_id " +
         "INNER JOIN game_profiles gp ON user_games.game_id = gp.game_id " +
+        "INNER JOIN game_files gf ON user_games.game_id = gf.game_id " +
         "INNER JOIN purchase_history ph ON user_games.game_id = ph.game_id AND user_games.user_id = ph.user_id " +
         "INNER JOIN users u ON user_games.user_id = u.id " +
         "INNER JOIN user_profiles up ON user_games.user_id = up.user_id " +
@@ -31,8 +31,8 @@ public class PurchaseHistoryRepository extends AbstractRepository<GamePurchase, 
         "WHERE user_games.game_id = ?";
 
     private static final String getPurchasedGames = "SELECT * FROM user_games " +
-        "INNER JOIN game_files gf ON user_games.game_id = gf.game_id " +
         "INNER JOIN game_profiles gp ON user_games.game_id = gp.game_id " +
+        "INNER JOIN game_files gf ON user_games.game_id = gf.game_id " +
         "INNER JOIN purchase_history ph ON user_games.game_id = ph.game_id AND user_games.user_id = ph.user_id " +
         "INNER JOIN users u ON user_games.user_id = u.id " +
         "INNER JOIN user_profiles up ON user_games.user_id = up.user_id " +

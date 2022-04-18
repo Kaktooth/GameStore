@@ -24,7 +24,6 @@ public class GameRepository extends AbstractRepository<Game, UUID> {
 
     private static final String deleteGame = "DELETE FROM games WHERE id = ?";
 
-
     public GameRepository(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
     }

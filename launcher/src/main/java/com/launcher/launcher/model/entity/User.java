@@ -15,6 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -27,5 +28,13 @@ public class User {
     public String phone;
     public String publicUsername;
     public String resume;
+
+    public String getPublicUsername() {
+        return publicUsername;
+    }
+
+    public UUID getId() {
+        return id;
+    }
 }
 

@@ -2,6 +2,20 @@ plugins {
     id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'edu.sc.seis.launch4j' version '2.5.3'
+}
+launch4j {
+
+    outfile = "Launcher.exe"
+    jreMaxVersion = '1.8.9'
+    jdkPreference = 'preferJre'
+    initialHeapSize = 128
+    maxHeapSize = 512
+    stayAlive = false
+    bundledJre64Bit = true
+    jar = "launcher.jar"
+    bundledJrePath = 'jre'
+    jreMinVersion = "1.8.0"
 }
 
 group 'com.launcher'
@@ -33,9 +47,12 @@ javafx {
 }
 
 dependencies {
+    implementation 'io.github.bitstorm:tinyzip-core:1.0.0'
+    implementation 'net.lingala.zip4j:zip4j:2.10.0'
     implementation 'org.projectlombok:lombok:1.18.20'
     compileOnly 'org.projectlombok:lombok'
-    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2'
     implementation 'at.favre.lib:bcrypt:0.9.0'
     implementation('org.controlsfx:controlsfx:11.1.0')
     implementation('com.dlsc.formsfx:formsfx-core:11.3.2') {
@@ -56,4 +73,61 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+
+task(prepareReleases, dependsOn: ['jar', 'build', 'startScripts', 'createx64Exe', 'createx86Exe'], type: Task) {
+    doLast {
+
+        def base = "build/distributions/base";
+
+        copy {
+            with distributions.main.getContents()
+            from "other/"
+            into "$base"
+        }
+
+        copy {
+            from "$base";
+            into "build/distributions/windows-x86/";
+        }
+
+        copy {
+            from "build/launch4j/" + project.name + ".exe";
+            into "build/distributions/windows-x86/bin";
+
+        }
+
+        copy {
+            from "jre/$jreVersion$jreBuild/windows-i586/prepared/";
+            into "build/distributions/windows-x86/jre";
+        }
+
+        // Windows x64
+        copy {
+            from "$base";
+            into "build/distributions/windows-x64/";
+        }
+
+        copy {
+            from "build/launch4j/" + project.name + "64.exe";
+            into "build/distributions/windows-x64/bin";
+
+        }
+
+        copy {
+            from "jre/$jreVersion$jreBuild/windows-x64/prepared/";
+            into "build/distributions/windows-x64/jre";
+        }
+
+    }
+}
+
+task(zipW64, dependsOn: 'prepareReleases', type: Zip) {
+    from "build/distributions/windows-x64/";
+    destinationDir file("release");
+    appendix "windows-x64";
+}
+
+task(release, dependsOn: ['zipW32', 'zipW64'], type: Task) {
 }

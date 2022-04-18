@@ -11,7 +11,7 @@ import java.util.UUID;
 @Repository
 @Qualifier("gamePurchasesCounterRepository")
 public class GamePurchasesCounterRepository extends AbstractCounterRepository<UUID> {
-    private static final String getCount = "SELECT favorite_count FROM game_profiles " +
+    private static final String getCount = "SELECT purchase_count FROM game_profiles " +
         "WHERE game_profiles.game_id = ?";
 
     private static final String countPurchases = "UPDATE game_profiles " +

@@ -57,12 +57,12 @@ public class GameFileRepository extends AbstractRepository<GameFile, Integer> {
     }
 
     @Override
-    public GameFile get(Integer gameId) {
-        return jdbcTemplate.queryForObject(getGameFile, new BeanPropertyRowMapper<>(GameFile.class), gameId);
+    public GameFile get(Integer fileId) {
+        return jdbcTemplate.queryForObject(getGameFile, new BeanPropertyRowMapper<>(GameFile.class), fileId);
     }
 
     @Override
-    public void delete(Integer gameId) {
-        jdbcTemplate.update(deleteGameFile, gameId);
+    public void delete(Integer fileId) {
+        jdbcTemplate.update(deleteGameFile, fileId);
     }
 }

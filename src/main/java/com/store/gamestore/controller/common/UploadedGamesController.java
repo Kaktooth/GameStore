@@ -129,13 +129,13 @@ public class UploadedGamesController {
     }
 
     @PostMapping("/edit/{id}/files")
-    public String postGameFile(@PathVariable String id,
-                               @RequestParam("version") String version,
-                               @RequestParam("file") MultipartFile file) {
+    public String addGameFile(@PathVariable String id,
+                              @RequestParam("version") String version,
+                              @RequestParam("file") MultipartFile file) {
         GameFile gameFile = new GameFile(0, 1000, "", version, file, UUID.fromString(id));
         gameFileService.save(gameFile);
 
-        return "redirect:/uploaded-games/edit/" + id;
+        return "redirect:/uploaded-games/edit/" + id + "/files";
     }
 
     @PostMapping("/edit/{id}/files/{fileId}/delete")
@@ -209,6 +209,7 @@ public class UploadedGamesController {
         model.addAttribute("osList", operatingSystemService.getAll());
 
         Integer gameProfileId = uploadedGame.getGame().getGameProfile().getId();
+        log.info(uploadedGame.toString());
         log.info("game profile id: " + gameProfileId);
         Requirements requirements = requirementsService.get(gameProfileId);
 

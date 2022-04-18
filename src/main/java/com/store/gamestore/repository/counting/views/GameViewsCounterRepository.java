@@ -12,7 +12,7 @@ import java.util.UUID;
 @Repository
 @Qualifier("gameViewsCounterRepository")
 public class GameViewsCounterRepository extends AbstractCounterRepository<UUID> {
-    private static final String getCount = "SELECT favorite_count FROM game_profiles " +
+    private static final String getCount = "SELECT views_count FROM game_profiles " +
         "WHERE game_profiles.game_id = ?";
     private static final String countViews = "UPDATE game_profiles " +
         "SET views_count = ? " +

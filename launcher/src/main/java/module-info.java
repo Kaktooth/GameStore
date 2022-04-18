@@ -8,11 +8,17 @@ module com.launcher.launcher {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
-    requires com.google.gson;
     requires lombok;
+    requires com.fasterxml.jackson.annotation;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.datatype.jsr310;
+//    requires tinyzip.core;
 
     opens com.launcher.launcher to javafx.fxml;
     exports com.launcher.launcher;
+    exports com.launcher.launcher.service;
+    exports com.launcher.launcher.controller;
+    opens com.launcher.launcher.controller to javafx.fxml;
     exports com.launcher.launcher.model.entity;
-    exports com.launcher.launcher.model.service;
 }

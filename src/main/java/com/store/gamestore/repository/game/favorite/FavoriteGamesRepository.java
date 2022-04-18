@@ -23,8 +23,8 @@ public class FavoriteGamesRepository extends AbstractRepository<FavoriteGame, UU
     private static final String saveFavoriteGame = "INSERT INTO favorite_games VALUES (?, ?)";
 
     private static final String getFavoriteGame = "SELECT * FROM favorite_games " +
-        "INNER JOIN game_files gf ON favorite_games.game_id = gf.game_id " +
         "INNER JOIN game_profiles gp ON favorite_games.game_id = gp.game_id " +
+        "INNER JOIN game_files gf ON favorite_games.game_id = gf.game_id " +
         "INNER JOIN users u ON favorite_games.user_id = u.id " +
         "INNER JOIN user_profiles up ON favorite_games.user_id = up.user_id " +
         "INNER JOIN system_requirements sr on gp.id = sr.game_profile_id " +
@@ -33,8 +33,8 @@ public class FavoriteGamesRepository extends AbstractRepository<FavoriteGame, UU
         "WHERE favorite_games.game_id = ?";
 
     private static final String getFavoriteGames = "SELECT * FROM favorite_games " +
-        "INNER JOIN game_files gf ON favorite_games.game_id = gf.game_id " +
         "INNER JOIN game_profiles gp ON favorite_games.game_id = gp.game_id " +
+        "INNER JOIN game_files gf ON favorite_games.game_id = gf.game_id " +
         "INNER JOIN users u ON favorite_games.user_id = u.id " +
         "INNER JOIN user_profiles up ON favorite_games.user_id = up.user_id " +
         "INNER JOIN system_requirements sr on gp.id = sr.game_profile_id " +
