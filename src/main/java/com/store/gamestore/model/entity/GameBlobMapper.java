@@ -2,7 +2,6 @@ package com.store.gamestore.model.entity;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import javax.sql.rowset.serial.SerialBlob;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -22,7 +21,7 @@ public class GameBlobMapper implements RowMapper<GameBlob> {
             }
 
         }
-        gameBlob.setBlob(new SerialBlob(outputStream.toByteArray()));
+        gameBlob.setBytes(outputStream.toByteArray());
 
         return gameBlob;
     }

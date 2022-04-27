@@ -1,7 +1,7 @@
 package com.store.gamestore.repository.game.file;
 
+import com.store.gamestore.model.entity.BlobDataMapper;
 import com.store.gamestore.model.entity.GameBlob;
-import com.store.gamestore.model.entity.GameBlobMapper;
 import com.store.gamestore.repository.AbstractRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,8 @@ public class DownloadFilesRepository extends AbstractRepository<GameBlob, UUID> 
 
     @Override
     public GameBlob get(UUID gameId) {
+        System.out.println("loading blob");
         Integer version = jdbcTemplate.queryForObject(getGameFileVersion, Integer.class, gameId);
-        return jdbcTemplate.queryForObject(getGameFile, new GameBlobMapper(), version, gameId);
+        return jdbcTemplate.queryForObject(getGameFile, new BlobDataMapper(), version, gameId);
     }
 }

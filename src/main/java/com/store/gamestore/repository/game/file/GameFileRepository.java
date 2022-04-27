@@ -29,7 +29,8 @@ public class GameFileRepository extends AbstractRepository<GameFile, Integer> {
 
     @Override
     public GameFile save(GameFile gameFile) {
-        if (gameFile.getMultipartFile().getSize() < Runtime.getRuntime().freeMemory()) {
+        var size = gameFile.getMultipartFile().getSize();
+
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(conn -> {
                 PreparedStatement ps = conn.prepareStatement(saveGameFile, new String[]{"id"});
@@ -52,8 +53,7 @@ public class GameFileRepository extends AbstractRepository<GameFile, Integer> {
                 log.info("Game wasn't successfully saved");
             }
             return get(entityId);
-        }
-        return null;
+
     }
 
     @Override

@@ -35,12 +35,12 @@ public class AuthenticationController {
             Stage stage = new Stage();
             stage.setUserData(user);
             FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+            Scene scene = new Scene(fxmlLoader.load(), 1000, 800);
             scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
             GamesController gamesController = fxmlLoader.getController();
             gamesController.initData(user);
 
-            stage.setTitle("Game Storage Launcher");
+            stage.setTitle("Game installer");
             stage.setScene(scene);
             stage.sizeToScene();
             stage.show();

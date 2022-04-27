@@ -31,7 +31,7 @@ public class Launcher extends javafx.application.Application {
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
 
-        stage.setTitle("Launcher Login");
+        stage.setTitle("Login page");
         stage.setScene(scene);
         stage.sizeToScene();
         stage.show();

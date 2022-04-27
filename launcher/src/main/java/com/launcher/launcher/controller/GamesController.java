@@ -3,16 +3,22 @@ package com.launcher.launcher.controller;
 import com.launcher.launcher.model.entity.User;
 import com.launcher.launcher.model.entity.UserGameDTO;
 import com.launcher.launcher.service.GamesService;
+import eu.hansolo.tilesfx.Tile;
+import eu.hansolo.tilesfx.TileBuilder;
+import eu.hansolo.tilesfx.fonts.Fonts;
+import eu.hansolo.tilesfx.tools.FlowGridPane;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -51,6 +57,8 @@ public class GamesController {
         ObservableList<UserGameDTO> gamesList = FXCollections.observableArrayList();
         gamesList.addAll(userGames);
         listView.setItems(gamesList);
+        listView.setFocusTraversable(false);
+        listView.getSelectionModel().select(-1);
         listView.setCellFactory(param -> new ImageCell());
         listView.setStyle("-fx-control-inner-background: " + "#212529" + ";");
     }
@@ -60,26 +68,58 @@ public class GamesController {
         public void updateItem(UserGameDTO gameDTO, boolean empty) {
             if (gameDTO != null) {
                 super.updateItem(gameDTO, empty);
-                FlowPane flowPane = new FlowPane();
+                FlowGridPane panel = new FlowGridPane(2, 2);
+                Tile progressBar = TileBuilder.create()
+                    .skinType(Tile.SkinType.CIRCULAR_PROGRESS)
+                    .prefSize(20, 20)
+                    .backgroundColor(Color.rgb(33, 37, 41))
+                    .textVisible(false)
+                    .sectionsVisible(false)
+                    .trendVisible(false)
+                    .valueVisible(false)
+                    .thresholdVisible(false)
+                    .maxMeasuredValueVisible(false)
+                    .averageVisible(false)
+                    .tickLabelsXVisible(false)
+                    .scaleX(0.3)
+                    .scaleY(0.3)
+                    .build();
+                progressBar.setVisible(false);
+                progressBar.setCustomFont(Fonts.latoRegular(12.0));
+                panel.setMinWidth(300);
+                panel.setPadding(new Insets(15, 15, 15, 15));
 
-                javafx.scene.image.Image image = new javafx.scene.image.Image(
-                    new ByteArrayInputStream(gameDTO.getImage().getImageData()));
-                flowPane.getChildren().add(new ImageView(image));
-                flowPane.getChildren().add(new Label(gameDTO.game.gameProfile.title));
+                ImageView imageView = new ImageView(new javafx.scene.image.Image(
+                    new ByteArrayInputStream(gameDTO.getImage().getImageData())));
+                imageView.setFitHeight(215);
+                imageView.setFitWidth(460);
+                panel.getChildren().add(imageView);
+                Label title = new Label(gameDTO.game.gameProfile.title + "\n"
+                    + gameDTO.game.gameProfile.briefDescription);
+                title.setPadding(new Insets(20));
+                title.setTextAlignment(TextAlignment.LEFT);
+                title.setWrapText(true);
+                title.setMaxWidth(380);
+                panel.getChildren().add(title);
+
                 Button downloadButton = new Button();
                 downloadButton.setText("Download");
-                downloadButton.setScaleX(1.5);
-                downloadButton.setScaleY(1.2);
+                downloadButton.setPadding(new Insets(7));
                 downloadButton.setStyle("-fx-control-inner-background: " + "#11A13A" + ";");
                 downloadButton.setOnMouseClicked(event -> {
+
                     try {
-                        gamesService.downloadGame(gameDTO.getGame());
+                        long bytesLength = gamesService.downloadGame(gameDTO.getGame(), progressBar);
+                        progressBar.setMaxValue(bytesLength);
+                        progressBar.setVisible(true);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 });
-                flowPane.getChildren().add(downloadButton);
-                setGraphic(flowPane);
+                panel.getChildren().add(downloadButton);
+                panel.getChildren().add(progressBar);
+
+                setGraphic(panel);
                 setStyle("-fx-control-inner-background: " + "#212529" + ";");
             }
         }

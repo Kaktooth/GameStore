@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -54,13 +52,13 @@ public class RestUserGamesController {
     }
 
     @GetMapping("/download/{gameId}")
-    public ResponseEntity<byte[]> getGameFiles(@PathVariable String gameId) throws IOException, SQLException {
+    public ResponseEntity<byte[]> getGameFiles(@PathVariable String gameId) {
         GameBlob blob = gameFileRepository.get(UUID.fromString(gameId));
-        byte[] bytes = blob.getBlob().getBinaryStream().readAllBytes();
-
+        byte[] bytes = blob.getBytes();
+        System.out.println("blob is loaded");
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=net5.0.zip");
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + blob.getName());
 
         return
             ResponseEntity.ok()
