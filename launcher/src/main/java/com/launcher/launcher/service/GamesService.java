@@ -6,6 +6,8 @@ import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import com.launcher.launcher.model.entity.Game;
 import com.launcher.launcher.model.entity.UserGameDTO;
 import eu.hansolo.tilesfx.Tile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +24,7 @@ import java.util.List;
 
 public class GamesService {
 
+    private static Logger log = LoggerFactory.getLogger(GamesService.class);
     private final String installersPath = "C:\\Users\\Xiaomi\\GameStore\\installers";
     private final String gamesPath = "C:\\Users\\Xiaomi\\GameStore\\games";
     private final String protocol = "http";
@@ -44,21 +47,20 @@ public class GamesService {
             return objectMapper.readValue(json, new TypeReference<>() {
             });
         } catch (Exception exception) {
-            exception.printStackTrace();
+            log.error(exception.getMessage());
             return Collections.emptyList();
         }
     }
 
     public synchronized long downloadGame(Game game, Tile tile) throws IOException {
-        System.out.println("downloading......");
-        URL u = new URL(protocol + "://" + host + ":" + port + "/api/download/" + game.id);
-        System.out.println(u);
-        HttpURLConnection conn = (HttpURLConnection) u.openConnection();
 
+        URL u = new URL(protocol + "://" + host + ":" + port + "/api/download/" + game.id);
+        HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+        log.info("downloading... url: {}", u);
         try (InputStream is = conn.getInputStream()) {
             String fileName = conn.getHeaderField("Content-Disposition").replace("attachment; filename=", "");
             Path setupPath = Path.of(installersPath + "\\" + fileName);
-            System.out.println("setup path: " + setupPath);
+            log.info("setup path: {}", setupPath);
             long writtenBytes = Files.copy(is, setupPath, StandardCopyOption.REPLACE_EXISTING);
             tile.setValue(writtenBytes);
             Process prc;
@@ -69,15 +71,15 @@ public class GamesService {
                 prc = Runtime.getRuntime().exec("cmd /c start cmd.exe /C\"" + setupPath + "\"");
                 prc.waitFor();
             }
-            System.out.println("game downloaded");
+            log.info("game downloaded");
 
-            Files.delete(setupPath);
-            System.out.println("installer deleted");
+//            Files.delete(setupPath);
+//            log.info("installer deleted");
         } catch (InterruptedException | IOException exception) {
-            exception.printStackTrace();
+            log.error("Error message: {}", exception.getMessage());
         }
         String contentLength = conn.getHeaderField("Content-Length");
-        System.out.println("contentLength: " + contentLength);
+        log.info("bytes downloaded: {}", contentLength);
         return Long.parseLong(contentLength);
     }
 }

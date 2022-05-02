@@ -13,6 +13,10 @@ module com.launcher.launcher {
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jsr310;
+    requires org.slf4j;
+    requires org.slf4j.simple;
+    requires ch.qos.logback.core;
+    requires java.logging;
 
     opens com.launcher.launcher to javafx.fxml;
     exports com.launcher.launcher;

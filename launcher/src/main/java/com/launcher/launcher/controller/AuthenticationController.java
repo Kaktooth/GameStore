@@ -10,11 +10,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class AuthenticationController {
 
+    private static Logger log = LoggerFactory.getLogger(AuthenticationController.class);
     private final AuthenticationService authenticationService;
 
     @FXML
@@ -31,7 +34,9 @@ public class AuthenticationController {
     @FXML
     protected void authenticateUser() throws IOException {
         User user = authenticationService.authenticate(username.getText(), password.getText());
+
         if (user != null) {
+            log.info("User with name {} logged successfully", user.getPublicUsername());
             Stage stage = new Stage();
             stage.setUserData(user);
             FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("view.fxml"));
@@ -45,7 +50,9 @@ public class AuthenticationController {
             stage.sizeToScene();
             stage.show();
         }
+
         Stage stage = (Stage) loginButton.getScene().getWindow();
+        log.info("games window loaded");
         stage.close();
     }
 }

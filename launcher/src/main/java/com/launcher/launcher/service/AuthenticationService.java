@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import com.launcher.launcher.model.entity.User;
 import javafx.scene.control.Alert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,9 +16,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class AuthenticationService {
+    private static Logger log = LoggerFactory.getLogger(AuthenticationService.class);
     private final String protocol = "http";
     private final String host = "localhost";
     private final int port = 8082;
+
 
     public User authenticate(String username, String password) throws IOException {
         CookieHandler.setDefault(new CookieManager(null, CookiePolicy.ACCEPT_ALL));
@@ -35,7 +39,7 @@ public class AuthenticationService {
             alert.setContentText("Authentication Failed");
             alert.showAndWait();
 
-            exception.printStackTrace();
+            log.error("Error message: {}", exception.getMessage());
             return null;
         }
     }
