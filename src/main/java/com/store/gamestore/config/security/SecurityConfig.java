@@ -79,6 +79,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .failureUrl(logInPage + "?error")
             .permitAll();
 
-
     }
 }

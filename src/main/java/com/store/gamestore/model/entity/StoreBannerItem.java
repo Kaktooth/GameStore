@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.UUID;
 
 @Data
@@ -17,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class StoreBannerItem extends Image {
+public class StoreBannerItem extends Image implements Serializable {
     private UUID userId;
     private UUID gameId;
     private String description;

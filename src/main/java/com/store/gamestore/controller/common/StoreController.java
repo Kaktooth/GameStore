@@ -69,6 +69,7 @@ public class StoreController {
         Integer searchRange = 4;
         List<StoreBannerItem> bannerItems = storeBannerService.getAll();
         model.addAttribute("bannerItems", bannerItems);
+        System.out.println(bannerItems.toString());
 
         List<UploadedGame> popularGames = gameRecommendationService.getPopularGames(itemsCount);
         List<UploadedGameDTO> popularGamesDto = new ArrayList<>();

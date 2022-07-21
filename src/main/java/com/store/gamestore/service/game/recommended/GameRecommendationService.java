@@ -4,6 +4,7 @@ import com.store.gamestore.model.entity.UploadedGame;
 import com.store.gamestore.repository.CommonRepository;
 import com.store.gamestore.service.AbstractService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,7 @@ public class GameRecommendationService extends AbstractService<UploadedGame, UUI
     }
 
     @Override
+    @Cacheable(value = "popularGamesCached")
     public List<UploadedGame> getPopularGames(Integer count) {
         List<UploadedGame> uploadedGames = getAll()
             .stream()
@@ -38,6 +40,7 @@ public class GameRecommendationService extends AbstractService<UploadedGame, UUI
     }
 
     @Override
+    @Cacheable(value = "bestSellerGamesCached")
     public List<UploadedGame> getBestSellerGames(Integer count) {
         List<UploadedGame> uploadedGames = getAll()
             .stream()
@@ -49,6 +52,7 @@ public class GameRecommendationService extends AbstractService<UploadedGame, UUI
     }
 
     @Override
+    @Cacheable(value = "favoriteGamesCached")
     public List<UploadedGame> getMostFavoriteGames(Integer count) {
         List<UploadedGame> uploadedGames = getAll()
             .stream()
