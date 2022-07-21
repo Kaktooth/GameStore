@@ -40,11 +40,11 @@ public class CacheConfig {
     public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer() {
         return (builder) -> builder
             .withCacheConfiguration("popularGamesCached",
-                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(24)))
+                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(1)))
             .withCacheConfiguration("bestSellerGamesCached",
-                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(24)))
+                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(1)))
             .withCacheConfiguration("favoriteGamesCached",
-                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(24)));
+                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(1)));
     }
 
     @Bean
