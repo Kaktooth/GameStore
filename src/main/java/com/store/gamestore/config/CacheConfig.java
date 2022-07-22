@@ -16,35 +16,15 @@ import java.time.Duration;
 @Setter
 public class CacheConfig {
 
-//    private String host;
-//
-//    private String password;
-//
-//    @Bean
-//    @Primary
-//    public ReactiveRedisConnectionFactory reactiveRedisConnectionFactory(RedisConfiguration defaultRedisConfig) {
-//        LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
-//            .useSsl().build();
-//        return new LettuceConnectionFactory(defaultRedisConfig, clientConfig);
-//    }
-//
-//    @Bean
-//    public RedisConfiguration defaultRedisConfig() {
-//        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-//        config.setHostName(host);
-//        config.setPassword(RedisPassword.of(password));
-//        return config;
-//    }
-
     @Bean
     public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer() {
         return (builder) -> builder
             .withCacheConfiguration("popularGamesCached",
-                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(1)))
+                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(48)))
             .withCacheConfiguration("bestSellerGamesCached",
-                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(1)))
+                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(48)))
             .withCacheConfiguration("favoriteGamesCached",
-                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(1)));
+                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(48)));
     }
 
     @Bean
