@@ -40,10 +40,10 @@ public class StoreController {
 
     @Autowired
     public StoreController(CommonService<User, UUID> userService,
-                           GameSearcher<UploadedGame> gameSearchService,
-                           CommonService<GameImage, UUID> gameImageService,
-                           CommonService<StoreBannerItem, UUID> storeBannerService,
-                           @Qualifier("gameRecommendationService") Recommendations<UploadedGame> gameRecommendationService) {
+        GameSearcher<UploadedGame> gameSearchService,
+        CommonService<GameImage, UUID> gameImageService,
+        CommonService<StoreBannerItem, UUID> storeBannerService,
+        @Qualifier("gameRecommendationService") Recommendations<UploadedGame> gameRecommendationService) {
         this.userService = userService;
         this.gameSearchService = gameSearchService;
         this.gameImageService = gameImageService;
@@ -53,7 +53,7 @@ public class StoreController {
 
     @GetMapping
     public String getStorePage(@RequestParam(value = "searchString", required = false) String searchString,
-                               Model model) {
+        Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
