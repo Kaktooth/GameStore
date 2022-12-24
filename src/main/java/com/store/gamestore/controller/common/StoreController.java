@@ -109,6 +109,7 @@ public class StoreController {
         if (searchString == null || searchString.equals("")) {
             model.addAttribute("search", false);
         } else {
+            searchString = searchString.replace(" "," | ");
             List<UploadedGame> searchedGames = gameSearchService.searchGames(searchString, searchRange);
             List<UploadedGameDTO> searchedGamesDto = new ArrayList<>();
             for (var game : searchedGames) {
