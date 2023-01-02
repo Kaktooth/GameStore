@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>aeb4e147-1312-49a8-9b11-130226eef07c.SCHEMA:game_store_db.public</OriginalElement>
+  <nodes>
+    <node x="619.5" y="936.5">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.processors</node>
+    <node x="756.0" y="781.0">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.game_genres</node>
+    <node x="1208.0" y="494.5">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.user_profiles</node>
+    <node x="1058.0" y="831.3219322635757">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.uploaded_games</node>
+    <node x="1182.0" y="327.6913503735218">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.store_banner</node>
+    <node x="1458.5" y="786.82179059328">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.authorities</node>
+    <node x="943.0" y="792.0">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.games</node>
+    <node x="1061.5" y="522.5">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.images</node>
+    <node x="766.5" y="660.5">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.genres</node>
+    <node x="1004.5" y="327.6913503735218">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.game_pictures</node>
+    <node x="1050.775873221216" y="916.0">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.purchase_history</node>
+    <node x="1289.0" y="674.5394291648521">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.user_pictures</node>
+    <node x="1458.5" y="960.0">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.user_authorities</node>
+    <node x="847.0517464424321" y="870.5">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.game_files</node>
+    <node x="538.0" y="327.6913503735218">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.system_requirements</node>
+    <node x="1289.0" y="786.82179059328">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.users</node>
+    <node x="591.5" y="830.8219322635757">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.graphics_cards</node>
+    <node x="1074.0" y="627.5">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.user_games</node>
+    <node x="817.0" y="327.69135037352186">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.game_profiles</node>
+    <node x="-17.0" y="1412.5">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.flyway_schema_history</node>
+    <node x="564.5" y="702.0">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.operating_systems</node>
+    <node x="1426.5" y="337.5">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.game_picture_types</node>
+    <node x="1061.5" y="738.5">aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.favorite_games</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.game_files" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.games" relationship="REFERENCES">
+      <point x="64.00025355756793" y="-49.5" />
+      <point x="1042.0" y="893.5" />
+      <point x="1042.0" y="820.0" />
+      <point x="41.0" y="0.0" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.game_pictures" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.game_picture_types" relationship="REFERENCES">
+      <point x="0.0" y="-61.5" />
+      <point x="1084.0" y="310.1913503735218" />
+      <point x="1516.5" y="310.1913503735218" />
+      <point x="0.0" y="-39.5" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.user_pictures" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.images" relationship="REFERENCES">
+      <point x="64.0" y="-4.291648521075331E-4" />
+      <point x="1434.5" y="725.039" />
+      <point x="1434.5" y="467.0" />
+      <point x="1123.0" y="467.0" />
+      <point x="0.0" y="-39.5" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.store_banner" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.users" relationship="REFERENCES">
+      <point x="91.5" y="-3.5037352182598624E-4" />
+      <point x="1409.0" y="389.191" />
+      <point x="1409.0" y="652.0" />
+      <point x="1258.0" y="652.0" />
+      <point x="1258.0" y="870.322" />
+      <point x="-79.5" y="2.0940672004599037E-4" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.favorite_games" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.users" relationship="REFERENCES">
+      <point x="71.0" y="0.0" />
+      <point x="1223.0" y="777.5" />
+      <point x="1223.0" y="652.0" />
+      <point x="1258.0" y="652.0" />
+      <point x="1258.0" y="870.322" />
+      <point x="-79.5" y="2.0940672004599037E-4" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.game_pictures" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.images" relationship="REFERENCES">
+      <point x="0.0" y="61.499649626478174" />
+      <point x="1084.0" y="467.0" />
+      <point x="1123.0" y="467.0" />
+      <point x="0.0" y="-39.5" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.store_banner" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.images" relationship="REFERENCES">
+      <point x="0.0" y="61.499649626478174" />
+      <point x="1273.5" y="467.0" />
+      <point x="1123.0" y="467.0" />
+      <point x="0.0" y="-39.5" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.user_pictures" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.users" relationship="REFERENCES">
+      <point x="0.0" y="-50.50042916485211" />
+      <point x="1353.0" y="652.0" />
+      <point x="1258.0" y="652.0" />
+      <point x="1258.0" y="870.322" />
+      <point x="-79.5" y="2.0940672004599037E-4" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.store_banner" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.games" relationship="REFERENCES">
+      <point x="-90.0" y="61.499649626478174" />
+      <point x="1183.5" y="505.0" />
+      <point x="1011.0" y="505.0" />
+      <point x="1011.0" y="772.0" />
+      <point x="1042.0" y="772.0" />
+      <point x="1042.0" y="820.0" />
+      <point x="41.0" y="0.0" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.favorite_games" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.games" relationship="REFERENCES">
+      <point x="-71.0" y="-5.5" />
+      <point x="1042.0" y="772.0" />
+      <point x="1042.0" y="820.0" />
+      <point x="41.0" y="0.0" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.user_games" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.users" relationship="REFERENCES">
+      <point x="58.5" y="0.0" />
+      <point x="1223.0" y="678.0" />
+      <point x="1223.0" y="652.0" />
+      <point x="1258.0" y="652.0" />
+      <point x="1258.0" y="870.322" />
+      <point x="-79.5" y="2.0940672004599037E-4" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.purchase_history" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.games" relationship="REFERENCES">
+      <point x="-87.49987322121592" y="0.0" />
+      <point x="1017.5" y="977.5" />
+      <point x="1017.5" y="893.5" />
+      <point x="1042.0" y="893.5" />
+      <point x="1042.0" y="820.0" />
+      <point x="41.0" y="0.0" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.system_requirements" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.operating_systems" relationship="REFERENCES">
+      <point x="-27.5" y="149.5" />
+      <point x="0.0" y="-39.5" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.uploaded_games" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.users" relationship="REFERENCES">
+      <point x="76.5" y="6.773642428470339E-5" />
+      <point x="-79.5" y="2.0940672004599037E-4" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.game_genres" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.games" relationship="REFERENCES">
+      <point x="64.0" y="0.0" />
+      <point x="900.552" y="820.0" />
+      <point x="900.552" y="772.0" />
+      <point x="1042.0" y="772.0" />
+      <point x="1042.0" y="820.0" />
+      <point x="41.0" y="0.0" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.authorities" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.users" relationship="REFERENCES">
+      <point x="0.0" y="-71.99979059327995" />
+      <point x="1523.5" y="652.0" />
+      <point x="1258.0" y="652.0" />
+      <point x="1258.0" y="870.322" />
+      <point x="-79.5" y="2.0940672004599037E-4" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.system_requirements" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.graphics_cards" relationship="REFERENCES">
+      <point x="-128.0" y="149.5" />
+      <point x="547.0" y="870.3219322635757" />
+      <point x="-69.5" y="0.0" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.system_requirements" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.processors" relationship="REFERENCES">
+      <point x="-137.0" y="15.0" />
+      <point x="505.5" y="492.1913503735218" />
+      <point x="505.5" y="976.0" />
+      <point x="-55.5" y="0.0" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.game_profiles" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.games" relationship="REFERENCES">
+      <point x="84.5" y="-3.5037352188282966E-4" />
+      <point x="1011.0" y="488.191" />
+      <point x="1011.0" y="772.0" />
+      <point x="1042.0" y="772.0" />
+      <point x="1042.0" y="820.0" />
+      <point x="41.0" y="0.0" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.user_profiles" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.users" relationship="REFERENCES">
+      <point x="0.0" y="72.5" />
+      <point x="1292.5" y="652.0" />
+      <point x="1258.0" y="652.0" />
+      <point x="1258.0" y="870.322" />
+      <point x="-79.5" y="2.0940672004599037E-4" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.user_games" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.games" relationship="REFERENCES">
+      <point x="-58.5" y="0.0" />
+      <point x="1042.0" y="678.0" />
+      <point x="1042.0" y="820.0" />
+      <point x="41.0" y="0.0" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.game_pictures" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.games" relationship="REFERENCES">
+      <point x="-15.0" y="61.499649626478174" />
+      <point x="1069.0" y="505.0" />
+      <point x="1011.0" y="505.0" />
+      <point x="1011.0" y="772.0" />
+      <point x="1042.0" y="772.0" />
+      <point x="1042.0" y="820.0" />
+      <point x="41.0" y="0.0" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.purchase_history" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.users" relationship="REFERENCES">
+      <point x="87.50012677878408" y="0.0" />
+      <point x="1258.0" y="977.5" />
+      <point x="1258.0" y="870.322" />
+      <point x="-79.5" y="2.0940672004599037E-4" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.game_genres" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.genres" relationship="REFERENCES">
+      <point x="0.0" y="-39.0" />
+      <point x="0.0" y="39.5" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.uploaded_games" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.games" relationship="REFERENCES">
+      <point x="-76.5" y="6.773642428470339E-5" />
+      <point x="1042.0" y="870.322" />
+      <point x="1042.0" y="820.0" />
+      <point x="41.0" y="0.0" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.authorities" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.user_authorities" relationship="REFERENCES">
+      <point x="8.0" y="72.0" />
+      <point x="0.0" y="-39.5" />
+    </edge>
+    <edge source="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.system_requirements" target="aeb4e147-1312-49a8-9b11-130226eef07c.TABLE:game_store_db.public.game_profiles" relationship="REFERENCES">
+      <point x="137.0" y="11.000000000000057" />
+      <point x="-84.5" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Channel" zoom="0.85" showDependencies="false" x="1174.0" y="670.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
