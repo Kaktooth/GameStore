@@ -1,17 +1,15 @@
 package com.store.gamestore.service.game.genre;
 
-import com.store.gamestore.model.entity.GameGenre;
-import com.store.gamestore.repository.CommonRepository;
+import com.store.gamestore.persistence.entity.GameGenre;
+import com.store.gamestore.persistence.repository.CommonRepository;
 import com.store.gamestore.service.AbstractService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.UUID;
+import org.springframework.stereotype.Service;
 
 @Service
-@Transactional
 public class GameGenreService extends AbstractService<GameGenre, UUID> {
-    public GameGenreService(CommonRepository<GameGenre, UUID> repository) {
-        super(repository);
-    }
+
+  public GameGenreService(CommonRepository<GameGenre, UUID> repository) {
+    super(repository);
+  }
 }

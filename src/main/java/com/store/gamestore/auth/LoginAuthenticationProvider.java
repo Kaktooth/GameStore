@@ -44,7 +44,7 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
             if (user.getAuthorities() == null) {
                 SimpleGrantedAuthority userAuthority = new SimpleGrantedAuthority(Authority.USER.toString());
                 SimpleGrantedAuthority adminAuthority = new SimpleGrantedAuthority(Authority.ADMIN.toString());
-
+                // TODO delete this and get authorities from list
                 if (!Objects.equals(username, "admin@gmail.com")) {
                     authorities.add(userAuthority);
                 } else {

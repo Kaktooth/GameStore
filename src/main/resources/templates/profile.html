@@ -84,14 +84,16 @@
              style="height: 125px;">
             <div class="col">
                 <div class="col">
-                    <img style="width:120px;height:120px" src="" th:if="${userImage}!=null"
+                    <img style="width:140px;height:140px" src="" th:if="${userImage}!=null"
                          class="border-dark float-right rounded img-fluid d-block"
-                         alt="" th:src="'data:image/png;base64,'+ ${userImage.getBase64ImageData()}"/>
+                         alt="" th:src="'data:image/png;base64,'+
+                          ${userImage.image.getBase64ImageData()}"/>
                 </div>
             </div>
             <div class="col">
                 <h5 class="border-dark" th:text="${user.publicUsername}"></h5>
-                <p class="text-muted" th:if="${user.resume} != null" th:text="${user.resume}"></p>
+                <p class="text-muted" th:if="${userProfile.resume} != null"
+                   th:text="${userProfile.resume}"></p>
             </div>
         </div>
 
@@ -123,10 +125,10 @@
                          class="d-block w-100 img-fluid"/>
                 </div>
                 <div class="col-5 text-left">
-                    <h6 th:text="${favorite.game.gameProfile.title}"></h6>
-                    <p class="text-info" th:text="'Developer: ' + ${favorite.game.gameProfile.developer}"></p>
-                    <p th:if="${favorite.game.gameProfile.developer} != ${favorite.game.gameProfile.publisher}"
-                       class="md-2 text-info" th:text="'Publisher: ' + ${favorite.game.gameProfile.publisher}"></p>
+                    <h6 th:text="${favorite.game.title}"></h6>
+                    <p class="text-info" th:text="'Developer: ' + ${favorite.game.developer}"></p>
+                    <p th:if="${favorite.game.developer} != ${favorite.game.publisher}"
+                       class="md-2 text-info" th:text="'Publisher: ' + ${favorite.game.publisher}"></p>
                     <label class="text-info" th:text="${favorite.game.genre.toString()}"></label>
                 </div>
                 <div class="col text-right">
@@ -204,8 +206,7 @@
 font-small text-muted shadow">
     <div class="container text-center">
         <p>
-            All rights reserved. All trademarks are property of their respective owners in the US and other
-            countries.
+            This website is only for educational and demonstration purposes.
         </p>
         <a href="">Privacy Policy</a>
         <a href="">Agreement</a>

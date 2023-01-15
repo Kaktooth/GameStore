@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class GameProfile {

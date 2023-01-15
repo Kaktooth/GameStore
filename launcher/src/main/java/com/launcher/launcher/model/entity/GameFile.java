@@ -10,8 +10,6 @@ import lombok.Setter;
 import java.util.UUID;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(value = {"multipartFile"})

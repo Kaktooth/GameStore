@@ -1,0 +1,34 @@
+package com.store.gamestore.persistence.entity;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@Data
+@Entity
+@Table(name = "games")
+@EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
+@NoArgsConstructor
+public class Game extends Domain implements Serializable {
+
+  @Column(name = "title", nullable = false)
+  private String title;
+
+  @Column(name = "price", nullable = false)
+  private BigDecimal price;
+
+  @Column(name = "developer", nullable = false)
+  private String developer;
+
+  @Column(name = "publisher")
+  private String publisher;
+}

@@ -1,5 +1,5 @@
 CREATE TABLE user_authorities
 (
-    id          SERIAL PRIMARY KEY,
+    id          INTEGER PRIMARY KEY,
     authorities VARCHAR NOT NULL
 );

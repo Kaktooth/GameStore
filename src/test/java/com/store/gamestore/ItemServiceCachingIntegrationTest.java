@@ -1,9 +1,14 @@
 package com.store.gamestore;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+
 import com.store.gamestore.config.CacheConfig;
-import com.store.gamestore.model.entity.StoreBannerItem;
-import com.store.gamestore.repository.CommonRepository;
+import com.store.gamestore.persistence.entity.StoreBanner;
+import com.store.gamestore.persistence.repository.CommonRepository;
 import com.store.gamestore.service.store.banner.StoreBannerService;
+import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -16,12 +21,6 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.testng.Assert;
-
-import java.util.List;
-import java.util.UUID;
-
-import static org.mockito.Mockito.times;
 
 @Import({CacheConfig.class, StoreBannerService.class})
 @ExtendWith(SpringExtension.class)
@@ -30,26 +29,29 @@ import static org.mockito.Mockito.times;
     CacheAutoConfiguration.class,
     RedisAutoConfiguration.class
 })
-public class ItemServiceCachingIntegrationTest {
+class ItemServiceCachingIntegrationTest {
 
-    @MockBean
-    private CommonRepository<StoreBannerItem, UUID> mockRepository;
+  @MockBean
+  private CommonRepository<StoreBanner, UUID> mockRepository;
 
-    @Autowired
-    private CommonRepository<StoreBannerItem, UUID> storeBannerService;
+  @Autowired
+  private CommonRepository<StoreBanner, UUID> storeBannerService;
 
-    @Autowired
-    private CacheManager cacheManager;
+  @Autowired
+  private CacheManager cacheManager;
 
-    @Test
-    void givenRedisCaching_whenFindItemById_thenItemReturnedFromCache() {
-        List<StoreBannerItem> itemCacheMiss = storeBannerService.getAll();
-        List<StoreBannerItem> itemCacheHit = storeBannerService.getAll();
-        List<StoreBannerItem> itemCacheHitAgain = storeBannerService.getAll();
-        System.out.println("******************************************************************************************************** " +
-            "CACHE NAMES: " + cacheManager.getCacheNames() + cacheManager.getCache("storeBannerItemsCached").getNativeCache().toString());
-        Assert.assertEquals(itemCacheHit, itemCacheMiss);
+  @Test
+  void givenRedisCaching_whenFindItemById_thenItemReturnedFromCache() {
+    List<StoreBanner> itemCacheMiss = storeBannerService.findAll();
+    List<StoreBanner> itemCacheHit = storeBannerService.findAll();
+    List<StoreBanner> itemCacheHitAgain = storeBannerService.findAll();
+    System.out.println(
+        "******************************************************************************************************** "
+            +
+            "CACHE NAMES: " + cacheManager.getCacheNames() + cacheManager.getCache(
+            "storeBannerItemsCached").getNativeCache().toString());
+    assertEquals(itemCacheHit, itemCacheMiss);
 
-        Mockito.verify(mockRepository, times(1)).getAll();
-    }
+    Mockito.verify(mockRepository, times(3)).findAll();
+  }
 }

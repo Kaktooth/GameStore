@@ -1,0 +1,22 @@
+package com.store.gamestore.service.game.pictures;
+
+import com.store.gamestore.persistence.entity.GamePicture;
+import com.store.gamestore.persistence.repository.game.pictures.GamePictureRepository;
+import com.store.gamestore.service.AbstractService;
+import java.util.UUID;
+import org.springframework.stereotype.Service;
+
+@Service
+public class GamePictureServiceImpl extends AbstractService<GamePicture, UUID>
+    implements GamePictureService {
+
+  public GamePictureServiceImpl(GamePictureRepository repository) {
+    super(repository);
+  }
+
+  @Override
+  public GamePicture findGamePictureByGameIdAndPictureTypeId(UUID gameId, Integer typeId) {
+    return ((GamePictureRepository) repository).findGamePictureByGameIdAndPictureTypeId(gameId,
+        typeId);
+  }
+}

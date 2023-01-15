@@ -9,8 +9,6 @@ import lombok.Setter;
 import java.io.Serializable;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserGameDTO implements Serializable {

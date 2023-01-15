@@ -1,10 +1,14 @@
 package com.store.gamestore.service;
 
-import com.store.gamestore.repository.CommonRepository;
+import com.store.gamestore.persistence.entity.Domain;
+import com.store.gamestore.persistence.repository.CommonRepository;
 
+import java.io.Serializable;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
-public class AbstractService<T, I> implements CommonService<T, I> {
+@Transactional
+public class AbstractService<T extends Domain, I extends Serializable> implements CommonService<T, I> {
 
     protected final CommonRepository<T, I> repository;
 
@@ -18,27 +22,30 @@ public class AbstractService<T, I> implements CommonService<T, I> {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public T get(I id) {
-        return repository.get(id);
+        return repository.getById(id);
     }
 
     @Override
-    public List<T> getAll(I id) {
-        return repository.getAll(id);
+    @Transactional(readOnly = true)
+    public List<T> getAll(Iterable<I> ids) {
+        return repository.findAllById(ids);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<T> getAll() {
-        return repository.getAll();
+        return repository.findAll();
     }
 
     @Override
     public void update(T object) {
-        repository.update(object);
+        repository.save(object);
     }
 
     @Override
     public void delete(I id) {
-        repository.delete(id);
+        repository.deleteById(id);
     }
 }

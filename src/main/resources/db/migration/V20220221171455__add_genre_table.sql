@@ -1,5 +1,5 @@
 CREATE TABLE genres
 (
-    id    SERIAL PRIMARY KEY,
-    genre VARCHAR UNIQUE NOT NULL
+    id    INTEGER PRIMARY KEY,
+    name VARCHAR UNIQUE NOT NULL
 );

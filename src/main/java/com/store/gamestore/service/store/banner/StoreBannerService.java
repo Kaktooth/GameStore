@@ -1,24 +1,16 @@
 package com.store.gamestore.service.store.banner;
 
-import com.store.gamestore.model.entity.StoreBannerItem;
-import com.store.gamestore.repository.CommonRepository;
+import com.store.gamestore.persistence.entity.StoreBanner;
+import com.store.gamestore.persistence.repository.CommonRepository;
 import com.store.gamestore.service.AbstractService;
+import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.UUID;
-
 @Service
-@Transactional
-public class StoreBannerService extends AbstractService<StoreBannerItem, UUID> {
+public class StoreBannerService extends AbstractService<StoreBanner, UUID> {
 
-    public StoreBannerService(CommonRepository<StoreBannerItem, UUID> repository) {
-        super(repository);
-    }
-
-    @Override
-    public List<StoreBannerItem> getAll() {
-        return super.getAll();
-    }
+  public StoreBannerService(CommonRepository<StoreBanner, UUID> repository) {
+    super(repository);
+  }
 }

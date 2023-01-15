@@ -9,8 +9,6 @@ import lombok.Setter;
 import java.io.ByteArrayInputStream;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class GameBlob {

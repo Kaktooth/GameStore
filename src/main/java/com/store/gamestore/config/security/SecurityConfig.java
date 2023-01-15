@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .jdbcAuthentication()
             .dataSource(dataSource)
             .passwordEncoder(passwordEncoder)
-            .usersByUsernameQuery("SELECT username, email, password, enabled FROM users WHERE username = ?")
+            .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username = ?")
             .authoritiesByUsernameQuery("SELECT username, email, authority FROM authorities WHERE username = ?");
     }
 

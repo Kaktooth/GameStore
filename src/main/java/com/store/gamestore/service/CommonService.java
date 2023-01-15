@@ -8,7 +8,7 @@ public interface CommonService<T, I> {
 
     T get(I id);
 
-    List<T> getAll(I id);
+    List<T> getAll(Iterable<I> ids);
 
     List<T> getAll();
 

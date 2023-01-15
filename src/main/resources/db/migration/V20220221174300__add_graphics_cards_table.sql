@@ -1,5 +1,5 @@
 CREATE TABLE graphics_cards
 (
-    id   SERIAL PRIMARY KEY,
+    id   INTEGER PRIMARY KEY,
     name VARCHAR NOT NULL
 );

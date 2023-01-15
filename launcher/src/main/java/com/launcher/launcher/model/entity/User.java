@@ -12,10 +12,7 @@ import java.util.UUID;
 
 
 @Data
-@Getter
-@Setter
 @Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
