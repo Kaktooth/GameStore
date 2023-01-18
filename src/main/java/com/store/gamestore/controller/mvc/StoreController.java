@@ -53,8 +53,8 @@ public class StoreController {
 
     int size = 4;
     Integer searchRange = 4;
-    List<StoreBanner> bannerItems = storeBannerService.getAll();
-    model.addAttribute("bannerItems", bannerItems);
+    List<StoreBanner> storeBanners = storeBannerService.getAll();
+    model.addAttribute("bannerItems", storeBanners);
 
     //TODO REWRITE! use recommendation service
     List<Game> popularGames = gameService.getAll();

@@ -3,9 +3,15 @@ package com.store.gamestore.persistence.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,4 +37,12 @@ public class Game extends Domain implements Serializable {
 
   @Column(name = "publisher")
   private String publisher;
+
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+  @JoinTable(
+      name = "game_genres",
+      joinColumns = {@JoinColumn(name = "game_id")},
+      inverseJoinColumns = {@JoinColumn(name = "genre_id")}
+  )
+  private Set<Genre> genres;
 }

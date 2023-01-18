@@ -4,7 +4,6 @@ import com.store.gamestore.model.dto.GameplayImagesDTO;
 import com.store.gamestore.model.dto.UploadGameDTO;
 import com.store.gamestore.persistence.entity.Game;
 import com.store.gamestore.persistence.entity.GameFile;
-import com.store.gamestore.persistence.entity.GameGenre;
 import com.store.gamestore.persistence.entity.GamePicture;
 import com.store.gamestore.persistence.entity.GamePictureType;
 import com.store.gamestore.persistence.entity.GameProfile;
@@ -16,20 +15,16 @@ import com.store.gamestore.persistence.entity.Processor;
 import com.store.gamestore.persistence.entity.SystemRequirements;
 import com.store.gamestore.persistence.entity.UploadedGame;
 import com.store.gamestore.persistence.entity.User;
-import com.store.gamestore.persistence.entity.UserProfile;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.enumeration.CommonEnumerationService;
 import com.store.gamestore.service.user.UserService;
-import com.store.gamestore.service.user.profile.UserProfileService;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import javax.sql.rowset.serial.SerialBlob;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -47,12 +42,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class GameUploadController {
 
   private final CommonService<User, UUID> userService;
-
-  private final CommonService<UserProfile, UUID> userProfileService;
   private final CommonService<Game, UUID> gameService;
   private final CommonService<Image, UUID> imageService;
   private final CommonService<GamePicture, UUID> gameImageService;
-  private final CommonService<GameGenre, UUID> gameGenreService;
   private final CommonService<GameFile, UUID> gameFileService;
   private final CommonService<GameProfile, UUID> gameProfileService;
   private final CommonService<SystemRequirements, UUID> requirementsService;
@@ -85,8 +77,7 @@ public class GameUploadController {
   }
 
   @PostMapping
-  public String uploadFile(@ModelAttribute UploadGameDTO uploadInput,
-      BindingResult bindingResult,
+  public String uploadFile(@ModelAttribute UploadGameDTO uploadInput, BindingResult bindingResult,
       RedirectAttributes attributes) throws IOException, SQLException {
 
     if (uploadInput.getFile().isEmpty()) {
@@ -94,21 +85,26 @@ public class GameUploadController {
       return "redirect:/";
     }
 
-    Game game = gameService.save(new Game(uploadInput.getTitle(), uploadInput.getPrice(),
-        uploadInput.getDeveloper(), uploadInput.getPublisher()));
+    Set<Genre> genres = new HashSet<>();
+    for (Integer genre : uploadInput.getGenres()) {
+      genres.add(genreService.get(genre));
+    }
+
+    Game game = gameService.save(
+        new Game(uploadInput.getTitle(), uploadInput.getPrice(), uploadInput.getDeveloper(),
+            uploadInput.getPublisher(), genres));
 
     gameFileService.save(new GameFile(uploadInput.getFile().getOriginalFilename(),
-      uploadInput.getFile().getInputStream().readAllBytes(), uploadInput.getVersion(), game.getId()));
+        uploadInput.getFile().getInputStream().readAllBytes(), uploadInput.getVersion(),
+        game.getId()));
 
-    GameProfile gameProfile = new GameProfile(
-        LocalDate.now(), uploadInput.getDescription(), uploadInput.getSmallDescription(),
-        game.getId());
+    GameProfile gameProfile = new GameProfile(LocalDate.now(), uploadInput.getDescription(),
+        uploadInput.getSmallDescription(), game.getId());
     GameProfile savedGameProfile = gameProfileService.save(gameProfile);
 
     SystemRequirements requirements = new SystemRequirements(uploadInput.getMinMemory(),
-        uploadInput.getRecMemory(), uploadInput.getMinStorage(),
-        uploadInput.getRecStorage(), savedGameProfile.getId(),
-        uploadInput.getMinProcessorId(), uploadInput.getRecProcessorId(),
+        uploadInput.getRecMemory(), uploadInput.getMinStorage(), uploadInput.getRecStorage(),
+        savedGameProfile.getId(), uploadInput.getMinProcessorId(), uploadInput.getRecProcessorId(),
         uploadInput.getMinGraphicCardId(), uploadInput.getRecGraphicCardId(),
         uploadInput.getMinOSId(), uploadInput.getRecOSId());
     requirementsService.save(requirements);
@@ -117,27 +113,21 @@ public class GameUploadController {
     String name = authentication.getName();
     User user = ((UserService) userService).findUserByUsername(name);
 
-    UploadedGame uploadedGame = new UploadedGame(user.getId(), game.getId());
+    UploadedGame uploadedGame = new UploadedGame(user.getId(), game);
     uploadedGameService.save(uploadedGame);
 
-    Set<Genre> genres = new HashSet<>();
-    for (Integer genre : uploadInput.getGenres()) {
-      genres.add(genreService.get(genre));
-    }
-    gameGenreService.save(new GameGenre(game.getId(), genres));
+    Image storeImage = imageService.save(
+        new Image(uploadInput.getGameImages().getStoreImage().getInputStream().readAllBytes()));
+    GamePicture storeGameImage = new GamePicture(game.getId(), GamePictureType.STORE.ordinal(),
+        storeImage);
 
-    Image storeImage = imageService.save(new Image(
-        uploadInput.getGameImages().getStoreImage().getInputStream().readAllBytes()));
-    GamePicture storeGameImage = new GamePicture(game.getId(),
-        GamePictureType.STORE.ordinal(), storeImage);
+    Image pageImage = imageService.save(
+        new Image(uploadInput.getGameImages().getStoreImage().getInputStream().readAllBytes()));
+    GamePicture gamePageImage = new GamePicture(game.getId(), GamePictureType.GAME_PAGE.ordinal(),
+        pageImage);
 
-    Image pageImage = imageService.save(new Image(
-        uploadInput.getGameImages().getStoreImage().getInputStream().readAllBytes()));
-    GamePicture gamePageImage = new GamePicture(game.getId(),
-        GamePictureType.GAME_PAGE.ordinal(), pageImage);
-
-    Image collectionImage = imageService.save(new Image(
-        uploadInput.getGameImages().getStoreImage().getInputStream().readAllBytes()));
+    Image collectionImage = imageService.save(
+        new Image(uploadInput.getGameImages().getStoreImage().getInputStream().readAllBytes()));
     GamePicture collectionGameImage = new GamePicture(game.getId(),
         GamePictureType.COLLECTION.ordinal(), collectionImage);
     gameImageService.save(storeGameImage);
@@ -151,8 +141,9 @@ public class GameUploadController {
       gameImageService.save(gameplayGamePicture);
     }
 
-    attributes.addFlashAttribute("message", "Your game and file successfully uploaded "
-        + uploadInput.getFile().getOriginalFilename() + '!');
+    attributes.addFlashAttribute("message",
+        "Your game and file successfully uploaded " + uploadInput.getFile().getOriginalFilename()
+            + '!');
 
     return "redirect:/uploaded-games";
   }

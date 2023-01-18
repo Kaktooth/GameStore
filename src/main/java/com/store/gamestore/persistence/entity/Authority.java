@@ -19,13 +19,10 @@ public class Authority extends Domain {
 
   @Column(name = "username", nullable = false)
   private String username;
-
   @Column(name = "email", nullable = false)
   private String email;
-
   @Column(name = "authority", nullable = false)
   private Integer authorityId;
-
   @Column(name = "user_id", nullable = false)
   private UUID userId;
 

@@ -4,15 +4,11 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.hibernate.Hibernate;
 
 @MappedSuperclass
