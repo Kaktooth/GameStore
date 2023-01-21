@@ -99,7 +99,7 @@
             <div class="row">
                 <div class="col-md-8 mx-auto">
                     <form class="mb-5" method="post"
-                          th:action="@{/uploaded-games/edit/{gameId}(gameId = ${uploadedGame.game.id})}"
+                          th:action="@{/uploaded-games/edit/{gameId}(gameId = ${uploadedGame.id})}"
                           th:object="${editGameInput}">
                         <div class="text-white mb-2">
                             <label for="title" class="form-label">Title</label>
@@ -231,13 +231,13 @@
                         <a style="background-image: var(--bs-gradient);"
                            class="btn btn-md btn-primary float-right"
                            type="button"
-                           th:href="@{/uploaded-games/edit/{gameId}/files(gameId =${uploadedGame.game.id})}"
-                           th:text="'Go to ' + ${uploadedGame.game.title} + ' files'"> </a>
+                           th:href="@{/uploaded-games/edit/{gameId}/files(gameId =${uploadedGame.id})}"
+                           th:text="'Go to ' + ${uploadedGame.title} + ' files'"> </a>
 
                     </form>
 
                     <form method="post"
-                          th:action="@{/uploaded-games/edit/{gameId}/delete(gameId = ${uploadedGame.game.id})}">
+                          th:action="@{/uploaded-games/edit/{gameId}/delete(gameId = ${uploadedGame.id})}">
                         <button type="submit" class="btn bg-danger float-right">
                             Delete
                         </button>

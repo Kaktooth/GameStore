@@ -1,30 +1,28 @@
 package com.launcher.launcher.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.Set;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class GameGenre {
-    public Set<Genre> genres;
-    public UUID gameId;
 
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-        for (Genre genre : genres) {
-            result.append(genre.toString());
-            if (genres.toArray()[genres.size() - 1] != genre) {
-                result.append(", ");
-            }
-        }
-        return result.toString();
+  private Set<Genre> genres;
+  private UUID gameId;
+
+  @Override
+  public String toString() {
+    StringBuilder result = new StringBuilder();
+    for (Genre genre : genres) {
+      result.append(genre.toString());
+      if (genres.toArray()[genres.size() - 1] != genre) {
+        result.append(", ");
+      }
     }
+    return result.toString();
+  }
 }

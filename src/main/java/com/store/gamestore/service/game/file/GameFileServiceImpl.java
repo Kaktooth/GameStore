@@ -20,4 +20,9 @@ public class GameFileServiceImpl extends AbstractService<GameFile, UUID> impleme
   public List<GameFile> findAllByGameId(UUID gameId) {
     return ((GameFileRepository) repository).findAllByGameId(gameId);
   }
+
+  @Override
+  public GameFile getLatestFileVersionByGameId(UUID gameId) {
+    return ((GameFileRepository) repository).getLatestFileVersionByGameId(gameId);
+  }
 }

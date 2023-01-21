@@ -29,7 +29,7 @@ public class GameSearchService implements SearchService<GameDTO> {
         .limit(count)
         .map(game -> new GameDTO(game,
             gamePictureRepository.findGamePictureByGameIdAndPictureTypeId(game.getId(),
-                GamePictureType.COLLECTION.ordinal())))
+                GamePictureType.GAME_PAGE.ordinal())))
         .toList();
   }
 }

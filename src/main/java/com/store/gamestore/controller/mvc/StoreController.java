@@ -1,17 +1,15 @@
 package com.store.gamestore.controller.mvc;
 
 import com.store.gamestore.model.dto.GameDTO;
+import com.store.gamestore.model.util.GameMapper;
 import com.store.gamestore.model.util.Pagination;
 import com.store.gamestore.persistence.entity.Game;
-import com.store.gamestore.persistence.entity.GamePicture;
-import com.store.gamestore.persistence.entity.GamePictureType;
 import com.store.gamestore.persistence.entity.StoreBanner;
 import com.store.gamestore.persistence.entity.User;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.game.pictures.GamePictureService;
 import com.store.gamestore.service.search.SearchService;
 import com.store.gamestore.service.user.UserService;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -32,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class StoreController {
 
   private final CommonService<Game, UUID> gameService;
+  private final GameMapper gameMapper;
   private final UserService userService;
   private final SearchService<GameDTO> gameSearchService;
   private final GamePictureService gameImageService;
@@ -54,14 +53,8 @@ public class StoreController {
     List<StoreBanner> storeBanners = storeBannerService.getAll();
     model.addAttribute("bannerItems", storeBanners);
 
-    //TODO REWRITE! use recommendation service
     List<Game> popularGames = gameService.getAll();
-    List<GameDTO> popularGamesDtoList = new ArrayList<>();
-    for (var game : popularGames) {
-      GamePicture gameImage = gameImageService.findGamePictureByGameIdAndPictureTypeId(
-          game.getId(), GamePictureType.STORE.ordinal());
-      popularGamesDtoList.add(new GameDTO(game, gameImage));
-    }
+    List<GameDTO> popularGamesDtoList = gameMapper.sourceToDestination(popularGames);
     Pagination<GameDTO> pagination = new Pagination<>(popularGamesDtoList);
     Map<Integer, List<GameDTO>> popularGamesMap = pagination.toMap(size,
         pagination.getPageCount(size));

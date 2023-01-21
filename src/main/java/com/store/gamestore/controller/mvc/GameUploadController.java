@@ -19,10 +19,12 @@ import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.enumeration.CommonEnumerationService;
 import com.store.gamestore.service.user.UserService;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import javax.sql.rowset.serial.SerialBlob;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -76,7 +78,7 @@ public class GameUploadController {
 
   @PostMapping
   public String uploadFile(@ModelAttribute UploadGameDTO uploadInput, RedirectAttributes attributes)
-      throws IOException {
+      throws IOException, SQLException {
 
     if (uploadInput.getFile().isEmpty()) {
       attributes.addFlashAttribute("message", "Please select a file to upload.");
@@ -92,9 +94,9 @@ public class GameUploadController {
         new Game(uploadInput.getTitle(), uploadInput.getPrice(), uploadInput.getDeveloper(),
             uploadInput.getPublisher(), genres));
 
+    var blob = new SerialBlob(uploadInput.getFile().getBytes());
     gameFileService.save(new GameFile(uploadInput.getFile().getOriginalFilename(),
-        uploadInput.getFile().getInputStream().readAllBytes(), uploadInput.getVersion(),
-        game.getId()));
+        uploadInput.getVersion(), game.getId(), blob));
 
     GameProfile gameProfile = new GameProfile(LocalDate.now(), uploadInput.getDescription(),
         uploadInput.getSmallDescription(), game.getId());

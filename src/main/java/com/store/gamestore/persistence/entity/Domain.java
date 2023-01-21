@@ -1,6 +1,5 @@
 package com.store.gamestore.persistence.entity;
 
-import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.GeneratedValue;
@@ -15,7 +14,7 @@ import org.hibernate.Hibernate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class Domain implements Serializable {
+public abstract class Domain {
 
   @Id
   @GeneratedValue

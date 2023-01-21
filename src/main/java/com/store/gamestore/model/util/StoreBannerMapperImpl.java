@@ -10,20 +10,15 @@ import org.springframework.stereotype.Component;
 public class StoreBannerMapperImpl implements StoreBannerMapper {
 
   @Override
-  public synchronized StoreBanner destinationToSource(StoreBannerDTO storeBannerDto) {
+  public synchronized StoreBanner destinationToSource(StoreBannerDTO storeBannerDto)
+      throws IOException {
     StoreBanner storeBanner = new StoreBanner();
     storeBanner.setGameId(storeBannerDto.getGameId());
     storeBanner.setUserId(storeBannerDto.getUserId());
     storeBanner.setDescription(storeBannerDto.getDescription());
 
-    var imageData = new byte[0];
-    try {
-      imageData = storeBannerDto.getImageFile().getBytes();
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-
-    var image = new Image(imageData);
+    final var imageData = storeBannerDto.getImageFile().getBytes();
+    final var image = new Image(imageData);
     storeBanner.setImage(image);
     return storeBanner;
   }

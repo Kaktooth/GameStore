@@ -1,42 +1,28 @@
 package com.launcher.launcher.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class GameProfile {
-    public Integer id;
-    public BigDecimal price;
-    public String title;
-    public String developer;
-    public String publisher;
-    public Integer rating;
-    public Integer views;
-    public Integer purchase;
-    public Integer favorite;
-    public LocalDateTime releaseDate;
-    public String description;
-    public String briefDescription;
-    public UUID gameId;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public String getTitle() {
-        return title;
-    }
+  private Integer id;
+  private BigDecimal price;
+  private String title;
+  private String developer;
+  private String publisher;
+  private Integer rating;
+  private Integer views;
+  private Integer purchase;
+  private Integer favorite;
+  private LocalDateTime releaseDate;
+  private String description;
+  private String briefDescription;
+  private UUID gameId;
 }

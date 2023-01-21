@@ -5,6 +5,7 @@ import com.store.gamestore.persistence.repository.CommonRepository;
 import com.store.gamestore.persistence.repository.enumeration.CommonEnumerationRepository;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -21,5 +22,10 @@ public class AbstractEnumerationService<T, I extends Number> implements
   @Override
   public List<T> getAll() {
     return repository.findAll();
+  }
+
+  @Override
+  public List<T> getAll(Iterable<I> ids) {
+    return repository.findAllById(ids);
   }
 }

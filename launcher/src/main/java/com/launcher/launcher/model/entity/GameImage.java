@@ -1,14 +1,11 @@
 package com.launcher.launcher.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -17,6 +14,6 @@ import java.util.UUID;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GameImage extends Image {
 
-    public UUID gameId;
-    public String pictureType;
+  private UUID gameId;
+  private String pictureType;
 }

@@ -79,7 +79,7 @@
         </div>
 
         <form method="post" th:action="@{/uploaded-games/edit/{gameId}/files(gameId =
-         ${uploadedGame.game.id})}" enctype="multipart/form-data">
+         ${uploadedGame.id})}" enctype="multipart/form-data">
 
             <h4>Upload</h4>
             <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>

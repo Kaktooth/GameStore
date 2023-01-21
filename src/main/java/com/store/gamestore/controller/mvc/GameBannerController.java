@@ -3,13 +3,13 @@ package com.store.gamestore.controller.mvc;
 
 import com.store.gamestore.model.dto.StoreBannerDTO;
 import com.store.gamestore.model.util.StoreBannerMapper;
-import com.store.gamestore.persistence.entity.Image;
 import com.store.gamestore.persistence.entity.StoreBanner;
 import com.store.gamestore.persistence.entity.UploadedGame;
 import com.store.gamestore.persistence.entity.User;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.game.uploaded.UploadedGameService;
 import com.store.gamestore.service.user.UserService;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +44,7 @@ public class GameBannerController {
   }
 
   @PostMapping("/upload")
-  public String uploadBanner(@ModelAttribute StoreBannerDTO gameBanner) {
+  public String uploadBanner(@ModelAttribute StoreBannerDTO gameBanner) throws IOException {
     User user = getUser();
     gameBanner.setUserId(user.getId());
     bannerService.save(storeBannerMapper.destinationToSource(gameBanner));

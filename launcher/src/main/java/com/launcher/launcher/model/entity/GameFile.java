@@ -1,22 +1,20 @@
 package com.launcher.launcher.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(value = {"multipartFile"})
 public class GameFile {
-    public Integer id;
-    public Integer objectId;
-    public String name;
-    public String version;
-    public UUID gameId;
+
+  private Integer id;
+  private Integer objectId;
+  private String name;
+  private String version;
+  private UUID gameId;
 }

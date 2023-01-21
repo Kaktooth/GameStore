@@ -4,7 +4,6 @@ package com.store.gamestore.model.dto;
 import com.store.gamestore.persistence.entity.Game;
 import com.store.gamestore.persistence.entity.GamePicture;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

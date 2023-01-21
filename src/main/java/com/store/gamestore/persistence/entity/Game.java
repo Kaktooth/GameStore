@@ -3,8 +3,6 @@ package com.store.gamestore.persistence.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,5 +42,5 @@ public class Game extends Domain implements Serializable {
       joinColumns = {@JoinColumn(name = "game_id")},
       inverseJoinColumns = {@JoinColumn(name = "genre_id")}
   )
-  private Set<Genre> genres;
+  private List<Genre> genres;
 }
