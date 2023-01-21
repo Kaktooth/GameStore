@@ -32,4 +32,9 @@ public class GamePictureServiceImpl extends AbstractService<GamePicture, UUID>
     return gamePictures;
   }
 
+  @Override
+  public List<GamePicture> findGameplayPicturesByGameId(UUID gameId) {
+    return ((GamePictureRepository)repository).findGameplayPicturesByGameId(gameId);
+  }
+
 }

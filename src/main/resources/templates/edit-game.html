@@ -98,7 +98,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 mx-auto">
-                    <form class="mb-5" method="post" th:action="@{/uploaded-games/edit/{id}(id = ${uploadedGame.game.id})}"
+                    <form class="mb-5" method="post"
+                          th:action="@{/uploaded-games/edit/{gameId}(gameId = ${uploadedGame.game.id})}"
                           th:object="${editGameInput}">
                         <div class="text-white mb-2">
                             <label for="title" class="form-label">Title</label>
@@ -111,7 +112,7 @@
                             </div>
 
                             <label for="description" class="form-label">Description</label>
-                            <textarea type="text" id="description" name="description" th:field="*{description}"
+                            <textarea id="description" name="description" th:field="*{description}"
                                       class="bg-gradient-light form-control text-muted" autofocus=""
                                       maxlength="3700" minlength="450" style="word-wrap:break-word;" required></textarea>
                             <div class="invalid-feedback">
@@ -119,7 +120,7 @@
                             </div>
 
                             <label for="smallDescription" class="form-label">Small description</label>
-                            <textarea type="text" id="smallDescription" style="word-wrap:break-word;"
+                            <textarea id="smallDescription" style="word-wrap:break-word;"
                                       name="smallDescription" th:field="*{smallDescription}"
                                       class="bg-gradient-light form-control text-muted" autofocus=""
                                       maxlength="440" minlength="140" required></textarea>
@@ -230,12 +231,13 @@
                         <a style="background-image: var(--bs-gradient);"
                            class="btn btn-md btn-primary float-right"
                            type="button"
-                           th:href="@{/uploaded-games/edit/{id}/files(id =${uploadedGame.game.id.toString()})}"
-                           th:text="'Go to ' + ${uploadedGame.game.gameProfile.title} + ' files'"> </a>
+                           th:href="@{/uploaded-games/edit/{gameId}/files(gameId =${uploadedGame.game.id})}"
+                           th:text="'Go to ' + ${uploadedGame.game.title} + ' files'"> </a>
 
                     </form>
 
-                    <form method="post" th:action="@{/uploaded-games/edit/{id}/delete(id = ${uploadedGame.game.id})}">
+                    <form method="post"
+                          th:action="@{/uploaded-games/edit/{gameId}/delete(gameId = ${uploadedGame.game.id})}">
                         <button type="submit" class="btn bg-danger float-right">
                             Delete
                         </button>

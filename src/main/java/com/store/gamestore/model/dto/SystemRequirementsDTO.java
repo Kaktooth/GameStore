@@ -1,31 +1,37 @@
 package com.store.gamestore.model.dto;
 
 
+import com.store.gamestore.persistence.entity.GraphicsCard;
+import com.store.gamestore.persistence.entity.OperatingSystem;
+import com.store.gamestore.persistence.entity.Processor;
+import java.util.UUID;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class SystemRequirementsDTO {
 
-  private Long minimalMemory;
+  private Integer minimalMemory;
 
-  private Long recommendedMemory;
+  private Integer recommendedMemory;
 
-  private Long minimalStorage;
+  private Integer minimalStorage;
 
-  private Long recommendedStorage;
+  private Integer recommendedStorage;
 
-  private String gameProfileId;
+  private UUID gameProfileId;
 
-  private Long minimalProcessorId;
+  private Processor minimalProcessor;
 
-  private Long recommendedProcessorId;
+  private Processor recommendedProcessor;
 
-  private Long minimalGraphicCardId;
+  private GraphicsCard minimalGraphicCard;
 
-  private Long recommendedGraphicCardId;
+  private GraphicsCard recommendedGraphicCard;
 
-  private Long minimalOperatingSystemId;
+  private OperatingSystem minimalOperatingSystem;
 
-  private Long recommendedOperatingSystemId;
+  private OperatingSystem recommendedOperatingSystem;
 
 }

@@ -2,10 +2,13 @@ package com.store.gamestore.persistence.entity;
 
 import java.io.Serializable;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,10 +29,11 @@ public class StoreBanner extends Domain implements Serializable {
   @Column(name = "game_id", nullable = false)
   private UUID gameId;
 
-  @Column(name = "image_id")
-  private UUID imageId;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "image_id")
+  private Image image;
 
-  @Column(name = "banner_description", nullable = false)
-  private String bannerDescription;
+  @Column(name = "description", nullable = false)
+  private String description;
 
 }

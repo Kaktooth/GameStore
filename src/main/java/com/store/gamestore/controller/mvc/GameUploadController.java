@@ -19,7 +19,6 @@ import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.enumeration.CommonEnumerationService;
 import com.store.gamestore.service.user.UserService;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,7 +28,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,8 +75,8 @@ public class GameUploadController {
   }
 
   @PostMapping
-  public String uploadFile(@ModelAttribute UploadGameDTO uploadInput, BindingResult bindingResult,
-      RedirectAttributes attributes) throws IOException, SQLException {
+  public String uploadFile(@ModelAttribute UploadGameDTO uploadInput, RedirectAttributes attributes)
+      throws IOException {
 
     if (uploadInput.getFile().isEmpty()) {
       attributes.addFlashAttribute("message", "Please select a file to upload.");
@@ -122,12 +120,12 @@ public class GameUploadController {
         storeImage);
 
     Image pageImage = imageService.save(
-        new Image(uploadInput.getGameImages().getStoreImage().getInputStream().readAllBytes()));
+        new Image(uploadInput.getGameImages().getGamePageImage().getInputStream().readAllBytes()));
     GamePicture gamePageImage = new GamePicture(game.getId(), GamePictureType.GAME_PAGE.ordinal(),
         pageImage);
 
-    Image collectionImage = imageService.save(
-        new Image(uploadInput.getGameImages().getStoreImage().getInputStream().readAllBytes()));
+    Image collectionImage = imageService.save(new Image(
+        uploadInput.getGameImages().getCollectionImage().getInputStream().readAllBytes()));
     GamePicture collectionGameImage = new GamePicture(game.getId(),
         GamePictureType.COLLECTION.ordinal(), collectionImage);
     gameImageService.save(storeGameImage);
@@ -142,8 +140,8 @@ public class GameUploadController {
     }
 
     attributes.addFlashAttribute("message",
-        "Your game and file successfully uploaded " + uploadInput.getFile().getOriginalFilename()
-            + '!');
+        String.format("Your game and file successfully uploaded %s!",
+            uploadInput.getFile().getOriginalFilename()));
 
     return "redirect:/uploaded-games";
   }

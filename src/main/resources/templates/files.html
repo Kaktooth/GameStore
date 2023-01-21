@@ -64,11 +64,12 @@
     <div class="container-md text-white mb-4 bg-dark-2">
         <h4>Game Files</h4>
         <div class="text-dark">
-            <ul class="list-group card-body" th:each="file, i : ${uploadedGame.game.gameFiles}">
-                <form th:action="@{/uploaded-games/edit/{id}/files/{fileId}/delete(id = ${uploadedGame.game.id},fileId = ${file.id})}"
-                      method="post">
+            <ul class="list-group card-body" th:each="file, i : ${gameFiles}">
+                <form th:action="@{/uploaded-games/edit/{gameId}/files/{fileId}/delete(gameId
+                = ${file.gameId},fileId = ${file.id})}" method="post">
                     <li class="list-group-item border d-flex">
-                        <label th:text="${i.count} + '. file title: ' + ${file.name} + ' version: ' + ${file.version}"></label>
+                        <label th:text="${i.count} + '. file title: ' + ${file.name} + ' version: '
+                         + ${file.version}"></label>
                         <button type="submit" class="btn bg-danger ml-auto text-end">
                             Delete
                         </button>
@@ -77,8 +78,8 @@
             </ul>
         </div>
 
-        <form method="post" th:action="@{/uploaded-games/edit/{id}/files(id = ${uploadedGame.game.id})}"
-              enctype="multipart/form-data">
+        <form method="post" th:action="@{/uploaded-games/edit/{gameId}/files(gameId =
+         ${uploadedGame.game.id})}" enctype="multipart/form-data">
 
             <h4>Upload</h4>
             <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>

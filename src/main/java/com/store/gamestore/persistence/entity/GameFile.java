@@ -23,8 +23,8 @@ import org.hibernate.annotations.Type;
 @NoArgsConstructor
 public class GameFile extends Domain {
 
-  @Column(name = "file_name", nullable = false)
-  private String fileName;
+  @Column(name = "name", nullable = false)
+  private String name;
 
   @Lob
   @Type(type = "org.hibernate.type.BinaryType")

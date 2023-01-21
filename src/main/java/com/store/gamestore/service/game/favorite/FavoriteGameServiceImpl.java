@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FavoriteGameServiceImpl extends AbstractService<FavoriteGame, UUID> implements
-    FavoriteGamesService {
+    FavoriteGameService {
 
   public FavoriteGameServiceImpl(
       CommonRepository<FavoriteGame, UUID> repository) {
@@ -18,7 +18,17 @@ public class FavoriteGameServiceImpl extends AbstractService<FavoriteGame, UUID>
   }
 
   @Override
-  public List<FavoriteGame> findFavoriteGamesByUserId(UUID userId) {
-    return ((FavoriteGameRepository) repository).findFavoriteGamesByUserId(userId);
+  public List<FavoriteGame> findAllByUserId(UUID userId) {
+    return ((FavoriteGameRepository) repository).findAllByUserId(userId);
+  }
+
+  @Override
+  public FavoriteGame findByGameId(UUID gameId) {
+    return ((FavoriteGameRepository) repository).findByGameId(gameId);
+  }
+
+  @Override
+  public void deleteByGameIdAndUserId(UUID gameId, UUID userId) {
+    ((FavoriteGameRepository) repository).deleteByGameIdAndUserId(gameId, userId);
   }
 }

@@ -4,16 +4,17 @@ package com.store.gamestore.model.dto;
 import java.io.Serializable;
 import java.util.UUID;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class StoreBannerDTO implements Serializable {
 
-  private String userId;
+  private UUID userId;
 
-  private String gameId;
+  private UUID gameId;
 
-  private UUID imageId;
+  private MultipartFile imageFile;
 
-  private String bannerDescription;
+  private String description;
 
 }

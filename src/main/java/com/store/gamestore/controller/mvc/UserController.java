@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @AllArgsConstructor
 class UserController {
 
-  private final static byte[] EMPTY_PICTURE = new byte[0];
+  private static final byte[] EMPTY_PICTURE = new byte[0];
 
   private final UserService userService;
   private final AbstractService<UserProfile, UUID> userProfileService;

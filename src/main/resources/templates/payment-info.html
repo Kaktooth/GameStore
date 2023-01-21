@@ -71,7 +71,7 @@
 <main role="main" class="shadow d-flex justify-content-center container-lg text-white mb-4">
     <div class="container-lg row bg-dark-2 mb-4">
         <form class="needs-validation mb-4" th:method="post" th:object="${paymentInfoInput}"
-              th:action="@{/payment-info/{id}(id =${uploadedGame.game.id.toString()})}" novalidate>
+              th:action="@{/payment-info/{gameId}(gameId =${game.id})}" novalidate>
             <h5 class="form-row">Payment Method</h5>
             <div class="form-row">
                 <div class="col-md-4 mb-3">
