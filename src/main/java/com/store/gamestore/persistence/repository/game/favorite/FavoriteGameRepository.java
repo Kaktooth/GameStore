@@ -6,5 +6,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface FavoriteGameRepository extends CommonRepository<FavoriteGame, UUID> {
- List<FavoriteGame> findFavoriteGamesByUserId(UUID userId);
+
+  List<FavoriteGame> findAllByUserId(UUID userId);
+
+  FavoriteGame findByGameId(UUID gameId);
+
+  void deleteByGameIdAndUserId(UUID gameId, UUID userId);
 }

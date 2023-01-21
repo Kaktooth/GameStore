@@ -1,0 +1,30 @@
+package com.store.gamestore.model.util;
+
+import com.store.gamestore.model.dto.StoreBannerDTO;
+import com.store.gamestore.persistence.entity.Image;
+import com.store.gamestore.persistence.entity.StoreBanner;
+import java.io.IOException;
+import org.springframework.stereotype.Component;
+
+@Component
+public class StoreBannerMapperImpl implements StoreBannerMapper {
+
+  @Override
+  public synchronized StoreBanner destinationToSource(StoreBannerDTO storeBannerDto) {
+    StoreBanner storeBanner = new StoreBanner();
+    storeBanner.setGameId(storeBannerDto.getGameId());
+    storeBanner.setUserId(storeBannerDto.getUserId());
+    storeBanner.setDescription(storeBannerDto.getDescription());
+
+    var imageData = new byte[0];
+    try {
+      imageData = storeBannerDto.getImageFile().getBytes();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    var image = new Image(imageData);
+    storeBanner.setImage(image);
+    return storeBanner;
+  }
+}

@@ -121,7 +121,7 @@
                  class="row shadow border border-dark rounded-5 border-2 mb-2">
                 <div class="col">
                     <img th:id="'image' + ${i.index}" style="width:300px;height:160px"
-                         th:src="'data:image/png;base64,'+ ${favoriteGamesImages.get(i.index).getBase64ImageData()}"
+                         th:src="'data:image/png;base64,'+ ${favoriteGamesImages.get(i.index).image.getBase64ImageData()}"
                          class="d-block w-100 img-fluid"/>
                 </div>
                 <div class="col-5 text-left">
@@ -129,16 +129,16 @@
                     <p class="text-info" th:text="'Developer: ' + ${favorite.game.developer}"></p>
                     <p th:if="${favorite.game.developer} != ${favorite.game.publisher}"
                        class="md-2 text-info" th:text="'Publisher: ' + ${favorite.game.publisher}"></p>
-                    <label class="text-info" th:text="${favorite.game.genre.toString()}"></label>
+                    <label class="text-info" th:text="${favorite.game.genres}"></label>
                 </div>
                 <div class="col text-right">
-                    <p th:if="${favorite.game.gameProfile.price} > 0"
-                       th:text="${favorite.game.gameProfile.price} + ' $'"></p>
-                    <p th:if="${favorite.game.gameProfile.price} == 0" th:text="'Free'"></p>
+                    <p th:if="${favorite.game.price} > 0"
+                       th:text="${favorite.game.price} + ' $'"></p>
+                    <p th:if="${favorite.game.price} == 0" th:text="'Free'"></p>
                     <div class="text-right">
                         <a style="background-image: var(--bs-gradient);"
                            class="btn btn-sm btn-primary align-content-center"
-                           type="button" th:href="@{/game/{id}(id =${favorite.game.id.toString()})}">
+                           type="button" th:href="@{/game/{gameId}(gameId =${favorite.game.id})}">
                             Visit
                         </a>
                     </div>
@@ -185,9 +185,10 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <h5>Edit resume</h5>
-                                <textarea type="text" id="resume" style="word-wrap:break-word;" name="resume"
-                                          class="bg-gradient-light form-control text-muted" autofocus=""
-                                          maxlength="440" minlength="1" required>
+                                <label for="resume"></label>
+                                <textarea id="resume" style="word-wrap:break-word;"
+                                        class="bg-gradient-light form-control text-muted" autofocus=""
+                                        maxlength="440" minlength="1" name="resume" required>
                                 </textarea>
                             </div>
                         </div>

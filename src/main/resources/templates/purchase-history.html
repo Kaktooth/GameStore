@@ -95,9 +95,9 @@
             </thead>
             <tbody>
             <tr th:each="purchase : ${gamePurchaseList}">
-                <th scope="row" th:text="${purchase.date.toLocalDate()}"></th>
-                <td th:text="${purchase.userGame.game.gameProfile.title}"></td>
-                <td th:text="${purchase.amount}+'$'"></td>
+                <th scope="row" th:text="${purchase.date}"></th>
+                <td th:text="${purchase.game.title}"></td>
+                <td th:text="${purchase.moneyAmount}+'$'"></td>
             </tr>
             </tbody>
         </table>

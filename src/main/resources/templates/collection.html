@@ -85,9 +85,10 @@
             <div class="col py-5" th:each="userGame, i : ${collection}">
                 <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow"
                      style="width: 15rem;">
-                    <a th:href="@{/game/{id}/(id =${userGame.game.id.toString()})}">
+                    <a th:href="@{/game/{gameId}/(gameId =${userGame.game.id})}">
                         <img th:id="'image' + ${i.index}" style="width:300px;height:240px"
-                             th:src="'data:image/png;base64,'+ ${gameCollectionImages.get(i.index).getBase64ImageData()}"
+                             th:src="'data:image/png;base64,'+
+                             ${gameCollectionImages.get(i.index).image.getBase64ImageData()}"
                              class="d-block w-100 img-fluid image-uploaded" alt=""/>
                     </a>
                 </div>

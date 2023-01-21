@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class StoreController {
 
   private final CommonService<Game, UUID> gameService;
-  private final CommonService<User, UUID> userService;
+  private final UserService userService;
   private final SearchService<GameDTO> gameSearchService;
   private final GamePictureService gameImageService;
   private final CommonService<StoreBanner, UUID> storeBannerService;
@@ -40,14 +40,12 @@ public class StoreController {
   //  TODO add top recommended games
   @GetMapping
   public String getStorePage(
-      @RequestParam(value = "searchString", required = false) String searchString,
-      Model model) {
+      @RequestParam(value = "searchString", required = false) String searchString, Model model) {
 
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String name = authentication.getName();
     if (!name.equals("anonymousUser")) {
-
-      User user = ((UserService) userService).findUserByUsername(name);
+      User user = userService.findUserByUsername(name);
       model.addAttribute("user", user);
     }
 

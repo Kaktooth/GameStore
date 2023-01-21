@@ -121,24 +121,25 @@
               th:if="${search} == true and ${searchedGames.size()} > 0"
               style="position: static; margin: 0px; z-index: 1;">
             <li th:each="searchedGame, i : ${searchedGames}">
-              <a th:href="@{/game/{id}(id =${searchedGame.game.id.toString()})}">
+              <a th:href="@{/game/{gameId}(gameId =${searchedGame.game.id})}">
                 <div class="dropdown-item bg-dark-2 card" style="width:300px; height: 100px;">
                   <div class="row no-gutters">
                     <div class="col-md-6">
                       <img th:id="'image' + ${i.count}"
-                           th:src="'data:image/png;base64,'+ ${searchedGame.gameImage.getBase64ImageData()}"
+                           th:src="'data:image/png;base64,'+
+                           ${searchedGame.gamePicture.image.getBase64ImageData()}"
                            class="d-block w-100 img-fluid image-uploaded"/>
                     </div>
                     <div class="col-md-6">
                       <div class="text-center">
                         <small>
                           <label class="card-title" style="white-space: pre-wrap;"
-                                 th:text="${searchedGame.game.gameProfile.title}">
+                                 th:text="${searchedGame.game.title}">
                           </label>
                         </small>
                         <p class="card-text">
                           <small
-                              th:text="${searchedGame.game.gameProfile.price} + '$'">
+                              th:text="${searchedGame.game.price} + '$'">
                           </small>
                         </p>
                       </div>
@@ -186,9 +187,9 @@
       <div class="carousel-inner">
         <div th:each="banner, i : ${bannerItems}"
              class="carousel-item active" th:if="${i.count}==1">
-          <a th:href="@{/game/{id}(id =${banner.gameId.toString()})}">
+          <a th:href="@{/game/{id}(id =${banner.gameId})}">
             <img style="width:900px;height:460px"
-                 th:src="'data:image/png;base64,'+ ${banner.getBase64ImageData()}"
+                 th:src="'data:image/png;base64,'+ ${banner.image.getBase64ImageData()}"
                  class="rounded d-block w-100 img-fluid">
             <div class="carousel-caption d-none d-md-block text-right">
               <p class="lead" th:text="${banner.description}"></p>
@@ -292,7 +293,8 @@
                     <div
                         class="card card-cover overflow-hidden text-white bg-dark rounded-5 shadow">
                       <img th:id="'image' + ${i.index}" style="width:300px;height:240px"
-                           th:src="'data:image/png;base64,'+ ${upload.gameImage.getBase64ImageData()}"
+                           th:src="'data:image/png;base64,'+
+                           ${upload.gamePicture.image.getBase64ImageData()}"
                            class="d-block rounded w-100 img-fluid image-uploaded"/>
                     </div>
                   </a>
@@ -309,7 +311,8 @@
                     <div
                         class="card card-cover overflow-hidden text-white bg-dark rounded-5 shadow">
                       <img th:id="'image' + ${i.index}" style="width:300px;height:240px"
-                           th:src="'data:image/png;base64,'+ ${upload.gameImage.getBase64ImageData()}"
+                           th:src="'data:image/png;base64,'+
+                           ${upload.gamePicture.image.getBase64ImageData()}"
                            class="d-block rounded w-100 img-fluid image-uploaded"/>
                     </div>
                   </a>
@@ -347,7 +350,8 @@
                     <div
                         class="card card-cover overflow-hidden text-white bg-dark rounded-5 shadow">
                       <img th:id="'image' + ${i.index}" style="width:300px;height:240px"
-                           th:src="'data:image/png;base64,'+ ${upload.gameImage.getBase64ImageData()}"
+                           th:src="'data:image/png;base64,'+
+                           ${upload.gamePicture.image.getBase64ImageData()}"
                            class="d-block rounded w-100 img-fluid image-uploaded"/>
                     </div>
                   </a>

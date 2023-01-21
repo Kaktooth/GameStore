@@ -100,10 +100,10 @@
 
 <main role="main" class="shadow mb-4">
     <div class="container-lg text-white bg-dark-2 shadow">
-        <form th:method="post" th:action="@{/banners/upload}" th:object="${gameBanner}"
+        <form th:method="post" th:action="@{/banner/upload}" th:object="${gameBanner}"
               class="needs-validation mb-4" enctype="multipart/form-data" novalidate>
             <label for="description" class="form-label">Description</label>
-            <textarea type="text" id="description" name="description" th:field="*{description}"
+            <textarea id="description" name="description" th:field="*{description}"
                       class="bg-gradient-light form-control mb-4 text-muted" autofocus=""
                       maxlength="90" minlength="10" style="word-wrap:break-word;" required></textarea>
             <div class="invalid-feedback">
@@ -112,12 +112,14 @@
             <div>
                 <label for="image" class="form-label">Upload image</label>
                 <input type="file" class="bg-gradient-light text-muted"
-                       th:field="*{image}" name="image" id="image"
+                       th:field="*{imageFile}" name="image" id="image"
                        accept="image/png, image/jpeg" required/>
             </div>
             <label for="gameId" class="form-label">Select your game</label>
             <select class="mb-4" th:field="*{gameId}" name="gameId" id="gameId">
-                <option th:each="game: ${uploadedGames}" th:value="${game.getGame().gameProfile.gameId}" th:text="${game.getGame().gameProfile.title}"></option>
+                <option th:each="uploadedGame: ${uploadedGames}"
+                        th:value="${uploadedGame.game.id}"
+                        th:text="${uploadedGame.game.title}"></option>
             </select>
 
             <button type="submit" class="btn bg-gradient-light btn-primary">Upload</button>

@@ -1,4 +1,4 @@
-package com.store.gamestore.controller.common;
+package com.store.gamestore.controller.mvc;
 
 import com.store.gamestore.persistence.entity.FavoriteGame;
 import com.store.gamestore.persistence.entity.GamePicture;
@@ -8,7 +8,7 @@ import com.store.gamestore.persistence.entity.User;
 import com.store.gamestore.persistence.entity.UserPicture;
 import com.store.gamestore.persistence.entity.UserProfile;
 import com.store.gamestore.service.CommonService;
-import com.store.gamestore.service.game.favorite.FavoriteGamesService;
+import com.store.gamestore.service.game.favorite.FavoriteGameService;
 import com.store.gamestore.service.game.pictures.GamePictureService;
 import com.store.gamestore.service.user.UserService;
 import com.store.gamestore.service.user.pictures.UserPictureService;
@@ -36,7 +36,7 @@ public class UserProfileController {
   private final CommonService<User, UUID> userService;
   private final CommonService<UserProfile, UUID> userProfileService;
   private final CommonService<GamePicture, UUID> gameImageService;
-  private final FavoriteGamesService favoriteGameService;
+  private final FavoriteGameService favoriteGameService;
   private final CommonService<UserPicture, UUID> userImageService;
   private final CommonService<Image, UUID> imageService;
 
@@ -45,7 +45,7 @@ public class UserProfileController {
 
     User user = getUser();
     UserProfile userProfile = getUserProfile(user.getId());
-    List<FavoriteGame> favoriteGames = favoriteGameService.findFavoriteGamesByUserId(user.getId());
+    List<FavoriteGame> favoriteGames = favoriteGameService.findAllByUserId(user.getId());
     model.addAttribute("user", user);
     model.addAttribute("userProfile", userProfile);
     model.addAttribute("favoriteGames", favoriteGames);
