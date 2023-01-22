@@ -7,7 +7,6 @@ import com.store.gamestore.persistence.entity.Game;
 import com.store.gamestore.persistence.entity.StoreBanner;
 import com.store.gamestore.persistence.entity.User;
 import com.store.gamestore.service.CommonService;
-import com.store.gamestore.service.game.pictures.GamePictureService;
 import com.store.gamestore.service.search.SearchService;
 import com.store.gamestore.service.user.UserService;
 import java.util.List;
@@ -33,7 +32,6 @@ public class StoreController {
   private final GameMapper gameMapper;
   private final UserService userService;
   private final SearchService<GameDTO> gameSearchService;
-  private final GamePictureService gameImageService;
   private final CommonService<StoreBanner, UUID> storeBannerService;
 
   //  TODO add top recommended games

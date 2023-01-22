@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,14 +33,15 @@ public class RestUserGamesController {
     return userGameMapper.sourceToDestination(userGames);
   }
 
+  @Transactional
   @GetMapping("/download/{gameId}")
   public ResponseEntity<byte[]> getGameFiles(@PathVariable UUID gameId)
       throws SQLException, IOException {
-    final var gameBlob = gameFileService.getLatestFileByGameId(gameId);
-    final var bytes = gameBlob.getBlob().getBinaryStream().readAllBytes();
+    final var gameFile = gameFileService.getLatestFileByGameId(gameId);
+    final var bytes = gameFile.getFile().getBinaryStream().readAllBytes();
 
     final var headers = new HttpHeaders();
-    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + gameBlob.getName());
+    headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + gameFile.getName());
 
     return ResponseEntity.ok()
         .headers(headers)

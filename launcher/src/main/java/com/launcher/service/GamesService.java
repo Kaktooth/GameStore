@@ -14,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Collections;
 import java.util.List;
@@ -48,7 +49,11 @@ public class GamesService {
   }
 
   public synchronized long downloadGame(Game game, Tile tile) throws IOException {
-    final var installersPath = "C:\\Users\\Xiaomi\\GameStore\\installers";
+    final var installersPath = System.getenv("APPDATA") + "\\GameStore\\installers";
+    Path installersDir = Paths.get(installersPath);
+    if (!Files.exists(installersDir)) {
+      Files.createDirectories(installersDir);
+    }
 
     final var downloadGamesUrl = new URL(
         HTTP + "://" + HOST + ":" + PORT + "/api/download/" + game.getId());

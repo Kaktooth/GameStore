@@ -1,6 +1,5 @@
 package com.store.gamestore.persistence.repository.game.file;
 
-import com.store.gamestore.persistence.entity.GameBlob;
 import com.store.gamestore.persistence.entity.GameFile;
 import com.store.gamestore.persistence.repository.CommonRepository;
 import io.lettuce.core.dynamic.annotation.Param;
@@ -18,5 +17,5 @@ public interface GameFileRepository extends CommonRepository<GameFile, UUID> {
 
   @Query(nativeQuery = true, value = "SELECT * FROM game_files "
       + "WHERE game_id = :#{#gameId} AND CAST(REPLACE(version, '.', '')AS INTEGER) = :#{#fileVersion}")
-  GameBlob getLatestFile(@Param("gameId") UUID gameId, @Param("fileVersion") Integer fileVersion);
+  GameFile getLatestFile(@Param("gameId") UUID gameId, @Param("fileVersion") Integer fileVersion);
 }
