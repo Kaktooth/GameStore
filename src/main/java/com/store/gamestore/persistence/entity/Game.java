@@ -1,6 +1,5 @@
 package com.store.gamestore.persistence.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -22,7 +21,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Game extends Domain implements Serializable {
+public class Game extends Domain {
 
   @Column(name = "title", nullable = false)
   private String title;

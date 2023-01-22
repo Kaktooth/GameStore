@@ -1,5 +1,6 @@
 package com.store.gamestore.service.game.file;
 
+import com.store.gamestore.persistence.entity.GameBlob;
 import com.store.gamestore.persistence.entity.GameFile;
 import com.store.gamestore.service.CommonService;
 import java.util.List;
@@ -9,5 +10,5 @@ public interface GameFileService extends CommonService<GameFile, UUID> {
 
   List<GameFile> findAllByGameId(UUID gameId);
 
-  GameFile getLatestFileVersionByGameId(UUID gameId);
+  GameBlob getLatestFileByGameId(UUID gameId);
 }

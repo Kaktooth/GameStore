@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="TOP_CENTER" cache="true" cacheHint="QUALITY" prefHeight="467.0" prefWidth="693.0" spacing="20.0" style="-fx-background-image: #212529; -fx-background-color: #212529;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.launcher.launcher.controller.AuthenticationController">
+<VBox alignment="TOP_CENTER" cache="true" cacheHint="QUALITY" prefHeight="467.0" prefWidth="693.0" spacing="20.0" style="-fx-background-image: #212529; -fx-background-color: #212529;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.launcher.controller.AuthenticationController">
   <effect>
     <BoxBlur height="0.0" iterations="2" width="0.0" />
   </effect>

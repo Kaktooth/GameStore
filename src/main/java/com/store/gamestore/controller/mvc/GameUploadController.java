@@ -21,8 +21,8 @@ import com.store.gamestore.service.user.UserService;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import javax.sql.rowset.serial.SerialBlob;
 import lombok.AllArgsConstructor;
@@ -85,7 +85,7 @@ public class GameUploadController {
       return "redirect:/";
     }
 
-    Set<Genre> genres = new HashSet<>();
+    List<Genre> genres = new ArrayList<>();
     for (Integer genre : uploadInput.getGenres()) {
       genres.add(genreService.get(genre));
     }

@@ -1,6 +1,5 @@
 package com.store.gamestore.persistence.repository.game.collection;
 
-import com.store.gamestore.persistence.entity.UploadedGame;
 import com.store.gamestore.persistence.entity.UserGame;
 import com.store.gamestore.persistence.repository.CommonRepository;
 import java.util.List;

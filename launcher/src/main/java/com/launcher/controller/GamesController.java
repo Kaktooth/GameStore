@@ -1,15 +1,14 @@
-package com.launcher.launcher.controller;
+package com.launcher.controller;
 
-import com.launcher.launcher.model.entity.User;
-import com.launcher.launcher.model.entity.UserGameDTO;
-import com.launcher.launcher.service.GamesService;
+import com.launcher.model.entity.User;
+import com.launcher.model.entity.UserGameDTO;
+import com.launcher.service.GamesService;
 import eu.hansolo.tilesfx.Tile;
 import eu.hansolo.tilesfx.TileBuilder;
 import eu.hansolo.tilesfx.fonts.Fonts;
 import eu.hansolo.tilesfx.tools.FlowGridPane;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,18 +25,12 @@ import javafx.scene.text.TextAlignment;
 public class GamesController {
 
   private static final String INNER_BACKGROUND = "-fx-control-inner-background: ";
-
-  private final GamesService gamesService;
+  private final GamesService gamesService = new GamesService();
   private User user;
-
   @FXML
   private Label usernameLabel;
   @FXML
   private ListView<UserGameDTO> listView;
-
-  public GamesController() {
-    this.gamesService = new GamesService();
-  }
 
   void initData(User user) throws IOException {
     this.user = user;
@@ -54,14 +47,14 @@ public class GamesController {
     usernameLabel = new Label();
     usernameLabel.setLabelFor(new Text(getUser().getPublicUsername()));
 
-    List<UserGameDTO> userGames = gamesService.getGames(getUser().getId().toString());
+    var userGames = gamesService.getGames(getUser().getId().toString());
     ObservableList<UserGameDTO> gamesList = FXCollections.observableArrayList();
     gamesList.addAll(userGames);
     listView.setItems(gamesList);
     listView.setFocusTraversable(false);
     listView.getSelectionModel().select(-1);
     listView.setCellFactory(param -> new ImageCell());
-    listView.setStyle(INNER_BACKGROUND + "#212529" + ";");
+    listView.setStyle(INNER_BACKGROUND + "#212529;");
   }
 
   private class ImageCell extends ListCell<UserGameDTO> {
@@ -96,8 +89,8 @@ public class GamesController {
         imageView.setFitHeight(215);
         imageView.setFitWidth(460);
         panel.getChildren().add(imageView);
-        Label title = new Label(gameDTO.game.gameProfile.title + "\n"
-            + gameDTO.game.gameProfile.briefDescription);
+        Label title = new Label(gameDTO.getGame().getTitle() + "\n"
+            + gameDTO.getGame().getDeveloper());
         title.setPadding(new Insets(20));
         title.setTextAlignment(TextAlignment.LEFT);
         title.setWrapText(true);
@@ -107,7 +100,7 @@ public class GamesController {
         Button downloadButton = new Button();
         downloadButton.setText("Download");
         downloadButton.setPadding(new Insets(7));
-        downloadButton.setStyle(INNER_BACKGROUND + "#11A13A" + ";");
+        downloadButton.setStyle(INNER_BACKGROUND + "#11A13A;");
         downloadButton.setOnMouseClicked(event -> {
 
           try {
@@ -122,7 +115,7 @@ public class GamesController {
         panel.getChildren().add(progressBar);
 
         setGraphic(panel);
-        setStyle("-fx-control-inner-background: " + "#212529" + ";");
+        setStyle(INNER_BACKGROUND + "#212529;");
       }
     }
   }

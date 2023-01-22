@@ -1,11 +1,7 @@
 package com.store.gamestore.service.enumeration;
 
-import com.store.gamestore.persistence.entity.Domain;
-import com.store.gamestore.persistence.repository.CommonRepository;
 import com.store.gamestore.persistence.repository.enumeration.CommonEnumerationRepository;
-import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

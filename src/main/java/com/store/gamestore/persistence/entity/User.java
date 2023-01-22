@@ -1,24 +1,24 @@
 package com.store.gamestore.persistence.entity;
 
-import java.io.Serializable;
-import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.Hibernate;
 
 @Data
 @Entity
 @Table(name = "users")
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User extends Domain implements Serializable {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class User extends Domain {
 
   @Column(name = "username", nullable = false)
   private String username;
@@ -38,4 +38,20 @@ public class User extends Domain implements Serializable {
   @Column(name = "phone_number")
   private String phoneNumber;
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+      return false;
+    }
+    User user = (User) o;
+    return getId() != null && Objects.equals(getId(), user.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
+  }
 }

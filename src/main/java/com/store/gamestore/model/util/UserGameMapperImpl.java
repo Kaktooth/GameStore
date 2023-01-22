@@ -24,11 +24,7 @@ public class UserGameMapperImpl implements UserGameMapper {
     GamePicture gamePicture = gamePictureService.findGamePictureByGameIdAndPictureTypeId(
         userGame.getGame().getId(), GamePictureType.GAME_PAGE.ordinal());
 
-    var userGameDto = new UserGameDTO();
-    userGameDto.setGame(userGame.getGame());
-    userGameDto.setUser(user);
-    userGameDto.setImage(gamePicture.getImage());
-    return null;
+    return new UserGameDTO(user, userGame.getGame(), gamePicture.getImage());
   }
 
   @Override

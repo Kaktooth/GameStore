@@ -1,10 +1,9 @@
-package com.launcher.launcher.service;
+package com.launcher.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
-import com.launcher.launcher.model.entity.Game;
-import com.launcher.launcher.model.entity.UserGameDTO;
+import com.launcher.model.entity.Game;
+import com.launcher.model.entity.UserGameDTO;
 import eu.hansolo.tilesfx.Tile;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,11 +17,12 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Collections;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Slf4j
 public class GamesService {
 
+  Logger log = LoggerFactory.getLogger(GamesService.class);
   private static final String HTTP = "http";
   private static final Integer PORT = 8082;
   private static final String HOST = "localhost";
@@ -43,7 +43,6 @@ public class GamesService {
       return objectMapper.readValue(json, new TypeReference<>() {
       });
     } catch (Exception exception) {
-      log.error(exception.getMessage());
       return Collections.emptyList();
     }
   }
@@ -54,12 +53,10 @@ public class GamesService {
     final var downloadGamesUrl = new URL(
         HTTP + "://" + HOST + ":" + PORT + "/api/download/" + game.getId());
     final var conn = (HttpURLConnection) downloadGamesUrl.openConnection();
-    log.info("downloading... url: {}", downloadGamesUrl);
     try (InputStream is = conn.getInputStream()) {
       String fileName = conn.getHeaderField("Content-Disposition")
           .replace("attachment; filename=", "");
       Path setupPath = Path.of(installersPath + "\\" + fileName);
-      log.info("setup path: {}", setupPath);
       long writtenBytes = Files.copy(is, setupPath, StandardCopyOption.REPLACE_EXISTING);
       tile.setValue(writtenBytes);
       Process downloadProcess;
@@ -70,7 +67,6 @@ public class GamesService {
         downloadProcess = Runtime.getRuntime().exec("cmd /c start cmd.exe /C\"" + setupPath + "\"");
         downloadProcess.waitFor();
       }
-      log.info("game downloaded");
     } catch (InterruptedException exception) {
       log.error("InterruptedException Error message: {}", exception.getMessage());
       Thread.currentThread().interrupt();

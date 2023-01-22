@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class GameImagesDTO {
+
   private MultipartFile storeImage;
   private MultipartFile gamePageImage;
   private MultipartFile collectionImage;

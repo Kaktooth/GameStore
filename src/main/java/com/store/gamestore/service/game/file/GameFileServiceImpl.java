@@ -1,5 +1,6 @@
 package com.store.gamestore.service.game.file;
 
+import com.store.gamestore.persistence.entity.GameBlob;
 import com.store.gamestore.persistence.entity.GameFile;
 import com.store.gamestore.persistence.repository.CommonRepository;
 import com.store.gamestore.persistence.repository.game.file.GameFileRepository;
@@ -22,7 +23,8 @@ public class GameFileServiceImpl extends AbstractService<GameFile, UUID> impleme
   }
 
   @Override
-  public GameFile getLatestFileVersionByGameId(UUID gameId) {
-    return ((GameFileRepository) repository).getLatestFileVersionByGameId(gameId);
+  public GameBlob getLatestFileByGameId(UUID gameId) {
+    Integer fileVersion = ((GameFileRepository) repository).getLatestFileVersionByGameId(gameId);
+    return ((GameFileRepository) repository).getLatestFile(gameId, fileVersion);
   }
 }
