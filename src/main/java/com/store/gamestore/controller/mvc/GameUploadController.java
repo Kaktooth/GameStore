@@ -20,8 +20,6 @@ import com.store.gamestore.service.enumeration.CommonEnumerationService;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import javax.sql.rowset.serial.SerialBlob;
 import lombok.AllArgsConstructor;
@@ -53,8 +51,8 @@ public class GameUploadController {
 
   @GetMapping
   public String getUploadPage(Model model) {
-    final String onlyLetters = "^[a-zA-Z]+$";
-    final String onlyDigits = "^[\\d]+$";
+    var onlyLetters = "^[a-zA-Z]+$";
+    var onlyDigits = "^[\\d]+$";
     model.addAttribute("user", userHolder.getAuthenticated());
     model.addAttribute("uploadInput", new UploadGameDTO());
     model.addAttribute("gameplayImages", new GameplayImagesDTO());
@@ -76,11 +74,7 @@ public class GameUploadController {
       return "redirect:/";
     }
 
-    List<Genre> genres = new ArrayList<>();
-    for (Integer genre : uploadInput.getGenres()) {
-      genres.add(genreService.get(genre));
-    }
-
+    var genres = genreService.getAll(uploadInput.getGenres());
     var game = gameService.save(
         new Game(uploadInput.getTitle(), uploadInput.getPrice(), uploadInput.getDeveloper(),
             uploadInput.getPublisher(), genres));
@@ -123,10 +117,11 @@ public class GameUploadController {
     gameImageService.save(gamePageImage);
     gameImageService.save(collectionGameImage);
 
-    for (var image : uploadInput.getGameImages().getGameplayImages()) {
-      var gameplayImage = imageService.save(new Image(image.getBytes()));
+    for (var imageFile : uploadInput.getGameImages().getGameplayImages()) {
+      var image = new Image(imageFile.getBytes());
+      var savedImage = imageService.save(image);
       var gameplayGamePicture = new GamePicture(game.getId(),
-          GamePictureType.GAMEPLAY.ordinal(), gameplayImage);
+          GamePictureType.GAMEPLAY.ordinal(), savedImage);
       gameImageService.save(gameplayGamePicture);
     }
 
