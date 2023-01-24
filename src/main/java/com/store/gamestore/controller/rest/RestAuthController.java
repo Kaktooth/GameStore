@@ -6,7 +6,6 @@ import com.store.gamestore.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,8 +23,8 @@ public class RestAuthController {
   @GetMapping
   public User getAuthenticatedUser(@RequestParam("username") String username,
       @RequestParam("password") String password) {
-    User user = new User();
-    Authentication authentication = loginAuthenticationProvider.authenticate(
+    var user = new User();
+    var authentication = loginAuthenticationProvider.authenticate(
         new UsernamePasswordAuthenticationToken(username, password));
     log.info("user authentication:" + username + ":" + password);
 

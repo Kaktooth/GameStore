@@ -2,30 +2,25 @@ package com.store.gamestore.controller.mvc;
 
 import com.store.gamestore.model.dto.EditGameDTO;
 import com.store.gamestore.model.util.UploadedGameMapper;
+import com.store.gamestore.model.util.UserHolder;
 import com.store.gamestore.persistence.entity.Game;
 import com.store.gamestore.persistence.entity.GameFile;
-import com.store.gamestore.persistence.entity.GameProfile;
 import com.store.gamestore.persistence.entity.Genre;
 import com.store.gamestore.persistence.entity.GraphicsCard;
 import com.store.gamestore.persistence.entity.OperatingSystem;
 import com.store.gamestore.persistence.entity.Processor;
-import com.store.gamestore.persistence.entity.SystemRequirements;
-import com.store.gamestore.persistence.entity.User;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.enumeration.CommonEnumerationService;
 import com.store.gamestore.service.game.file.GameFileService;
 import com.store.gamestore.service.game.profile.GameProfileService;
 import com.store.gamestore.service.game.uploaded.UploadedGameService;
 import com.store.gamestore.service.requirements.SystemRequirementsService;
-import com.store.gamestore.service.user.UserService;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.UUID;
 import javax.sql.rowset.serial.SerialBlob;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +39,7 @@ public class UploadedGamesController {
 
   private static final String EDIT_PAGE_REDIRECT = "redirect:/uploaded-games/edit/";
 
-  private final UserService userService;
+  private final UserHolder userHolder;
   private final CommonService<Game, UUID> gameService;
   private final UploadedGameMapper uploadedGameMapper;
   private final GameFileService gameFileService;
@@ -59,12 +54,11 @@ public class UploadedGamesController {
   @GetMapping
   public String uploadedGamesPage(Model model) {
 
-    final var user = getUser();
-    model.addAttribute("user", user);
+    var user = userHolder.getAuthenticated();
+    model.addAttribute("user", userHolder.getAuthenticated());
 
-    final var uploadedGames = uploadedGameService.findAllByUserId(user.getId());
-    final var uploadedGameDTOList = uploadedGameMapper.sourceToDestination(
-        uploadedGames);
+    var uploadedGames = uploadedGameService.findAllByUserId(user.getId());
+    var uploadedGameDTOList = uploadedGameMapper.sourceToDestination(uploadedGames);
     log.info("Uploaded games list loaded... size of uploaded games list: {}", uploadedGames.size());
 
     model.addAttribute("uploadedGames", uploadedGameDTOList);
@@ -74,16 +68,13 @@ public class UploadedGamesController {
   @GetMapping("/edit/{gameId}/files")
   public String gameFilesPage(@PathVariable UUID gameId, Model model) {
 
-    final var user = getUser();
-    model.addAttribute("user", user);
+    model.addAttribute("user", userHolder.getAuthenticated());
 
-    final var gameFiles = gameFileService.findAllByGameId(gameId);
-    final var game = gameService.get(gameId);
-
+    var gameFiles = gameFileService.findAllByGameId(gameId);
+    var game = gameService.get(gameId);
     model.addAttribute("gameFiles", gameFiles);
     model.addAttribute("uploadedGame", game);
     model.addAttribute("version", "");
-
     return "files";
   }
 
@@ -91,8 +82,8 @@ public class UploadedGamesController {
   public String addGameFile(@PathVariable UUID gameId, @RequestParam("version") String version,
       @RequestParam("file") MultipartFile file) throws IOException, SQLException {
 
-    final var blob = new SerialBlob(file.getBytes());
-    final var gameFile = new GameFile(file.getOriginalFilename(), version, gameId, blob);
+    var blob = new SerialBlob(file.getBytes());
+    var gameFile = new GameFile(file.getOriginalFilename(), version, gameId, blob);
     gameFileService.save(gameFile);
 
     return EDIT_PAGE_REDIRECT + gameId + "/files";
@@ -100,38 +91,30 @@ public class UploadedGamesController {
 
   @PostMapping("/edit/{gameId}/files/{fileId}/delete")
   public String editGame(@PathVariable UUID fileId, @PathVariable UUID gameId) {
-
     gameFileService.delete(fileId);
-
     return EDIT_PAGE_REDIRECT + gameId + "/files";
   }
 
   @PostMapping("/edit/{gameId}/delete")
   public String editGame(@PathVariable UUID gameId, Model model) {
-
     gameService.delete(gameId);
-    final var user = getUser();
-    model.addAttribute("user", user);
-
+    model.addAttribute("user", userHolder.getAuthenticated());
     return "uploaded-games";
   }
 
   @GetMapping("/edit/{gameId}")
   public String uploadedGamePage(@PathVariable UUID gameId, Model model) {
+    model.addAttribute("user", userHolder.getAuthenticated());
     model.addAttribute("genreList", genreService.getAll());
     model.addAttribute("processors", processorService.getAll());
     model.addAttribute("graphicCards", graphicsCardService.getAll());
     model.addAttribute("osList", operatingSystemService.getAll());
 
-    final var user = getUser();
-    model.addAttribute("user", user);
-
     final var game = gameService.get(gameId);
-    model.addAttribute("uploadedGame", game);
-
     final var gameProfile = gameProfileService.findGameProfileByGameId(gameId);
     final var requirements = requirementsService.findByGameProfileId(gameProfile.getId());
     final var editGameDTO = new EditGameDTO(game, gameProfile, requirements);
+    model.addAttribute("uploadedGame", game);
     model.addAttribute("editGameInput", editGameDTO);
 
     log.info("edited game with id: {}", gameId.toString());
@@ -170,11 +153,5 @@ public class UploadedGamesController {
     requirementsService.update(systemRequirements);
 
     return EDIT_PAGE_REDIRECT + gameId;
-  }
-
-  private User getUser() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    String name = authentication.getName();
-    return userService.findUserByUsername(name);
   }
 }

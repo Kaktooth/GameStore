@@ -2,6 +2,7 @@ package com.store.gamestore.controller.mvc;
 
 import com.store.gamestore.model.dto.GameplayImagesDTO;
 import com.store.gamestore.model.dto.UploadGameDTO;
+import com.store.gamestore.model.util.UserHolder;
 import com.store.gamestore.persistence.entity.Game;
 import com.store.gamestore.persistence.entity.GameFile;
 import com.store.gamestore.persistence.entity.GamePicture;
@@ -14,10 +15,8 @@ import com.store.gamestore.persistence.entity.OperatingSystem;
 import com.store.gamestore.persistence.entity.Processor;
 import com.store.gamestore.persistence.entity.SystemRequirements;
 import com.store.gamestore.persistence.entity.UploadedGame;
-import com.store.gamestore.persistence.entity.User;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.enumeration.CommonEnumerationService;
-import com.store.gamestore.service.user.UserService;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -26,8 +25,6 @@ import java.util.List;
 import java.util.UUID;
 import javax.sql.rowset.serial.SerialBlob;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +38,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @AllArgsConstructor
 public class GameUploadController {
 
-  private final CommonService<User, UUID> userService;
+  private final UserHolder userHolder;
   private final CommonService<Game, UUID> gameService;
   private final CommonService<Image, UUID> imageService;
   private final CommonService<GamePicture, UUID> gameImageService;
@@ -58,19 +55,13 @@ public class GameUploadController {
   public String getUploadPage(Model model) {
     final String onlyLetters = "^[a-zA-Z]+$";
     final String onlyDigits = "^[\\d]+$";
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    String name = authentication.getName();
-    User user = ((UserService) userService).findUserByUsername(name);
-    model.addAttribute("user", user);
-
+    model.addAttribute("user", userHolder.getAuthenticated());
     model.addAttribute("uploadInput", new UploadGameDTO());
     model.addAttribute("gameplayImages", new GameplayImagesDTO());
     model.addAttribute("genreList", genreService.getAll());
-
     model.addAttribute("processors", processorService.getAll());
     model.addAttribute("graphicCards", graphicsCardService.getAll());
     model.addAttribute("osList", operatingSystemService.getAll());
-
     model.addAttribute("onlyLetters", onlyLetters);
     model.addAttribute("onlyDigits", onlyDigits);
     return "upload";
@@ -90,7 +81,7 @@ public class GameUploadController {
       genres.add(genreService.get(genre));
     }
 
-    Game game = gameService.save(
+    var game = gameService.save(
         new Game(uploadInput.getTitle(), uploadInput.getPrice(), uploadInput.getDeveloper(),
             uploadInput.getPublisher(), genres));
 
@@ -98,45 +89,43 @@ public class GameUploadController {
     gameFileService.save(new GameFile(uploadInput.getFile().getOriginalFilename(),
         uploadInput.getVersion(), game.getId(), blob));
 
-    GameProfile gameProfile = new GameProfile(LocalDate.now(), uploadInput.getDescription(),
+    var gameProfile = new GameProfile(LocalDate.now(), uploadInput.getDescription(),
         uploadInput.getSmallDescription(), game.getId());
-    GameProfile savedGameProfile = gameProfileService.save(gameProfile);
+    var savedGameProfile = gameProfileService.save(gameProfile);
 
-    SystemRequirements requirements = new SystemRequirements(uploadInput.getMinMemory(),
+    var requirements = new SystemRequirements(uploadInput.getMinMemory(),
         uploadInput.getRecMemory(), uploadInput.getMinStorage(), uploadInput.getRecStorage(),
         savedGameProfile.getId(), uploadInput.getMinProcessorId(), uploadInput.getRecProcessorId(),
         uploadInput.getMinGraphicCardId(), uploadInput.getRecGraphicCardId(),
         uploadInput.getMinOSId(), uploadInput.getRecOSId());
     requirementsService.save(requirements);
 
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    String name = authentication.getName();
-    User user = ((UserService) userService).findUserByUsername(name);
+    var user = userHolder.getAuthenticated();
 
-    UploadedGame uploadedGame = new UploadedGame(user.getId(), game);
+    var uploadedGame = new UploadedGame(user.getId(), game);
     uploadedGameService.save(uploadedGame);
 
-    Image storeImage = imageService.save(
+    var storeImage = imageService.save(
         new Image(uploadInput.getGameImages().getStoreImage().getInputStream().readAllBytes()));
-    GamePicture storeGameImage = new GamePicture(game.getId(), GamePictureType.STORE.ordinal(),
+    var storeGameImage = new GamePicture(game.getId(), GamePictureType.STORE.ordinal(),
         storeImage);
 
-    Image pageImage = imageService.save(
+    var pageImage = imageService.save(
         new Image(uploadInput.getGameImages().getGamePageImage().getInputStream().readAllBytes()));
-    GamePicture gamePageImage = new GamePicture(game.getId(), GamePictureType.GAME_PAGE.ordinal(),
+    var gamePageImage = new GamePicture(game.getId(), GamePictureType.GAME_PAGE.ordinal(),
         pageImage);
 
-    Image collectionImage = imageService.save(new Image(
+    var collectionImage = imageService.save(new Image(
         uploadInput.getGameImages().getCollectionImage().getInputStream().readAllBytes()));
-    GamePicture collectionGameImage = new GamePicture(game.getId(),
+    var collectionGameImage = new GamePicture(game.getId(),
         GamePictureType.COLLECTION.ordinal(), collectionImage);
     gameImageService.save(storeGameImage);
     gameImageService.save(gamePageImage);
     gameImageService.save(collectionGameImage);
 
     for (var image : uploadInput.getGameImages().getGameplayImages()) {
-      Image gameplayImage = imageService.save(new Image(image.getBytes()));
-      GamePicture gameplayGamePicture = new GamePicture(game.getId(),
+      var gameplayImage = imageService.save(new Image(image.getBytes()));
+      var gameplayGamePicture = new GamePicture(game.getId(),
           GamePictureType.GAMEPLAY.ordinal(), gameplayImage);
       gameImageService.save(gameplayGamePicture);
     }

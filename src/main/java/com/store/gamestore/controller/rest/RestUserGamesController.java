@@ -29,7 +29,7 @@ public class RestUserGamesController {
 
   @GetMapping("/{userId}/games")
   public List<UserGameDTO> getUserGames(@PathVariable UUID userId) {
-    final var userGames = userGamesService.findAllByUserId(userId);
+    var userGames = userGamesService.findAllByUserId(userId);
     return userGameMapper.sourceToDestination(userGames);
   }
 
@@ -37,10 +37,10 @@ public class RestUserGamesController {
   @GetMapping("/download/{gameId}")
   public ResponseEntity<byte[]> getGameFiles(@PathVariable UUID gameId)
       throws SQLException, IOException {
-    final var gameFile = gameFileService.getLatestFileByGameId(gameId);
-    final var bytes = gameFile.getFile().getBinaryStream().readAllBytes();
+    var gameFile = gameFileService.getLatestFileByGameId(gameId);
+    var bytes = gameFile.getFile().getBinaryStream().readAllBytes();
 
-    final var headers = new HttpHeaders();
+    var headers = new HttpHeaders();
     headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + gameFile.getName());
 
     return ResponseEntity.ok()

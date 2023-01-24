@@ -43,8 +43,8 @@ class UserController {
       @RequestParam(value = "password") String password,
       @RequestParam(value = "email") String email) {
 
-    String encodedPassword = passwordEncoder.encode(password);
-    User user = User
+    var encodedPassword = passwordEncoder.encode(password);
+    var user = User
         .builder()
         .username(username)
         .password(encodedPassword)
@@ -53,11 +53,11 @@ class UserController {
         .publicUsername(publicUsername)
         .build();
 
-    User createdUser = userService.save(user);
-    Authority authority = new Authority(username, email, Authorities.USER.ordinal(),
+    var createdUser = userService.save(user);
+    var authority = new Authority(username, email, Authorities.USER.ordinal(),
         createdUser.getId());
-    UserProfile userProfile = new UserProfile(createdUser.getId());
-    UserPicture userPicture = new UserPicture(createdUser.getId(), new Image(EMPTY_PICTURE));
+    var userProfile = new UserProfile(createdUser.getId());
+    var userPicture = new UserPicture(createdUser.getId(), new Image(EMPTY_PICTURE));
     authorityService.save(authority);
     userProfileService.save(userProfile);
     imageService.save(userPicture.getImage());
