@@ -1,6 +1,6 @@
 package com.store.gamestore.controller.rest;
 
-import com.store.gamestore.auth.LoginAuthenticationProvider;
+import com.store.gamestore.common.auth.LoginAuthenticationProvider;
 import com.store.gamestore.persistence.entity.User;
 import com.store.gamestore.service.user.UserService;
 import lombok.RequiredArgsConstructor;

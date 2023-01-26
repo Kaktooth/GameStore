@@ -2,6 +2,7 @@ package com.store.gamestore.common.auth;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -18,17 +19,11 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class LoginAuthenticationProvider implements AuthenticationProvider {
 
   private final UserDetailsManager userDetailsManager;
   private final PasswordEncoder passwordEncoder;
-
-  @Autowired
-  public LoginAuthenticationProvider(UserDetailsManager userDetailsManager,
-      PasswordEncoder passwordEncoder) {
-    this.userDetailsManager = userDetailsManager;
-    this.passwordEncoder = passwordEncoder;
-  }
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {

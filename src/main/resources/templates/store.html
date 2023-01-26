@@ -41,6 +41,23 @@
       background: #212529;
       color: aliceblue;
     }
+
+    .image {
+      width:220px;
+      height:220px;
+    }
+
+    .title {
+      font-size: 1.6rem;
+      font-weight: 250;
+      margin-top: 5rem;
+      padding-bottom: 10px;
+      font-family: sans-serif;
+      border-bottom: 3px solid transparent;
+      border-image: linear-gradient(0.25turn, rgba(2, 180, 210, 0.80), rgba(2, 180, 210, 0));
+      border-image-slice: 1;
+      width:100%;
+    }
   </style>
 
   <script>
@@ -221,7 +238,7 @@
       </button>
     </div>
     <div class="container-md">
-      <h5>Most popular games</h5>
+      <h5 class="title">Most popular games</h5>
       <div id="carousel3" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#carousel3" th:data-slide-to="${popularGames.intValue()}-1"
@@ -232,14 +249,13 @@
                th:if="${popularGames.key}==1">
             <div class="container p-4">
               <div class="row row-cols-lg-4 p-4">
-                <div class="col" th:each="upload, i : ${popularGames.value}">
+                <div th:each="upload, i : ${popularGames.value}">
                   <a th:href="@{/game/{id}(id =${upload.game.id})}">
-                    <div
-                        class="card card-cover overflow-hidden text-white bg-dark rounded-5 shadow">
-                      <img th:id="'image' + ${i.index}" style="width:300px;height:300px"
+                    <div class="overflow-hidden text-white p-3">
+                      <img th:id="'image' + ${i.index}"
                            th:src="'data:image/png;base64,'+
                            ${upload.gamePicture.image.getBase64ImageData()}"
-                           class="d-block rounded w-100 img-fluid image-uploaded"/>
+                           class="rounded image shadow"/>
                     </div>
                   </a>
                 </div>
@@ -250,13 +266,14 @@
                th:if="${popularGames.key}!=1">
             <div class="container p-4">
               <div class="row row-cols-lg-4 p-4">
-                <div class="col" th:each="upload, i : ${popularGames.value}">
+                <div th:each="upload, i : ${popularGames.value}">
                   <a th:href="@{/game/{id}(id =${upload.game.id.toString()})}">
                     <div
-                        class="card card-cover overflow-hidden text-white bg-dark rounded-5 shadow">
-                      <img th:id="'image' + ${i.index}" style="width:300px;height:300px"
-                           th:src="'data:image/png;base64,'+ ${upload.gameImage.getBase64ImageData()}"
-                           class="d-block rounded w-100 img-fluid image-uploaded"/>
+                        class="overflow-hidden text-white p-3">
+                      <img th:id="'image' + ${i.index}"
+                           th:src="'data:image/png;base64,'+
+                           ${upload.gamePicture.image.getBase64ImageData()}"
+                           class="rounded image shadow"/>
                     </div>
                   </a>
                 </div>
@@ -277,7 +294,7 @@
       </div>
     </div>
     <div class="container-md">
-      <h5>Most purchased games</h5>
+      <h5 class="title">Most purchased games</h5>
       <div id="carousel4" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#carousel4" th:data-slide-to="${bestSellerGames.intValue()}-1"
@@ -288,14 +305,14 @@
                th:if="${bestSellerGames.key}==1">
             <div class="container p-4">
               <div class="row row-cols-lg-4 p-4">
-                <div class="col" th:each="upload, i : ${bestSellerGames.value}">
+                <div th:each="upload, i : ${bestSellerGames.value}">
                   <a th:href="@{/game/{id}(id =${upload.game.id.toString()})}">
                     <div
-                        class="card card-cover overflow-hidden text-white bg-dark rounded-5 shadow">
-                      <img th:id="'image' + ${i.index}" style="width:300px;height:300px"
+                        class="overflow-hidden text-white p-3">
+                      <img th:id="'image' + ${i.index}"
                            th:src="'data:image/png;base64,'+
                            ${upload.gamePicture.image.getBase64ImageData()}"
-                           class="d-block rounded w-100 img-fluid image-uploaded"/>
+                           class="rounded image shadow"/>
                     </div>
                   </a>
                 </div>
@@ -306,14 +323,14 @@
                th:if="${bestSellerGames.key}!=1">
             <div class="container p-4">
               <div class="row row-cols-lg-4 p-4">
-                <div class="col" th:each="upload, i : ${bestSellerGames.value}">
+                <div th:each="upload, i : ${bestSellerGames.value}">
                   <a th:href="@{/game/{id}(id =${upload.game.id.toString()})}">
                     <div
-                        class="card card-cover overflow-hidden text-white bg-dark rounded-5 shadow">
-                      <img th:id="'image' + ${i.index}" style="width:300px;height:300px"
+                        class="overflow-hidden text-white p-3">
+                      <img th:id="'image' + ${i.index}"
                            th:src="'data:image/png;base64,'+
                            ${upload.gamePicture.image.getBase64ImageData()}"
-                           class="d-block rounded w-100 img-fluid image-uploaded"/>
+                           class="rounded image shadow"/>
                     </div>
                   </a>
                 </div>
@@ -334,7 +351,7 @@
       </div>
     </div>
     <div class="container-md">
-      <h5>Most favorite games</h5>
+      <h5 class="title">Most favorite games</h5>
       <div id="carousel5" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#carousel5" th:data-slide-to="${mostFavoriteGames.intValue()}-1"
@@ -345,14 +362,13 @@
                th:if="${mostFavoriteGames.key}==1">
             <div class="container p-4">
               <div class="row row-cols-lg-4 p-4">
-                <div class="col" th:each="upload, i : ${mostFavoriteGames.value}">
+                <div th:each="upload, i : ${mostFavoriteGames.value}">
                   <a th:href="@{/game/{id}(id =${upload.game.id.toString()})}">
-                    <div
-                        class="card card-cover overflow-hidden text-white bg-dark rounded-5 shadow">
-                      <img th:id="'image' + ${i.index}" style="width:300px;height:300px"
+                    <div class="overflow-hidden text-white p-3">
+                      <img th:id="'image' + ${i.index}"
                            th:src="'data:image/png;base64,'+
                            ${upload.gamePicture.image.getBase64ImageData()}"
-                           class="d-block rounded w-100 img-fluid image-uploaded"/>
+                           class="rounded image shadow"/>
                     </div>
                   </a>
                 </div>
@@ -363,13 +379,13 @@
                th:if="${mostFavoriteGames.key}!=1">
             <div class="container p-4">
               <div class="row row-cols-lg-4 p-4">
-                <div class="col" th:each="upload, i : ${mostFavoriteGames.value}">
+                <div th:each="upload, i : ${mostFavoriteGames.value}">
                   <a th:href="@{/game/{id}(id =${upload.game.id.toString()})}">
-                    <div
-                        class="card card-cover overflow-hidden text-white bg-dark rounded-5 shadow">
-                      <img th:id="'image' + ${i.index}" style="width:300px;height:300px"
-                           th:src="'data:image/png;base64,'+ ${upload.gameImage.getBase64ImageData()}"
-                           class="d-block rounded w-100 img-fluid image-uploaded"/>
+                    <div class="overflow-hidden text-white p-3">
+                      <img th:id="'image' + ${i.index}"
+                           th:src="'data:image/png;base64,'+
+                           ${upload.gamePicture.image.getBase64ImageData()}"
+                           class="rounded image shadow"/>
                     </div>
                   </a>
                 </div>
@@ -397,8 +413,6 @@
     <p>
       This website is only for educational and demonstration purposes.
     </p>
-    <!--        <a href="">Privacy Policy</a>-->
-    <!--        <a href="">Agreement</a>-->
   </div>
 </footer>
 </body>
