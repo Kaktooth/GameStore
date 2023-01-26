@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Access Denied</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.css">
 
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>You not authorized</title>
+  <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+  <link rel="stylesheet" type="text/css" href="./assets/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="./assets/css/default.css">
 </head>
+
 <body>
-<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-<h1 class="h3 mb-3 font-weight-normal ">Access Denied</h1>
+<div class="cover">
+  <h1>Error <span>401</span></h1>
+  <h2>Unauthorized</h2>
+</div>
 </body>
 </html>

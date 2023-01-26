@@ -28,6 +28,11 @@ public class FavoriteGameServiceImpl extends AbstractService<FavoriteGame, UUID>
   }
 
   @Override
+  public Boolean findByGameIdAndUserId(UUID gameId, UUID userId) {
+    return ((FavoriteGameRepository) repository).findByGameIdAndUserId(gameId, userId);
+  }
+
+  @Override
   public void deleteByGameIdAndUserId(UUID gameId, UUID userId) {
     ((FavoriteGameRepository) repository).deleteByGameIdAndUserId(gameId, userId);
   }

@@ -1,4 +1,4 @@
-package com.store.gamestore.auth;
+package com.store.gamestore.common.auth;
 
 import java.util.ArrayList;
 import java.util.List;

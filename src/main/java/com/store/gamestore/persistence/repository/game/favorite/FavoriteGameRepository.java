@@ -11,5 +11,7 @@ public interface FavoriteGameRepository extends CommonRepository<FavoriteGame, U
 
   FavoriteGame findByGameId(UUID gameId);
 
+  Boolean findByGameIdAndUserId(UUID gameId, UUID userId);
+
   void deleteByGameIdAndUserId(UUID gameId, UUID userId);
 }

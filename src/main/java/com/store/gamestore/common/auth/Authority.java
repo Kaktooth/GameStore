@@ -1,4 +1,4 @@
-package com.store.gamestore.auth;
+package com.store.gamestore.common.auth;
 
 public enum Authority {
     USER(0), ADMIN(1);

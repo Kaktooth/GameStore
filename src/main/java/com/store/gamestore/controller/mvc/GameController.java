@@ -69,14 +69,11 @@ public class GameController {
     var systemRequirementsDTO = systemRequirementsMapper
         .sourceToDestination(systemRequirements);
 
-    var favoriteGameList = favoriteGameService.findAllByUserId(user.getId());
-
-    boolean favorite = false;
-    for (var favoriteGame : favoriteGameList) {
-      if (favoriteGame.getGame().getId().equals(gameId)) {
-        favorite = true;
-        break;
-      }
+    Boolean favorite = null;
+    Boolean purchased = null;
+    if (user != null) {
+      favorite = favoriteGameService.findByGameIdAndUserId(gameId, user.getId());
+      purchased = userGamesService.findByGameIdAndUserId(gameId, user.getId());
     }
 
     var gamePageImage = gameImageService.findGamePictureByGameIdAndPictureTypeId(gameId,
@@ -86,14 +83,6 @@ public class GameController {
     final var gameplayPictures = gameImageService.findGameplayPicturesByGameId(gameId);
     model.addAttribute("gameplayPictures", gameplayPictures);
 
-    var userGames = userGamesService.findAllByUserId(user.getId());
-    boolean purchased = false;
-    for (var userGame : userGames) {
-      if (userGame.getGame().getId().equals(game.getId())) {
-        purchased = true;
-        break;
-      }
-    }
     model.addAttribute("favorite", favorite);
     model.addAttribute("purchased", purchased);
     model.addAttribute("gameProfile", gameProfile);

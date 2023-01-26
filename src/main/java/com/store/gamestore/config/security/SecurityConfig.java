@@ -1,7 +1,10 @@
 package com.store.gamestore.config.security;
 
 
-import com.store.gamestore.auth.LoginAuthenticationProvider;
+import com.store.gamestore.common.auth.LoginAuthenticationProvider;
+import com.store.gamestore.common.AppConstraints.AppPath;
+import javax.sql.DataSource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,72 +15,51 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-import javax.sql.DataSource;
-
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    String errorPage = "/error";
-    String logInPage = "/log-in";
-    String createAccountPage = "/create-account";
-    String accessDeniedPage = "/access-denied-page";
-    String storePage = "/store";
-    String authApi = "/api/**";
-    String page = "/";
-    String webjars = "/webjars/**";
-    String resources = "/resources/**";
+  private final DataSource dataSource;
+  private final PasswordEncoder passwordEncoder;
 
-    private final DataSource dataSource;
-    private final PasswordEncoder passwordEncoder;
+  @Autowired
+  void configureGlobal(AuthenticationManagerBuilder auth,
+      LoginAuthenticationProvider authenticationProvider) throws Exception {
 
-    @Autowired
-    public SecurityConfig(DataSource dataSource,
-                          PasswordEncoder passwordEncoder) {
-        this.dataSource = dataSource;
-        this.passwordEncoder = passwordEncoder;
-    }
+    auth.authenticationProvider(authenticationProvider)
+        .jdbcAuthentication()
+        .dataSource(dataSource)
+        .passwordEncoder(passwordEncoder)
+        .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username = ?")
+        .authoritiesByUsernameQuery(
+            "SELECT username, email, authority FROM authorities WHERE username = ?");
+  }
 
-    @Autowired
-    void configureGlobal(
-        AuthenticationManagerBuilder auth,
-        LoginAuthenticationProvider authenticationProvider
-    ) throws Exception {
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
 
-        auth.authenticationProvider(authenticationProvider)
-            .jdbcAuthentication()
-            .dataSource(dataSource)
-            .passwordEncoder(passwordEncoder)
-            .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username = ?")
-            .authoritiesByUsernameQuery("SELECT username, email, authority FROM authorities WHERE username = ?");
-    }
+    http
+        .csrf()
+        .csrfTokenRepository(new CookieCsrfTokenRepository())
+        .and()
+        .authorizeRequests()
+        .mvcMatchers(AppPath.ERROR_PAGE, AppPath.API_PAGE, AppPath.LOG_IN_PAGE,
+            AppPath.ACCOUNT_CREATION_PAGE, AppPath.STORE_PAGE, AppPath.START_PAGE,
+            AppPath.ACCESS_DENIED_PAGE, AppPath.GAME_PAGE)
+        .permitAll()
+        .anyRequest()
+        .authenticated()
+        .and()
+        .formLogin()
+        .loginPage(AppPath.LOG_IN_PAGE)
+        .loginProcessingUrl(AppPath.LOG_IN_PAGE)
+        .usernameParameter("user")
+        .passwordParameter("password")
+        .defaultSuccessUrl(AppPath.PROFILE_PAGE, true)
+        .failureUrl(AppPath.LOG_IN_PAGE + AppPath.ERROR_ATTRIBUTE)
+        .permitAll();
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-
-        http
-            .csrf()
-            .csrfTokenRepository(new CookieCsrfTokenRepository())
-            .and()
-            .headers()
-            .frameOptions()
-            .sameOrigin()
-            .and()
-            .authorizeRequests()
-            .mvcMatchers(errorPage, authApi, logInPage, createAccountPage, storePage, page, webjars, resources)
-            .permitAll()
-            .anyRequest()
-            .authenticated()
-            .and()
-            .formLogin()
-            .loginPage(logInPage)
-            .loginProcessingUrl(logInPage)
-            .usernameParameter("user")
-            .passwordParameter("password")
-            .defaultSuccessUrl("/profile", true)
-            .failureUrl(logInPage + "?error")
-            .permitAll();
-
-    }
+  }
 }
