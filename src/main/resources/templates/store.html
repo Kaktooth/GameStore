@@ -58,6 +58,25 @@
       border-image-slice: 1;
       width:100%;
     }
+
+    .game-title {
+      font-size: 15px;
+      margin-bottom: 3px;
+      font-weight: 50;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-family: "Motiva Sans", Sans-serif;
+      color: aliceblue;
+      margin-top: 5px;
+      margin-right: 5px;
+      word-break: break-word;
+    }
+
+    .game-price {
+      font-size: 14px;
+      font-family: Inter,sans-serif;
+      margin-right: 5px;
+    }
   </style>
 
   <script>
@@ -256,6 +275,8 @@
                            th:src="'data:image/png;base64,'+
                            ${upload.gamePicture.image.getBase64ImageData()}"
                            class="rounded image shadow"/>
+                      <p class="game-title" th:text="${upload.game.title}"></p>
+                      <p class="game-price" th:text="${upload.game.price} + ' usd.'"></p>
                     </div>
                   </a>
                 </div>
@@ -274,6 +295,8 @@
                            th:src="'data:image/png;base64,'+
                            ${upload.gamePicture.image.getBase64ImageData()}"
                            class="rounded image shadow"/>
+                      <p class="game-title" th:text="${upload.game.title}"></p>
+                      <p class="game-price" th:text="${upload.game.price} + ' usd.'"></p>
                     </div>
                   </a>
                 </div>
@@ -313,6 +336,8 @@
                            th:src="'data:image/png;base64,'+
                            ${upload.gamePicture.image.getBase64ImageData()}"
                            class="rounded image shadow"/>
+                      <p class="game-title" th:text="${upload.game.title}"></p>
+                      <p class="game-price" th:text="${upload.game.price} + ' usd.'"></p>
                     </div>
                   </a>
                 </div>
@@ -331,6 +356,8 @@
                            th:src="'data:image/png;base64,'+
                            ${upload.gamePicture.image.getBase64ImageData()}"
                            class="rounded image shadow"/>
+                      <p class="game-title" th:text="${upload.game.title}"></p>
+                      <p class="game-price" th:text="${upload.game.price} + ' usd.'"></p>
                     </div>
                   </a>
                 </div>
@@ -369,6 +396,8 @@
                            th:src="'data:image/png;base64,'+
                            ${upload.gamePicture.image.getBase64ImageData()}"
                            class="rounded image shadow"/>
+                      <p class="game-title" th:text="${upload.game.title}"></p>
+                      <p class="game-price" th:text="${upload.game.price} + ' usd.'"></p>
                     </div>
                   </a>
                 </div>
@@ -386,6 +415,8 @@
                            th:src="'data:image/png;base64,'+
                            ${upload.gamePicture.image.getBase64ImageData()}"
                            class="rounded image shadow"/>
+                      <p class="game-title" th:text="${upload.game.title}"></p>
+                      <p class="game-price" th:text="${upload.game.price} + ' usd.'"></p>
                     </div>
                   </a>
                 </div>

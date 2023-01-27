@@ -35,7 +35,7 @@ public class PurchaseController {
     model.addAttribute("user", userHolder.getAuthenticated());
     var game = gameService.get(gameId);
     var gameImage = gameImageService.findGamePictureByGameIdAndPictureTypeId(gameId,
-        GamePictureType.GAME_PAGE.ordinal());
+        GamePictureType.STORE.ordinal());
     model.addAttribute("game", game);
     model.addAttribute("gameImage", gameImage);
 
