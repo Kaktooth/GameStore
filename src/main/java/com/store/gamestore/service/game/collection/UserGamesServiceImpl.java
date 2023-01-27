@@ -23,8 +23,8 @@ public class UserGamesServiceImpl extends AbstractService<UserGame, UUID> implem
   }
 
   @Override
-  public Boolean findByGameIdAndUserId(UUID gameId, UUID userId) {
-    return ((UserGamesRepository) repository).findByGameIdAndUserId(gameId, userId);
+  public Boolean existsByGameIdAndUserId(UUID gameId, UUID userId) {
+    return ((UserGamesRepository) repository).existsByGameIdAndUserId(gameId, userId);
   }
 
   @Override

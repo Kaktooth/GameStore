@@ -238,7 +238,8 @@
       <p class="text-muted"
          th:text="'Release date:   ' + ${gameProfile.releaseDate.toString()}">
       </p>
-      <div class="card bg-dark-2" th:if="${purchased != true && purchased != null}">
+      <div class="card bg-dark-2" th:if="${purchased != true && purchased != null
+      && canBePurchased == true}">
         <div class="card-body shadow mb-2">
           <div th:if="${game.price} > 0">
             <div class="">

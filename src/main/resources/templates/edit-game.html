@@ -178,7 +178,7 @@
                             <select th:field="*{minOSId}" name="minOSId" id="minOSId">
                                 <option th:each="os: ${osList}" th:value="${os.id}" th:text="${os.name}"></option>
                             </select>
-
+                            <br>
 
                             <label for="minMemory" class="form-label">Minimal memory</label>
                             <input type="number" th:field="*{minMemory}" id="minMemory" name="minMemory"
@@ -207,6 +207,7 @@
                             <select th:field="*{recOSId}" name="recOSId" id="recOSId">
                                 <option th:each="os: ${osList}" th:value="${os.id}" th:text="${os.name}"></option>
                             </select>
+                            <br>
 
                             <label for="recMemory" class="form-label">Recommended memory</label>
                             <input type="number" id="recMemory" name="recMemory" th:field="*{recMemory}"

@@ -9,7 +9,7 @@ public interface UserGamesRepository extends CommonRepository<UserGame, UUID> {
 
   List<UserGame> findAllByUserId(UUID userId);
 
-  Boolean findByGameIdAndUserId(UUID gameId, UUID userId);
+  Boolean existsByGameIdAndUserId(UUID gameId, UUID userId);
 
   UserGame findByGameId(UUID gameId);
 }

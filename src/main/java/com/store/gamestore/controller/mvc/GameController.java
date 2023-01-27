@@ -10,6 +10,7 @@ import com.store.gamestore.service.game.collection.UserGamesService;
 import com.store.gamestore.service.game.favorite.FavoriteGameService;
 import com.store.gamestore.service.game.pictures.GamePictureService;
 import com.store.gamestore.service.game.profile.GameProfileService;
+import com.store.gamestore.service.game.uploaded.UploadedGameService;
 import com.store.gamestore.service.requirements.SystemRequirementsService;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class GameController {
 
   private final UserHolder userHolder;
   private final UserGamesService userGamesService;
+  private final UploadedGameService uploadedGameService;
   private final GameProfileService gameProfileService;
   private final GamePictureService gameImageService;
   private final CommonService<Game, UUID> gameService;
@@ -71,9 +73,11 @@ public class GameController {
 
     Boolean favorite = null;
     Boolean purchased = null;
+    var canBePurchased = false;
     if (user != null) {
-      favorite = favoriteGameService.findByGameIdAndUserId(gameId, user.getId());
-      purchased = userGamesService.findByGameIdAndUserId(gameId, user.getId());
+      favorite = favoriteGameService.existsByGameIdAndUserId(gameId, user.getId());
+      purchased = userGamesService.existsByGameIdAndUserId(gameId, user.getId());
+      canBePurchased = !uploadedGameService.findByGameId(gameId).getUserId().equals(user.getId());
     }
 
     var gamePageImage = gameImageService.findGamePictureByGameIdAndPictureTypeId(gameId,
@@ -85,6 +89,7 @@ public class GameController {
 
     model.addAttribute("favorite", favorite);
     model.addAttribute("purchased", purchased);
+    model.addAttribute("canBePurchased", canBePurchased);
     model.addAttribute("gameProfile", gameProfile);
     model.addAttribute("game", game);
     model.addAttribute("requirements", systemRequirementsDTO);

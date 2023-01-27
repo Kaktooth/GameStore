@@ -28,8 +28,8 @@ public class FavoriteGameServiceImpl extends AbstractService<FavoriteGame, UUID>
   }
 
   @Override
-  public Boolean findByGameIdAndUserId(UUID gameId, UUID userId) {
-    return ((FavoriteGameRepository) repository).findByGameIdAndUserId(gameId, userId);
+  public Boolean existsByGameIdAndUserId(UUID gameId, UUID userId) {
+    return ((FavoriteGameRepository) repository).existsByGameIdAndUserId(gameId, userId);
   }
 
   @Override
