@@ -1,0 +1,26 @@
+.header-cover {
+  width: 320px;
+  height: 180px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: 250;
+  margin-top: 5rem;
+  padding-bottom: 10px;
+  font-family: sans-serif;
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(0.25turn, rgba(2, 180, 210, 0.80), rgba(2, 180, 210, 0));
+  border-image-slice: 1;
+  width: 100%;
+}
+
+.description-block {
+  line-height: 1.5em;
+  font-size: 15px;
+  margin-top: 30px;
+  font-weight: normal;
+}

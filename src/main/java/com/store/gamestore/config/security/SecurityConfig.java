@@ -1,10 +1,10 @@
 package com.store.gamestore.config.security;
 
 
+import com.store.gamestore.common.AppConstraints.AppPath;
 import com.store.gamestore.common.AppConstraints.Authentication;
 import com.store.gamestore.common.AppConstraints.ExtendedAppPath;
 import com.store.gamestore.common.auth.LoginAuthenticationProvider;
-import com.store.gamestore.common.AppConstraints.AppPath;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .mvcMatchers(AppPath.ERROR_PAGE, ExtendedAppPath.API_PAGE, AppPath.LOG_IN_PAGE,
             AppPath.ACCOUNT_CREATION_PAGE, AppPath.STORE_PAGE, AppPath.START_PAGE,
-            AppPath.ACCESS_DENIED_PAGE, ExtendedAppPath.GAME_PAGE)
+            AppPath.ACCESS_DENIED_PAGE, ExtendedAppPath.GAME_PAGE,
+            ExtendedAppPath.CSS, ExtendedAppPath.JS)
         .permitAll()
         .anyRequest()
         .authenticated()

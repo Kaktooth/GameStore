@@ -52,5 +52,7 @@ public class AppConstraints {
     public static final String ERROR_PAGE = "/error/**";
     public static final String ACCESS_DENIED_PAGE = "/access-denied-page";
     public static final String API_PAGE = "/api/**";
+    public static final String CSS = "/css/**";
+    public static final String JS = "/js/**";
   }
 }
