@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,11 +32,9 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
     UserDetails user = userDetailsManager.loadUserByUsername(username);
 
     if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-      List<GrantedAuthority> authorities
-          = new ArrayList<>();
+      List<GrantedAuthority> authorities = new ArrayList<>();
       if (user.getAuthorities() == null) {
-        SimpleGrantedAuthority userAuthority = new SimpleGrantedAuthority(
-            Authority.USER.toString());
+        var userAuthority = new SimpleGrantedAuthority(Authority.USER.toString());
         authorities.add(userAuthority);
       } else {
         authorities.addAll(user.getAuthorities());

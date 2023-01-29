@@ -1,10 +1,10 @@
 package com.store.gamestore.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,13 +17,14 @@ import org.hibernate.Hibernate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User extends Domain {
 
   @Column(name = "username", nullable = false)
+  @NotEmpty(message = "Username should not be empty")
   private String username;
 
   @Column(name = "password", nullable = false)
+  @NotEmpty(message = "Password should not be empty")
   private String password;
 
   @Column(name = "enabled", nullable = false)
