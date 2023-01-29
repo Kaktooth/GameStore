@@ -11,5 +11,7 @@ public interface FavoriteGameService extends CommonService<FavoriteGame, UUID> {
 
   FavoriteGame findByGameId(UUID gameId);
 
+  Boolean existsByGameIdAndUserId(UUID gameId, UUID userId);
+
   void deleteByGameIdAndUserId(UUID gameId, UUID userId);
 }

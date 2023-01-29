@@ -1,20 +1,15 @@
 package com.store.gamestore.controller.mvc;
 
 import com.store.gamestore.model.dto.PaymentInfoDTO;
+import com.store.gamestore.model.util.UserHolder;
 import com.store.gamestore.persistence.entity.Game;
-import com.store.gamestore.persistence.entity.UploadedGame;
-import com.store.gamestore.persistence.entity.User;
 import com.store.gamestore.service.CommonService;
-import com.store.gamestore.service.user.UserService;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,21 +21,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class PaymentController {
 
-  private final UserService userService;
+  private final UserHolder userHolder;
 
   private final CommonService<Game, UUID> gameService;
 
   @GetMapping
   public String getPaymentInformationPage(@PathVariable UUID gameId, Model model) {
-    final String onlyLetters = "^[a-zA-Z\\s]+$";
-    final String onlyDigits = "^[\\d]+$";
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    String name = authentication.getName();
-    User user = userService.findUserByUsername(name);
-    model.addAttribute("user", user);
-
+    var onlyLetters = "^[a-zA-Z\\s]+$";
+    var onlyDigits = "^[\\d]+$";
+    model.addAttribute("user", userHolder.getAuthenticated());
     model.addAttribute("paymentInfoInput", new PaymentInfoDTO());
-    Game game = gameService.get(gameId);
+
+    var game = gameService.get(gameId);
     model.addAttribute("game", game);
     model.addAttribute("paymentMethods", Map.of(0, "Visa", 1, "Mastercard"));
     model.addAttribute("currentYear", LocalDateTime.now().getYear());

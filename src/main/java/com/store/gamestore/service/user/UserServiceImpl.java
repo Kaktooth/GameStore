@@ -1,10 +1,8 @@
 package com.store.gamestore.service.user;
 
-import com.store.gamestore.persistence.entity.Authority;
 import com.store.gamestore.persistence.entity.User;
 import com.store.gamestore.persistence.repository.CommonRepository;
 import com.store.gamestore.persistence.repository.user.UserRepository;
-import com.store.gamestore.persistence.repository.user.authorities.AuthorityRepository;
 import com.store.gamestore.service.AbstractService;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
@@ -18,6 +16,6 @@ public class UserServiceImpl extends AbstractService<User, UUID> implements User
 
   @Override
   public User findUserByUsername(String username) {
-    return ((UserRepository)repository).findByUsername(username);
+    return ((UserRepository) repository).findByUsername(username);
   }
 }

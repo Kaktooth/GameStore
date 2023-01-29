@@ -3,18 +3,13 @@ package com.store.gamestore.controller.mvc;
 
 import com.store.gamestore.model.dto.StoreBannerDTO;
 import com.store.gamestore.model.util.StoreBannerMapper;
-import com.store.gamestore.persistence.entity.Image;
+import com.store.gamestore.model.util.UserHolder;
 import com.store.gamestore.persistence.entity.StoreBanner;
-import com.store.gamestore.persistence.entity.UploadedGame;
-import com.store.gamestore.persistence.entity.User;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.game.uploaded.UploadedGameService;
-import com.store.gamestore.service.user.UserService;
-import java.util.List;
+import java.io.IOException;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class GameBannerController {
 
-  private final UserService userService;
+  private final UserHolder userHolder;
   private final CommonService<StoreBanner, UUID> bannerService;
   private final UploadedGameService uploadedGameService;
   private final StoreBannerMapper storeBannerMapper;
@@ -35,8 +30,8 @@ public class GameBannerController {
   @GetMapping("/upload")
   public String uploadBannerPage(Model model) {
 
-    User user = getUser();
-    List<UploadedGame> uploadedGames = uploadedGameService.findAllByUserId(user.getId());
+    var user = userHolder.getAuthenticated();
+    var uploadedGames = uploadedGameService.findAllByUserId(user.getId());
     model.addAttribute("user", user);
     model.addAttribute("gameBanner", new StoreBannerDTO());
     model.addAttribute("uploadedGames", uploadedGames);
@@ -44,17 +39,11 @@ public class GameBannerController {
   }
 
   @PostMapping("/upload")
-  public String uploadBanner(@ModelAttribute StoreBannerDTO gameBanner) {
-    User user = getUser();
+  public String uploadBanner(@ModelAttribute StoreBannerDTO gameBanner) throws IOException {
+    var user = userHolder.getAuthenticated();
     gameBanner.setUserId(user.getId());
     bannerService.save(storeBannerMapper.destinationToSource(gameBanner));
 
     return "redirect:/store";
-  }
-
-  private User getUser() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    String name = authentication.getName();
-    return userService.findUserByUsername(name);
   }
 }

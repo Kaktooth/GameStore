@@ -1,7 +1,6 @@
 package com.store.gamestore.persistence.entity;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;

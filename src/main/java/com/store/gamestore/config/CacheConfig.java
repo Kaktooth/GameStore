@@ -18,7 +18,7 @@ public class CacheConfig {
 
     @Bean
     public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer() {
-        return (builder) -> builder
+        return builder -> builder
             .withCacheConfiguration("popularGamesCached",
                 RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(48)))
             .withCacheConfiguration("bestSellerGamesCached",

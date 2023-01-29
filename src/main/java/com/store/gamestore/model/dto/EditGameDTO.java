@@ -34,11 +34,11 @@ public class EditGameDTO {
     this.setRecGraphicCardId(requirements.getRecommendedGraphicCardId());
     this.setRecOSId(requirements.getRecommendedOperatingSystemId());
 
-    List<Integer> genres = game.getGenres()
+    List<Integer> genresList = game.getGenres()
         .stream()
         .map(Genre::getId)
         .toList();
-    this.setGenres(genres);
+    this.setGenres(genresList);
   }
 
 

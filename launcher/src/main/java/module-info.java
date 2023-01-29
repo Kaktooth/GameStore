@@ -1,4 +1,4 @@
-module com.launcher.launcher {
+module com.launcher {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -8,20 +8,18 @@ module com.launcher.launcher {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
-    requires lombok;
     requires com.fasterxml.jackson.annotation;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jsr310;
     requires org.slf4j;
     requires org.slf4j.simple;
-    requires ch.qos.logback.core;
     requires java.logging;
 
-    opens com.launcher.launcher to javafx.fxml;
-    exports com.launcher.launcher;
-    exports com.launcher.launcher.service;
-    exports com.launcher.launcher.controller;
-    opens com.launcher.launcher.controller to javafx.fxml;
-    exports com.launcher.launcher.model.entity;
+    opens com.launcher to javafx.fxml;
+    exports com.launcher;
+    exports com.launcher.service;
+    exports com.launcher.controller;
+    opens com.launcher.controller to javafx.fxml;
+    exports com.launcher.model.entity;
 }

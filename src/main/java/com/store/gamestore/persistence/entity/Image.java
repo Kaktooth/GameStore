@@ -1,6 +1,5 @@
 package com.store.gamestore.persistence.entity;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -16,7 +15,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Image extends Domain implements Serializable {
+public class Image extends Domain {
 
   @Column(name = "image", nullable = false)
   byte[] imageData;

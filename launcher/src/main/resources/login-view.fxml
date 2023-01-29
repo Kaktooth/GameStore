@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" cache="true" cacheHint="QUALITY" prefHeight="467.0" prefWidth="693.0" spacing="20.0" style="-fx-background-image: #212529; -fx-background-color: #212529;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.launcher.controller.AuthenticationController">
+  <effect>
+    <BoxBlur height="0.0" iterations="2" width="0.0" />
+  </effect>
+  <children>
+    <StackPane prefHeight="45.0" prefWidth="693.0" style="-fx-background-color: #212529;">
+      <children>
+        <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="55.0" text="Log in" textFill="ALICEBLUE" StackPane.alignment="CENTER">
+          <font>
+            <Font name="Bell MT" size="18.0" />
+          </font>
+          <StackPane.margin>
+            <Insets left="10.0" />
+          </StackPane.margin></Label>
+      </children>
+      <effect>
+        <InnerShadow blurType="TWO_PASS_BOX" height="10.88" radius="2.22" width="0.0" />
+      </effect>
+    </StackPane>
+    <GridPane prefHeight="314.0" prefWidth="693.0">
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="341.0" minWidth="10.0" prefWidth="201.33333333333331" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="341.0" minWidth="10.0" prefWidth="84.66666666666666" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="507.0" minWidth="10.0" prefWidth="182.66666666666663" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="507.0" minWidth="10.0" prefWidth="232.0" />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints maxHeight="201.0000228881836" minHeight="10.0" prefHeight="128.66666666666669" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="179.9999885559082" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="184.66666666666666" minHeight="10.0" prefHeight="184.66666666666666" vgrow="SOMETIMES" />
+      </rowConstraints>
+      <children>
+        <TextField id="username" fx:id="username" style="-fx-background-color: #f0f8ff;" GridPane.columnIndex="2" />
+        <TextField id="password" fx:id="password" style="-fx-background-color: #f0f8ff;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <Label alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" text="Username" textAlignment="RIGHT" textFill="ALICEBLUE" GridPane.columnIndex="1">
+          <font>
+            <Font size="14.0" />
+          </font>
+        </Label>
+        <Label alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" text="Password" textAlignment="RIGHT" textFill="ALICEBLUE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+          <font>
+            <Font size="14.0" />
+          </font>
+        </Label>
+        <Button id="loginButton" fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#authenticateUser" prefHeight="33.0" prefWidth="108.0" text="Log in" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2">
+          <font>
+            <Font size="14.0" />
+          </font>
+          <GridPane.margin>
+            <Insets left="15.0" />
+          </GridPane.margin>
+        </Button>
+      </children>
+    </GridPane>
+  </children>
+</VBox>
