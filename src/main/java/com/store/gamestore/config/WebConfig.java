@@ -1,5 +1,7 @@
 package com.store.gamestore.config;
 
+import com.store.gamestore.common.AppConstraints.AppPath;
+import com.store.gamestore.common.AppConstraints.ExtendedAppPath;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -10,20 +12,22 @@ public class WebConfig implements WebMvcConfigurer {
 
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
-    registry.addRedirectViewController("/", "/store");
-    registry.addViewController("/upload/**").setViewName("upload");
-    registry.addViewController("/uploaded-games/**").setViewName("uploaded-games");
-    registry.addViewController("/game/**").setViewName("game");
-    registry.addViewController("/store/**").setViewName("store");
-    registry.addViewController("/profile/**").setViewName("profile");
-    registry.addViewController("/log-in/**").setViewName("log-in");
-    registry.addViewController("/create_account/**").setViewName("create-account");
-    registry.addViewController("/account/**").setViewName("account");
-    registry.addViewController("/collection/**").setViewName("collection");
-    registry.addViewController("/payment-info/**").setViewName("payment-info");
-    registry.addViewController("/purchase/**").setViewName("purchase");
-    registry.addViewController("/error/**").setViewName("error");
-    registry.addViewController("/error/**").setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
-    registry.addViewController("/access-denied-page/**").setStatusCode(HttpStatus.FORBIDDEN);
+    registry.addRedirectViewController(AppPath.START_PAGE, AppPath.STORE_PAGE);
+    registry.addViewController(ExtendedAppPath.GAME_UPLOAD_PAGE).setViewName("upload");
+    registry.addViewController(ExtendedAppPath.UPLOADED_GAMES_PAGE).setViewName("uploaded-games");
+    registry.addViewController(ExtendedAppPath.GAME_PAGE).setViewName("game");
+    registry.addViewController(ExtendedAppPath.STORE_PAGE).setViewName("store");
+    registry.addViewController(ExtendedAppPath.PROFILE_PAGE).setViewName("profile");
+    registry.addViewController(ExtendedAppPath.LOG_IN_PAGE).setViewName("log-in");
+    registry.addViewController(ExtendedAppPath.ACCOUNT_CREATION_PAGE).setViewName("create-account");
+    registry.addViewController(ExtendedAppPath.ACCOUNT_PAGE).setViewName("account");
+    registry.addViewController(ExtendedAppPath.COLLECTION_PAGE).setViewName("collection");
+    registry.addViewController(ExtendedAppPath.PAYMENT_INFO_PAGE).setViewName("payment-info");
+    registry.addViewController(ExtendedAppPath.PURCHASE_PAGE).setViewName("purchase");
+    registry.addViewController(ExtendedAppPath.ERROR_PAGE).setViewName("error");
+    registry.addViewController(ExtendedAppPath.ERROR_PAGE)
+        .setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+    registry.addViewController(ExtendedAppPath.ACCESS_DENIED_PAGE)
+        .setStatusCode(HttpStatus.FORBIDDEN);
   }
 }

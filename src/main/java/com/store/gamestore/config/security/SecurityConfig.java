@@ -1,6 +1,8 @@
 package com.store.gamestore.config.security;
 
 
+import com.store.gamestore.common.AppConstraints.Authentication;
+import com.store.gamestore.common.AppConstraints.ExtendedAppPath;
 import com.store.gamestore.common.auth.LoginAuthenticationProvider;
 import com.store.gamestore.common.AppConstraints.AppPath;
 import javax.sql.DataSource;
@@ -32,9 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .jdbcAuthentication()
         .dataSource(dataSource)
         .passwordEncoder(passwordEncoder)
-        .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username = ?")
-        .authoritiesByUsernameQuery(
-            "SELECT username, email, authority FROM authorities WHERE username = ?");
+        .usersByUsernameQuery(Authentication.GET_USER_BY_USERNAME_QUERY)
+        .authoritiesByUsernameQuery(Authentication.GET_AUTHORITY_BY_USERNAME_QUERY);
   }
 
   @Override
@@ -45,9 +46,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .csrfTokenRepository(new CookieCsrfTokenRepository())
         .and()
         .authorizeRequests()
-        .mvcMatchers(AppPath.ERROR_PAGE, AppPath.API_PAGE, AppPath.LOG_IN_PAGE,
+        .mvcMatchers(AppPath.ERROR_PAGE, ExtendedAppPath.API_PAGE, AppPath.LOG_IN_PAGE,
             AppPath.ACCOUNT_CREATION_PAGE, AppPath.STORE_PAGE, AppPath.START_PAGE,
-            AppPath.ACCESS_DENIED_PAGE, AppPath.GAME_PAGE)
+            AppPath.ACCESS_DENIED_PAGE, ExtendedAppPath.GAME_PAGE)
         .permitAll()
         .anyRequest()
         .authenticated()
@@ -55,8 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .formLogin()
         .loginPage(AppPath.LOG_IN_PAGE)
         .loginProcessingUrl(AppPath.LOG_IN_PAGE)
-        .usernameParameter("user")
-        .passwordParameter("password")
         .defaultSuccessUrl(AppPath.PROFILE_PAGE, true)
         .failureUrl(AppPath.LOG_IN_PAGE + AppPath.ERROR_ATTRIBUTE)
         .permitAll();
