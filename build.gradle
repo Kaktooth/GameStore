@@ -1,44 +1,19 @@
-plugins {
-    id 'java'
-    id "org.sonarqube" version "3.3"
-    id 'org.springframework.boot' version '2.6.3'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+allprojects {
+    apply plugin: 'org.sonarqube'
+
+    version = '0.0.1-SNAPSHOT'
 }
 
-group = 'com.store'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '16'
+buildscript {
+    repositories {
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-
+        mavenCentral()
     }
-}
+    dependencies {
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.flywaydb:flyway-core'
-
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-    implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.5'
-
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.modelmapper:modelmapper:3.1.1'
-
-    implementation 'org.springframework.boot:spring-boot-starter-cache:2.7.1'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis:2.7.1'
-
-    compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'org.postgresql:postgresql'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.5.RELEASE")
+        classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3")
+    }
 }
 
 sonarqube {
@@ -46,8 +21,4 @@ sonarqube {
         property "sonar.projectKey", "KEY11091108"
         property "sonar.qualitygate.wait", true
     }
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
 }

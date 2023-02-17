@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Edit Game</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/root-page-style.css" />
+  <link rel="stylesheet" href="/css/genre-selector-style.css" />
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+          crossorigin="anonymous"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+        rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/genre-selector.js}"></script>
+  <script type="text/javascript" th:src="@{/js/validate-input.js}"></script>
+</head>
+<body class="bg-dark-2" style="background-image: var(--bg-gradient2);">
+<header class="masthead special-color-dark mb-4">
+  <nav class="navbar shadow navbar-dark p-3 bg-dark-2 text-white" aria-label="Main navigation">
+    <div class="container-fluid d-grid gap-3 align-items-center">
+      <ul class="nav col col-lg-auto me-lg-auto mb-2 justify-content-left mb-md-0">
+        <a class="font-weight-bold navbar-brand" href="/store">Upload Game</a>
+        <li><a class="nav-link px-2 text-white" href="/documentation">Documentation</a></li>
+        <li><a class="nav-link px-2 text-white" href="/faq">FAQ</a></li>
+        <li><a class="nav-link px-2 text-white" href="/uploaded-games">Uploaded Games</a></li>
+      </ul>
+      <div class="d-flex justify-content-end text-white">
+        <div th:if="${#httpServletRequest.remoteUser}!=null">
+          <a class="nav-link dropdown-toggle l text-white"
+             data-toggle="dropdown" href="#" role="button"
+             aria-haspopup="true"
+             aria-expanded="false">
+            <label th:text="${user.publicUsername}"></label>
+          </a>
+          <div class="dropdown-menu shadow" aria-labelledby="dropdownUser2"
+               style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(-0.00172424px, 56px, 0px);">
+            <a class="dropdown-item" href="/account?account">Account</a>
+            <a class="dropdown-item" href="/profile?profile">Profile</a>
+            <a class="dropdown-item" href="/support?support">Contact support</a>
+            <a class="dropdown-item" href="/upload">Upload game</a>
+
+            <hr class="dropdown-divider">
+            <form class="dropdown-item" th:action="@{/logout}" method="post">
+              <button class="btn btn-md btn-light text-dark" type="submit">Log out</button>
+            </form>
+
+          </div>
+        </div>
+        <div th:if="${#httpServletRequest.remoteUser}==null">
+          <a class="text-end text-white" href="/log-in?login" th:text="'login'"></a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<main role="main" class="shadow mb-4">
+  <section class="my-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <form class="mb-5" method="post"
+                th:action="@{/uploaded-games/edit/{gameId}(gameId = ${uploadedGame.id})}"
+                th:object="${editGameInput}">
+            <div class="text-white mb-2">
+              <label for="title" class="form-label">Title</label>
+              <input type="text" id="title" name="title" th:field="*{title}"
+                     class="bg-gradient-light form-control text-muted" autofocus=""
+                     minlength="5" maxlength="45" required>
+              <div class="invalid-feedback">
+                Please provide a valid name.
+                Name must be at least 5 letters and no more than 70
+              </div>
+
+              <label for="description" class="form-label">Description</label>
+              <textarea id="description" name="description" th:field="*{description}"
+                        class="bg-gradient-light form-control text-muted" autofocus=""
+                        maxlength="3700" minlength="450" style="word-wrap:break-word;"
+                        required></textarea>
+              <div class="invalid-feedback">
+                Game description must be at least 450 chars and no more than 700
+              </div>
+
+              <label for="smallDescription" class="form-label">Small description</label>
+              <textarea id="smallDescription" style="word-wrap:break-word;"
+                        name="smallDescription" th:field="*{smallDescription}"
+                        class="bg-gradient-light form-control text-muted" autofocus=""
+                        maxlength="440" minlength="140" required></textarea>
+              <div class="invalid-feedback">
+                Small game description must be at least 140 chars and no more than 440
+              </div>
+
+              <label for="developer" class="form-label">Developer</label>
+              <input type="text" id="developer" name="developer" th:field="*{developer}"
+                     class="bg-gradient-light form-control text-muted" autofocus=""
+                     minlength="3" maxlength="140" required>
+              <div class="invalid-feedback">
+                Please provide a valid name for developer.
+              </div>
+
+              <label for="publisher" class="form-label">Publisher</label>
+              <input type="text" id="publisher" name="publisher" th:field="*{publisher}"
+                     class="bg-gradient-light form-control text-muted" autofocus=""
+                     minlength="3" maxlength="140" required>
+              <div class="invalid-feedback">
+                Please provide a valid name for publisher.
+              </div>
+
+              <label for="price" class="form-label">Price</label>
+              <input type="number" step="any" id="price" name="price" th:field="*{price}"
+                     class="bg-gradient-light form-control text-muted" autofocus=""
+                     max="9999" required>
+              <div class="invalid-feedback">
+
+              </div>
+            </div>
+
+            <h4 class="text-white">Select game genre</h4>
+
+            <div class="text-dark">
+              <select class="js-example-basic-multiple js-example-basic-multiple-limit-4"
+                      name="genres" id="genres" th:field="*{genres}"
+                      multiple="multiple"
+                      style="background-image: var(--bg-gradient2); width: 100%;"
+                      data-placeholder="Select a genre" tabindex="-1"
+                      aria-hidden="true">
+                <option class="select-gradient-bg" th:each="g: ${genreList}"
+                        th:value="${g.id}" th:text="${g.name}"></option>
+              </select>
+            </div>
+            <div class="text-white mb-2">
+              <h4>Select minimal requirements for your game</h4>
+
+              <select th:field="*{minProcessorId}" name="minProcessorId" id="minProcessorId">
+                <option th:each="p: ${processors}" th:value="${p.id}" th:text="${p.name}"></option>
+              </select>
+              <select th:field="*{minGraphicCardId}" name="minGraphicCardId" id="minGraphicCardId">
+                <option th:each="c: ${graphicCards}" th:value="${c.id}"
+                        th:text="${c.name}"></option>
+              </select>
+              <select th:field="*{minOSId}" name="minOSId" id="minOSId">
+                <option th:each="os: ${osList}" th:value="${os.id}" th:text="${os.name}"></option>
+              </select>
+              <br>
+
+              <label for="minMemory" class="form-label">Minimal memory</label>
+              <input type="number" th:field="*{minMemory}" id="minMemory" name="minMemory"
+                     class="bg-gradient-light form-control text-muted" autofocus=""
+                     min="1" required>
+              <div class="invalid-feedback">
+                Cant be zero
+              </div>
+
+              <label for="minStorage" class="form-label">Minimal available space in storage</label>
+              <input type="number" id="minStorage" th:field="*{minStorage}" th:required="required"
+                     name="minStorage" class="bg-gradient-light form-control text-muted"
+                     autofocus=""
+                     min="1" required>
+              <div class="invalid-feedback">
+                Cant be zero
+              </div>
+
+              <h4>Select maximal requirements for your game</h4>
+              <select th:field="*{recProcessorId}" name="recProcessorId" id="recProcessorId">
+                <option th:each="p: ${processors}" th:value="${p.id}" th:text="${p.name}"></option>
+              </select>
+              <select th:field="*{recGraphicCardId}" name="recGraphicCardId" id="recGraphicCardId">
+                <option th:each="c: ${graphicCards}" th:value="${c.id}"
+                        th:text="${c.name}"></option>
+              </select>
+              <select th:field="*{recOSId}" name="recOSId" id="recOSId">
+                <option th:each="os: ${osList}" th:value="${os.id}" th:text="${os.name}"></option>
+              </select>
+              <br>
+
+              <label for="recMemory" class="form-label">Recommended memory</label>
+              <input type="number" id="recMemory" name="recMemory" th:field="*{recMemory}"
+                     th:required="required"
+                     class="bg-gradient-light form-control text-muted" autofocus=""
+                     min="1" required>
+              <div class="invalid-feedback">
+                Cant be zero
+              </div>
+
+              <label for="recStorage" class="form-label">Recommended available space in
+                storage</label>
+              <input type="number" id="recStorage" th:field="*{recStorage}" th:required="required"
+                     name="recStorage" class="bg-gradient-light form-control text-muted"
+                     autofocus=""
+                     min="1" required>
+              <div class="invalid-feedback">
+                Cant be zero
+              </div>
+            </div>
+
+            <button type="submit" class="btn bg-gradient-light btn-primary">Save game</button>
+
+            <a style="background-image: var(--bs-gradient);"
+               class="btn btn-md btn-primary float-right"
+               type="button"
+               th:href="@{/uploaded-games/edit/{gameId}/files(gameId =${uploadedGame.id})}"
+               th:text="'Go to ' + ${uploadedGame.title} + ' files'"> </a>
+
+          </form>
+
+          <form method="post"
+                th:action="@{/uploaded-games/edit/{gameId}/delete(gameId = ${uploadedGame.id})}">
+            <button type="submit" class="btn bg-danger float-right">
+              Delete
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer style="background-image: var(--bg-gradient);" class="footer-10
+justify-content-center special-color-dark font-small text-muted shadow">
+  <div class="container text-center">
+    <p>
+      This website is only for educational and demonstration purposes.
+    </p>
+    <a href="">Privacy Policy</a>
+    <a href="">Agreement</a>
+  </div>
+</footer>
+</body>
+</html>
