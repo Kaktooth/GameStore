@@ -10,5 +10,4 @@ public class RecommendationApiCoreApplication {
   public static void main(String[] args) {
     SpringApplication.run(RecommendationApiCoreApplication.class, args);
   }
-
 }

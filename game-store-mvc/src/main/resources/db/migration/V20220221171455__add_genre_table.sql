@@ -1,0 +1,5 @@
+CREATE TABLE genres
+(
+    id    INTEGER PRIMARY KEY,
+    name VARCHAR UNIQUE NOT NULL
+);

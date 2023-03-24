@@ -1,0 +1,1 @@
+INSERT INTO game_picture_types VALUES (0, 'STORE'), (1, 'COLLECTION'), (2, 'GAMEPAGE'), (3, 'GAMEPLAY');

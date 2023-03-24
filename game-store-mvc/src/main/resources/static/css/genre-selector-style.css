@@ -1,0 +1,13 @@
+
+.js-example-basic-multiple {
+  color: black;
+  background-image: linear-gradient(to right, #212529, #432444)
+}
+
+.select2-results__option {
+  color: black;
+}
+
+.select-gradient-bg {
+  background: linear-gradient(to right, #FFFFFF, #432444)
+}
