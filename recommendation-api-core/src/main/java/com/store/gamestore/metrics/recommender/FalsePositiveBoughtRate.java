@@ -18,9 +18,9 @@ public class FalsePositiveBoughtRate implements Metric {
   @Override
   public UserMetric calculateMetric(UUID userId) {
 
-    var notUsedRecommendedGames = usedItemInteractionCalculator.getNotUsedItemInteractions(userId,
+    var notUsedRecommendedGames = usedItemInteractionCalculator.getUsedGamesInteractions(userId,
         InteractionType.BOUGHT, true);
-    var notUsedGames = usedItemInteractionCalculator.getUsedItemInteractions(userId,
+    var notUsedGames = usedItemInteractionCalculator.getUsedGamesInteractions(userId,
         InteractionType.BOUGHT, false);
     double rate = notUsedRecommendedGames / (notUsedRecommendedGames + notUsedGames);
     var metricGenerationDate = LocalDateTime.now();

@@ -1,5 +1,26 @@
-
 spring:
+  datasource:
+    url: jdbc:postgresql:game-store-db
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: false
   data:
     mongodb:
       database: user-data
+  application:
+    name: recommendation-service
+  kafka:
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+
+spark:
+  threads: 4
+server:
+  servlet:
+    context-path: /api

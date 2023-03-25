@@ -6,6 +6,12 @@ plugins {
 
 group 'com.launcher'
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(16)
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -13,9 +19,6 @@ repositories {
 ext {
     junitVersion = '5.7.1'
 }
-
-sourceCompatibility = '16'
-targetCompatibility = '16'
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'

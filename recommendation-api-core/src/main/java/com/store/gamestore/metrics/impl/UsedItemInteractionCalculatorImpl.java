@@ -16,14 +16,14 @@ public class UsedItemInteractionCalculatorImpl implements UsedItemInteractionCal
   private final UserInteractionRepository userInteractionRepository;
 
   @Override
-  public Integer getUsedItemInteractions(UUID userId, InteractionType interaction,
+  public Integer getUsedGamesInteractions(UUID userId, InteractionType interaction,
       boolean recommended) {
     var pair = getUsedAndUnusedGames(userId, interaction, recommended);
     return pair.getRight();
   }
 
   @Override
-  public Integer getNotUsedItemInteractions(UUID userId, InteractionType interaction,
+  public Integer getNotUsedGamesInteractions(UUID userId, InteractionType interaction,
       boolean recommended) {
     var pair = getUsedAndUnusedGames(userId, interaction, recommended);
     return pair.getLeft();

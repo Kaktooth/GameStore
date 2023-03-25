@@ -2,7 +2,7 @@ package com.store.gamestore.service.impl;
 
 import com.store.gamestore.common.ApplicationConstants.Qualifiers;
 import com.store.gamestore.common.ApplicationConstants.RecommenderConstants;
-import com.store.gamestore.recommendator.Recommender;
+import com.store.gamestore.recommender.Recommender;
 import com.store.gamestore.persistence.entity.UserRecommendation;
 import com.store.gamestore.persistence.repository.UserRecommendationRepository;
 import com.store.gamestore.service.RecommenderService;

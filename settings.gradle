@@ -1,4 +1,4 @@
 rootProject.name = 'GameStore'
-include 'api-core'
+include 'game-store-mvc'
 include 'recommendation-api-core'
 include 'launcher'

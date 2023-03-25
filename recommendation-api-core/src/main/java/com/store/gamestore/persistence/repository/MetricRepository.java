@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface MetricRepository extends MongoRepository<UserMetric, UUID> {
 
-  List<UserMetric> findAllByUserId(UUID userId);
+  List<UserMetric> findAllByReferenceId(UUID refId);
 
-  List<UserMetric> findAllByUserIdAndMetricName(UUID userId, String metricName);
+  List<UserMetric> findAllByReferenceIdAndMetricName(UUID refId, String metricName);
 }

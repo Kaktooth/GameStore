@@ -27,12 +27,12 @@ public class MetricServiceImpl implements MetricService {
   }
 
   @Override
-  public List<UserMetric> getAllMetricsByUserId(UUID userId) {
-    return metricRepository.findAllByUserId(userId);
+  public List<UserMetric> getAllMetricsByReferenceId(UUID refId) {
+    return metricRepository.findAllByReferenceId(refId);
   }
 
   @Override
-  public List<UserMetric> getMetricsByUserIdAndName(UUID userId, String metricName) {
-    return metricRepository.findAllByUserIdAndMetricName(userId, metricName);
+  public List<UserMetric> getMetricsByReferenceIdAndName(UUID refId, String metricName) {
+    return metricRepository.findAllByReferenceIdAndMetricName(refId, metricName);
   }
 }

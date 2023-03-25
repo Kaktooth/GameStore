@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public interface UsedItemInteractionCalculator {
 
-  Integer getUsedItemInteractions(UUID userId, InteractionType interaction, boolean recommended);
+  Integer getUsedGamesInteractions(UUID userId, InteractionType interaction, boolean recommended);
 
-  Integer getNotUsedItemInteractions(UUID userId, InteractionType interaction, boolean recommended);
+  Integer getNotUsedGamesInteractions(UUID userId, InteractionType interaction, boolean recommended);
 }

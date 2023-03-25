@@ -8,6 +8,8 @@ public interface GameRecommendationRepository extends MongoRepository<GameRecomm
 
   List<GameRecommendation> findAllByFirstGameId(String gameId);
 
+  GameRecommendation findFirstByFirstGameIdOrderBySimilarity(String gameId);
+
   Boolean existsByFirstGameIdAndSecondGameIdAndSimilarity(String firstGameId, String secondGameId,
       Double similarity);
 }

@@ -4,12 +4,9 @@ import com.store.gamestore.metrics.Metric;
 import com.store.gamestore.metrics.UsedItemInteractionCalculator;
 import com.store.gamestore.persistence.entity.InteractionType;
 import com.store.gamestore.persistence.entity.UserMetric;
-import com.store.gamestore.persistence.repository.UserInteractionRepository;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,9 +17,9 @@ public class BoughtPrecisionMetric implements Metric {
 
   @Override
   public UserMetric calculateMetric(UUID userId) {
-    var usedGames = usedItemInteractionCalculator.getUsedItemInteractions(userId,
+    var usedGames = usedItemInteractionCalculator.getUsedGamesInteractions(userId,
         InteractionType.BOUGHT, true);
-    var notUsedGames = usedItemInteractionCalculator.getNotUsedItemInteractions(userId,
+    var notUsedGames = usedItemInteractionCalculator.getUsedGamesInteractions(userId,
         InteractionType.BOUGHT, true);
     double precision = usedGames / (usedGames + notUsedGames);
     var metricGenerationDate = LocalDateTime.now();

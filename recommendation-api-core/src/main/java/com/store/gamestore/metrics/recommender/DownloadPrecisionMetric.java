@@ -17,9 +17,9 @@ public class DownloadPrecisionMetric implements Metric {
 
   @Override
   public UserMetric calculateMetric(UUID userId) {
-    var usedGames = usedItemInteractionCalculator.getUsedItemInteractions(userId,
+    var usedGames = usedItemInteractionCalculator.getUsedGamesInteractions(userId,
         InteractionType.DOWNLOADED, true);
-    var notUsedGames = usedItemInteractionCalculator.getNotUsedItemInteractions(userId,
+    var notUsedGames = usedItemInteractionCalculator.getUsedGamesInteractions(userId,
         InteractionType.DOWNLOADED, true);
     double precision = usedGames / (usedGames + notUsedGames);
     var metricGenerationDate = LocalDateTime.now();

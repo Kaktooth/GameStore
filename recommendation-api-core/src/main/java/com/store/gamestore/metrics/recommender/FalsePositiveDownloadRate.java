@@ -18,9 +18,9 @@ public class FalsePositiveDownloadRate implements Metric {
   @Override
   public UserMetric calculateMetric(UUID userId) {
 
-    var notUsedRecommendedGames = usedItemInteractionCalculator.getNotUsedItemInteractions(userId,
+    var notUsedRecommendedGames = usedItemInteractionCalculator.getUsedGamesInteractions(userId,
         InteractionType.DOWNLOADED, true);
-    var notUsedGames = usedItemInteractionCalculator.getUsedItemInteractions(userId,
+    var notUsedGames = usedItemInteractionCalculator.getUsedGamesInteractions(userId,
         InteractionType.DOWNLOADED, false);
     double rate = notUsedRecommendedGames / (notUsedRecommendedGames + notUsedGames);
     var metricGenerationDate = LocalDateTime.now();

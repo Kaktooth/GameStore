@@ -17,6 +17,12 @@ public interface UserInteractionRepository extends MongoRepository<UserInteracti
       InteractionType interactionType, Boolean recommended);
 
   @Aggregation(pipeline = {
+      "{ $match: { 'gameId' : ?0, 'interactionType' : ?1, 'recommended' : ?2 } }",
+      "{ $count:  'gameInteractionCount'}"})
+  Integer countAllGameInteractions(UUID gameId, InteractionType interactionType,
+      Boolean recommended);
+
+  @Aggregation(pipeline = {
       "{ $match: { 'gameId' : ?0, 'interactionType' : ?1 } }",
       "{ $count:  'gameInteractionCount'}"})
   Integer countAllGameInteractions(UUID gameId, InteractionType interactionType);

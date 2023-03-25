@@ -8,7 +8,7 @@ public interface MetricService {
 
   void calculateMetrics();
 
-  List<UserMetric> getAllMetricsByUserId(UUID userId);
+  List<UserMetric> getAllMetricsByReferenceId(UUID refId);
 
-  List<UserMetric> getMetricsByUserIdAndName(UUID userId, String metricName);
+  List<UserMetric> getMetricsByReferenceIdAndName(UUID refId, String metricName);
 }

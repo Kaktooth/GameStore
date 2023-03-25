@@ -1,8 +1,8 @@
 package com.store.gamestore.service.impl;
 
-import com.store.gamestore.recommendator.FeaturesExtractor;
-import com.store.gamestore.recommendator.TopicFinder;
-import com.store.gamestore.recommendator.TrainedModel;
+import com.store.gamestore.recommender.FeaturesExtractor;
+import com.store.gamestore.recommender.TopicFinder;
+import com.store.gamestore.recommender.TrainedModel;
 import com.store.gamestore.service.TopicService;
 import java.util.HashMap;
 import java.util.Map;
