@@ -1,7 +1,7 @@
 package com.store.gamestore.controller.mvc;
 
 import com.store.gamestore.model.dto.EditGameDTO;
-import com.store.gamestore.model.util.UploadedGameMapper;
+import com.store.gamestore.common.mapper.UploadedGameMapper;
 import com.store.gamestore.model.util.UserHolder;
 import com.store.gamestore.persistence.entity.Game;
 import com.store.gamestore.persistence.entity.GameFile;

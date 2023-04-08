@@ -1,6 +1,7 @@
 package com.store.gamestore.persistence.entity;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,12 +12,13 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @AllArgsConstructor
 @Builder
 @Document(collection = "game-recommendations")
-public class GameRecommendation {
+public class GameRecommendation implements Serializable {
+
+  private static final long serialVersionUID = -8393886434462419486L;
 
   @MongoId
-  private String id;
-  private String firstGameId;
-  private String secondGameId;
+  private UUID id;
+  private UUID firstGameId;
+  private UUID secondGameId;
   private Double similarity;
-  private LocalDateTime localDateTime;
 }

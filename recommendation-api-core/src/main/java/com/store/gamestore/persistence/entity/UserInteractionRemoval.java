@@ -1,5 +1,6 @@
 package com.store.gamestore.persistence.entity;
 
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserInteractionRemoval {
 
-  private String userId;
-  private String gameId;
+  private UUID userId;
+  private UUID gameId;
   private InteractionType interactionType;
 }

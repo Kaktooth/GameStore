@@ -20,13 +20,13 @@ public class MetricsController {
   private final MetricService metricService;
 
   @GetMapping("/{refId}")
-  public List<UserMetric> getAllMetricsByRefId(@PathVariable UUID refId) {
-    return metricService.getAllMetricsByReferenceId(refId);
+  public List<UserMetric> getMetricsByRefId(@PathVariable UUID refId) {
+    return metricService.getMetricsByReferenceId(refId);
   }
 
   @GetMapping("/{refId}/{metricName}")
-  public List<UserMetric> getAllMetricsByRefIdAndMetricName(@PathVariable UUID refId,
+  public UserMetric getAllMetricsByRefIdAndMetricName(@PathVariable UUID refId,
       @PathVariable String metricName) {
-    return metricService.getMetricsByReferenceIdAndName(refId, metricName);
+    return metricService.getMetricByReferenceIdAndName(refId, metricName);
   }
 }

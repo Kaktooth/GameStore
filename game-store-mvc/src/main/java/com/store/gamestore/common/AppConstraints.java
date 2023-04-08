@@ -15,6 +15,19 @@ public class AppConstraints {
   }
 
   @UtilityClass
+  public class Pagination {
+
+    public static final int PAGE_SIZE = 4;
+
+  }
+
+  @UtilityClass
+  public class Search {
+
+    public static final int RANGE = 4;
+  }
+
+  @UtilityClass
   public class CacheNames {
 
     public static final String POPULAR_GAMES = "popularGamesCached";
@@ -54,5 +67,14 @@ public class AppConstraints {
     public static final String API_PAGE = "/api/**";
     public static final String CSS = "/css/**";
     public static final String JS = "/js/**";
+  }
+
+  @UtilityClass
+  public class KafkaTopics {
+
+    public static final String USER_INTERACTIONS = "user-interactions";
+    public static final String USER_INTERACTION_REMOVALS = "user-interactions-removal";
+    public static final String GAME_RECOMMENDATIONS = "game-recommendations";
+    public static final String USER_RECOMMENDATIONS = "user-recommendations";
   }
 }

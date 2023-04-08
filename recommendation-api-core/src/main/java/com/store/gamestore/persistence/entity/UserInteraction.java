@@ -1,6 +1,7 @@
 package com.store.gamestore.persistence.entity;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,9 +15,9 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 public class UserInteraction {
 
   @MongoId
-  private String id;
-  private String userId;
-  private String gameId;
+  private UUID id;
+  private UUID userId;
+  private UUID gameId;
   private InteractionType interactionType;
   private LocalDateTime date;
   private Boolean recommended;

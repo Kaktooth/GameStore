@@ -9,5 +9,5 @@ public interface MetricRepository extends MongoRepository<UserMetric, UUID> {
 
   List<UserMetric> findAllByReferenceId(UUID refId);
 
-  List<UserMetric> findAllByReferenceIdAndMetricName(UUID refId, String metricName);
+  UserMetric findByReferenceIdAndMetricName(UUID refId, String metricName);
 }

@@ -1,5 +1,6 @@
 package com.store.gamestore.common.message.sender;
 
+import com.store.gamestore.common.AppConstraints.KafkaTopics;
 import com.store.gamestore.persistence.entity.InteractionType;
 import com.store.gamestore.persistence.entity.UserInteraction;
 import com.store.gamestore.persistence.entity.UserInteractionRemoval;
@@ -20,7 +21,7 @@ public class KafkaUserInteractionSender implements UserInteractionSender {
   public void send(InteractionType interactionType, UUID userId, UUID gameId) {
     var userInteraction = new UserInteraction(UUID.randomUUID().toString(), userId.toString(),
         gameId.toString(), interactionType, LocalDateTime.now(), false);
-    userInteractionKafkaTemplate.send("user-interactions", userInteraction.getId(),
+    userInteractionKafkaTemplate.send(KafkaTopics.USER_INTERACTIONS, userInteraction.getId(),
         userInteraction);
   }
 
@@ -28,7 +29,7 @@ public class KafkaUserInteractionSender implements UserInteractionSender {
   public void sendRemoval(InteractionType interactionType, UUID userId, UUID gameId) {
     var userInteraction = new UserInteractionRemoval(userId.toString(), gameId.toString(),
         interactionType);
-    userInteractionRemovalKafkaTemplate.send("user-interactions-removal",
+    userInteractionRemovalKafkaTemplate.send(KafkaTopics.USER_INTERACTION_REMOVALS,
         UUID.randomUUID().toString(), userInteraction);
   }
 }

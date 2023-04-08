@@ -11,6 +11,7 @@ public class ApplicationConstants {
   public class RecommenderConstants {
 
     public static final int SCHEDULER_RATE = 60000;
+    public static final int GAME_RECOMMENDATIONS_LIMIT = 12;
   }
 
   @UtilityClass
@@ -41,12 +42,12 @@ public class ApplicationConstants {
   @UtilityClass
   public class LoadingPaths {
 
-    public static final String COUNT_VECTORIZER = "./recommendation-api-core/src/main/resources/static/data/trained-models/count-vectorizer";
-    public static final String VOCABULARY = "./recommendation-api-core/src/main/resources/static/data/trained-models/vocabulary";
-    public static final String LDA_MODEL = "./recommendation-api-core/src/main/resources/static/data/trained-models/LDA";
-    public static final String LDA_DESCRIBED_TOPICS = "./recommendation-api-core/src/main/resources/static/data/trained-models/topics";
-    public static final String GAMES_METADATA_TEXT_FILE = "./recommendation-api-core/src/main/resources/static/data/video_games_small.txt";
-    public static final String POS_TAGGER_MODEL = "./recommendation-api-core/src/main/resources/static/data/en-pos-perceptron.bin";
+    public static final String COUNT_VECTORIZER = "./src/main/resources/static/data/trained-models/count-vectorizer";
+    public static final String VOCABULARY = "./src/main/resources/static/data/trained-models/vocabulary";
+    public static final String LDA_MODEL = "./src/main/resources/static/data/trained-models/LDA";
+    public static final String LDA_DESCRIBED_TOPICS = "./src/main/resources/static/data/trained-models/topics";
+    public static final String GAMES_METADATA_TEXT_FILE = "./src/main/resources/static/data/video_games_small.txt";
+    public static final String POS_TAGGER_MODEL = "./src/main/resources/static/data/en-pos-perceptron.bin";
   }
 
   @UtilityClass
@@ -58,7 +59,7 @@ public class ApplicationConstants {
   @UtilityClass
   public class Columns {
 
-    public static final String STANDARD_COLUMN = "value";
+    public static final String VALUE_COLUMN = "value";
     public static final String WORD_COLUMN = "word";
     public static final String INDEX_COLUMN = "index";
     public static final String FEATURES_COLUMN = "features";
@@ -75,6 +76,10 @@ public class ApplicationConstants {
     public static final String SECOND_TOPIC_DISTRIBUTION = "topicDistribution2";
     public static final String PAIR = "pair";
     public static final String JENSEN_SHANNON_DISTANCE = "jsd";
+    public static final String FIRST_COLUMN = "_1";
+    public static final String SECOND_COLUMN = "_2";
+    public static final String ID_COLUMN = "id";
+    public static final String NORMILIZED_VALUE ="normalizedValue";
   }
 
   @UtilityClass
@@ -123,11 +128,21 @@ public class ApplicationConstants {
 
     public static final String GENERATE_RANDOM_STRING = "generateRandomString";
     public static final String CALCULATE_JENSEN_SHANNON_DISTANCE = "calculateJSD";
+    public static final String NORMILIZE = "normalize";
   }
 
   @UtilityClass
   public class WordClasses {
 
     public static final String NOUN = "NOUN";
+  }
+
+  @UtilityClass
+  public class KafkaTopics {
+
+    public static final String GAME_RECOMMENDATIONS = "game-recommendations";
+    public static final String USER_RECOMMENDATIONS = "user-recommendations";
+    public static final String USER_INTERACTIONS = "user-interactions";
+    public static final String USER_INTERACTION_REMOVALS = "user-interactions-removal";
   }
 }

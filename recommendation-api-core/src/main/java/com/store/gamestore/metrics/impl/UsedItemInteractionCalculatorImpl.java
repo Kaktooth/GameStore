@@ -31,15 +31,15 @@ public class UsedItemInteractionCalculatorImpl implements UsedItemInteractionCal
 
   private Pair<Integer, Integer> getUsedAndUnusedGames(UUID userId, InteractionType interaction,
       boolean recommended) {
-    var games = userInteractionRepository.getAllInteractedGamesByUserId(userId.toString());
+    var games = userInteractionRepository.getAllInteractedGamesByUserId(userId);
     var usedItemsCount = 0;
     var notUsedItemsCount = 0;
     for (var gameId : games) {
-      var isVisited = userInteractionRepository.userInteractionExists(userId.toString(),
-          gameId.toString(), InteractionType.VISITED, recommended);
-      var isUsed = userInteractionRepository.userInteractionExists(userId.toString(),
-          gameId.toString(), interaction, recommended);
-      if (isVisited && isUsed) {
+      var isVisited = userInteractionRepository.userInteractionExists(userId, gameId,
+          InteractionType.VISITED, recommended);
+      var isUsed = userInteractionRepository.userInteractionExists(userId, gameId, interaction,
+          recommended);
+      if (isVisited.orElse(false) && isUsed.orElse(false)) {
         usedItemsCount++;
       } else {
         notUsedItemsCount--;

@@ -1,37 +1,56 @@
 package com.store.gamestore.configuration;
 
+import com.store.gamestore.common.ApplicationConstants.KafkaTopics;
 import com.store.gamestore.persistence.entity.UserInteraction;
 import com.store.gamestore.persistence.entity.UserInteractionRemoval;
 import com.store.gamestore.persistence.repository.UserInteractionRepository;
+import com.store.gamestore.service.UserInteractionsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.admin.NewTopic;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.config.TopicBuilder;
 
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
 public class KafkaConfiguration {
 
-  private final UserInteractionRepository userInteractionRepository;
+  private final UserInteractionsService userInteractionsService;
 
-  @KafkaListener(id = "user-interactions", topics = "user-interactions", groupId = "user-interactions")
+  @Bean
+  public NewTopic userRecommendationsTopic() {
+    return TopicBuilder.name(KafkaTopics.USER_RECOMMENDATIONS)
+        .partitions(6)
+        .compact()
+        .build();
+  }
+
+  @Bean
+  public NewTopic gameRecommendationsTopic() {
+    return TopicBuilder.name(KafkaTopics.GAME_RECOMMENDATIONS)
+        .partitions(6)
+        .compact()
+        .build();
+  }
+
+  @KafkaListener(topics = KafkaTopics.USER_INTERACTIONS, groupId = KafkaTopics.USER_INTERACTIONS)
   public void onEvent(UserInteraction userInteraction) {
     if (userInteraction != null) {
       log.info("Received interaction: {}", userInteraction);
-      userInteractionRepository.save(userInteraction);
+      userInteractionsService.save(userInteraction);
     } else {
       log.error("Received null object");
     }
   }
 
-  @KafkaListener(id = "user-interactions-removal", topics = "user-interactions-removal", groupId = "user-interactions-removal")
+  @KafkaListener(topics = KafkaTopics.USER_INTERACTION_REMOVALS, groupId = KafkaTopics.USER_INTERACTION_REMOVALS)
   public void onEvent(UserInteractionRemoval userInteraction) {
     if (userInteraction != null) {
       log.info("Received interaction removal: {}", userInteraction);
-      userInteractionRepository.deleteAllByUserIdAndGameIdAndInteractionType(
-          userInteraction.getUserId(), userInteraction.getGameId(),
-          userInteraction.getInteractionType());
+      userInteractionsService.deleteAllUserInteractionsByRemoval(userInteraction);
     } else {
       log.error("Received null object");
     }

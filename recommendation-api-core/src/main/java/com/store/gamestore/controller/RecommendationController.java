@@ -1,17 +1,13 @@
 package com.store.gamestore.controller;
 
-import com.store.gamestore.persistence.entity.GameRating;
+import com.store.gamestore.persistence.entity.GameRecommendation;
 import com.store.gamestore.persistence.entity.UserRecommendation;
-import com.store.gamestore.service.GameRatingService;
 import com.store.gamestore.service.RecommenderService;
 import com.store.gamestore.service.TopicService;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class RecommendationController {
 
   private final RecommenderService recommenderService;
-  private final GameRatingService gameRatingService;
   private final TopicService topicService;
 
   @GetMapping("/topics")
@@ -37,7 +32,7 @@ public class RecommendationController {
   }
 
   @GetMapping("/game/{gameId}")
-  public List<UserRecommendation> getRecommendationsForGame(@PathVariable UUID gameId) {
+  public List<GameRecommendation> getRecommendationsForGame(@PathVariable UUID gameId) {
     log.info("get recommendations for game: {}", gameId);
     return recommenderService.getRecommendationsByGameId(gameId);
   }
@@ -45,17 +40,13 @@ public class RecommendationController {
   @GetMapping("/user/{userId}")
   public List<UserRecommendation> getRecommendationsForUser(@PathVariable UUID userId) {
     log.info("get recommendations for user: {}", userId);
-    List<UserRecommendation> userRecommendations = new ArrayList<>();
-    var ratedGameIds = gameRatingService.getRatingsByUserId(userId).stream()
-        .sorted(Comparator.comparing(GameRating::getRating))
-        .limit(5)
-        .map(GameRating::getGameId)
-        .collect(Collectors.toList());
+    return recommenderService.getRecommendationsByUserId(userId);
+  }
 
-    ratedGameIds.stream()
-        .map(this::getRecommendationsForGame)
-        .forEachOrdered(userRecommendations::addAll);
-
-    return userRecommendations;
+  @GetMapping("/user/{userId}/topic/{topicId}")
+  public List<UserRecommendation> getRecommendationsForUser(@PathVariable UUID userId,
+      @PathVariable UUID topicId) {
+    log.info("get recommendations for user: {}", userId);
+    return recommenderService.getRecommendationsByUserId(userId);
   }
 }

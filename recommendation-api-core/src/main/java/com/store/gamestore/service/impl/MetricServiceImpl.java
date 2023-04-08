@@ -20,6 +20,7 @@ public class MetricServiceImpl implements MetricService {
   private final UserRepository userRepository;
   private final MetricRepository metricRepository;
 
+  @Override
   @Scheduled(fixedDelay = MetricsConstants.SCHEDULER_RATE)
   public void calculateMetrics() {
     var users = userRepository.findAll();
@@ -27,12 +28,12 @@ public class MetricServiceImpl implements MetricService {
   }
 
   @Override
-  public List<UserMetric> getAllMetricsByReferenceId(UUID refId) {
+  public List<UserMetric> getMetricsByReferenceId(UUID refId) {
     return metricRepository.findAllByReferenceId(refId);
   }
 
   @Override
-  public List<UserMetric> getMetricsByReferenceIdAndName(UUID refId, String metricName) {
-    return metricRepository.findAllByReferenceIdAndMetricName(refId, metricName);
+  public UserMetric getMetricByReferenceIdAndName(UUID refId, String metricName) {
+    return metricRepository.findByReferenceIdAndMetricName(refId, metricName);
   }
 }

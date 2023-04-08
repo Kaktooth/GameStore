@@ -1,7 +1,10 @@
 package com.store.gamestore.controller.mvc;
 
+import com.store.gamestore.common.AppConstraints;
+import com.store.gamestore.common.Pagination;
+import com.store.gamestore.common.mapper.GameRecommendationMapper;
+import com.store.gamestore.common.mapper.SystemRequirementsMapper;
 import com.store.gamestore.common.message.sender.UserInteractionSender;
-import com.store.gamestore.model.util.SystemRequirementsMapper;
 import com.store.gamestore.model.util.UserHolder;
 import com.store.gamestore.persistence.entity.FavoriteGame;
 import com.store.gamestore.persistence.entity.Game;
@@ -13,9 +16,11 @@ import com.store.gamestore.service.game.favorite.FavoriteGameService;
 import com.store.gamestore.service.game.pictures.GamePictureService;
 import com.store.gamestore.service.game.profile.GameProfileService;
 import com.store.gamestore.service.game.uploaded.UploadedGameService;
+import com.store.gamestore.service.recommendation.GameRecommendationService;
 import com.store.gamestore.service.requirements.SystemRequirementsService;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Slf4j
 @Controller
 @RequestMapping("/game/{gameId}")
 @RequiredArgsConstructor
@@ -38,6 +44,8 @@ public class GameController {
   private final FavoriteGameService favoriteGameService;
   private final SystemRequirementsService requirementsService;
   private final SystemRequirementsMapper systemRequirementsMapper;
+  private final GameRecommendationMapper gameRecommendationMapper;
+  private final GameRecommendationService gameRecommendationService;
 
   @PostMapping("/add-favorite")
   public String addToFavorites(@PathVariable UUID gameId, Model model) {
@@ -88,6 +96,13 @@ public class GameController {
 
       userInteractionSender.send(InteractionType.VISITED, user.getId(), gameId);
     }
+
+    var similarGamesRecommendations = gameRecommendationService.getRecommendations(gameId);
+    var similarGamesDTO = gameRecommendationMapper.sourceToDestination(similarGamesRecommendations);
+    var pagination = new Pagination<>(similarGamesDTO);
+    var pageLength = pagination.getPageCount(AppConstraints.Pagination.PAGE_SIZE);
+    var similarGamesMap = pagination.toMap(AppConstraints.Pagination.PAGE_SIZE, pageLength);
+    model.addAttribute("similarGamesMap", similarGamesMap);
 
     var gamePageImage = gameImageService.findGamePictureByGameIdAndPictureTypeId(gameId,
         GamePictureType.GAME_PAGE.ordinal());

@@ -14,4 +14,7 @@ public interface GameMetadataRepository extends CrudRepository<GameMetadata, UUI
           + "             JOIN game_profiles gp on games.id = gp.game_id")
   @NotNull
   List<GameMetadata> findAll();
+
+  @Query(nativeQuery = true, value = "SELECT id FROM games")
+  List<UUID> findAllGameIds();
 }

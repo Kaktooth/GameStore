@@ -1,19 +1,12 @@
 package com.store.gamestore.metrics.recommender;
 
-import com.store.gamestore.metrics.Metric;
-import com.store.gamestore.persistence.entity.UserMetric;
-import com.store.gamestore.persistence.repository.UserInteractionRepository;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
-public class UserCoverageMetric implements Metric {
+public class UserCoverageMetric {
 
-  private final UserInteractionRepository userInteractionRepository;
-  @Override
-  public UserMetric calculateMetric(UUID userId) {
-    return null;
-  }
 }

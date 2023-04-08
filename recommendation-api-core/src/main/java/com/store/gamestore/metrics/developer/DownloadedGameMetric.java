@@ -4,23 +4,25 @@ import com.store.gamestore.metrics.Metric;
 import com.store.gamestore.persistence.entity.InteractionType;
 import com.store.gamestore.persistence.entity.UserMetric;
 import com.store.gamestore.persistence.repository.UserInteractionRepository;
-import java.time.LocalDateTime;
+import com.store.gamestore.service.UserInteractionsService;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DownloadedGameMetric implements Metric {
 
-  private final UserInteractionRepository userInteractionRepository;
+  private final UserInteractionsService userInteractionsService;
 
   @Override
   public UserMetric calculateMetric(UUID gameId) {
-    var userInteractions = userInteractionRepository.countAllGameInteractions(gameId,
-        InteractionType.DOWNLOADED).doubleValue();
-    var metricGenerationDate = LocalDateTime.now();
-    return new UserMetric(UUID.randomUUID(), gameId, userInteractions, metricGenerationDate,
-        getClass().getName());
+    var metricName = getClass().getSimpleName();
+    log.info("calculating: {}", metricName);
+    var userInteractions = userInteractionsService.countAllUserInteractionsWithGame(gameId,
+        InteractionType.DOWNLOADED).orElse(0).doubleValue();
+    return new UserMetric(UUID.randomUUID(), gameId, userInteractions, metricName);
   }
 }

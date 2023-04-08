@@ -1,6 +1,28 @@
 .header-cover {
-  width: 320px;
-  height: 180px;
+  width: 300px;
+  height: 60%;
+}
+
+.gameplay-image {
+  width: 720px;
+  height: 360px;
+}
+
+.image-sm {
+  width: 151px;
+  height: 151px;
+}
+
+.outer-prev-icon {
+  position: relative;
+  bottom: 40px;
+  right: 50px;
+}
+
+.outer-next-icon {
+  position: relative;
+  bottom: 40px;
+  left: 50px;
 }
 
 .title {
@@ -24,4 +46,17 @@ banner-description {
   font-size: 15px;
   margin-top: 30px;
   font-weight: normal;
+}
+
+.game-title {
+  font-size: 13px;
+  margin-bottom: 3px;
+  font-weight: 50;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: "Motiva Sans", Sans-serif;
+  color: aliceblue;
+  margin-top: 5px;
+  margin-right: 5px;
+  word-break: break-word;
 }

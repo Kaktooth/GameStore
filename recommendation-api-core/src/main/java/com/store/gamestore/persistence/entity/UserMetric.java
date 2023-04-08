@@ -1,6 +1,5 @@
 package com.store.gamestore.persistence.entity;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +13,5 @@ public class UserMetric {
   UUID id;
   UUID referenceId;
   Double value;
-  LocalDateTime generationDate;
   String metricName;
 }

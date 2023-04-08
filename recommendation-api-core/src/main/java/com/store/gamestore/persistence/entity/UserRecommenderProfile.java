@@ -1,5 +1,6 @@
 package com.store.gamestore.persistence.entity;
 
+import java.util.UUID;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -7,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 public class UserRecommenderProfile {
 
   @MongoId
-  private String userId;
+  private UUID userId;
   private String recommenderName;
   private Integer recommenderRating;
 }

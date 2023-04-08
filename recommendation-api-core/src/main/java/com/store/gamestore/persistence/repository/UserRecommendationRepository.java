@@ -7,11 +7,12 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface UserRecommendationRepository extends MongoRepository<UserRecommendation, UUID> {
 
-  List<UserRecommendation> findAllByGameId(UUID gameId);
+  List<UserRecommendation> findAllByGameIdOrderByPredictedRatingDesc(UUID gameId);
 
-  List<UserRecommendation> findAllByUserId(UUID userId);
+  List<UserRecommendation> findAllByUserIdOrderByPredictedRatingDesc(UUID userId);
 
-  List<UserRecommendation> findAllByTopicId(Integer topic);
+  List<UserRecommendation> findAllByUserIdAndTopicIdOrderByPredictedRatingDesc(UUID userId,
+      Integer topic);
 
   Boolean existsByGameIdAndPredictedRating(UUID gameId, Double predictedRating);
 }

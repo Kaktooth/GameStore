@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ImageService extends AbstractService<Image, UUID> {
 
-  public ImageService(
-      CommonRepository<Image, UUID> repository) {
+  public ImageService(CommonRepository<Image, UUID> repository) {
     super(repository);
   }
 }

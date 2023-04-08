@@ -4,11 +4,12 @@ import com.store.gamestore.metrics.Metric;
 import com.store.gamestore.persistence.entity.UserMetric;
 import com.store.gamestore.persistence.repository.GameRatingRepository;
 import com.store.gamestore.persistence.repository.GameRecommendationRepository;
-import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class MAEMetric implements Metric {
@@ -19,18 +20,23 @@ public class MAEMetric implements Metric {
 
   @Override
   public UserMetric calculateMetric(UUID userId) {
+    var metricName = getClass().getSimpleName();
+    log.info("calculating: {}", metricName);
     var gameRatings = gameRatingRepository.findAllByUserId(userId);
     var ratingsDivisionSum = 0;
     for (var rating : gameRatings) {
       var firstRating = gameRatingRepository.findFirstByGameIdAndUserIdOrderByDateTimeDesc(
           rating.getGameId(), rating.getUserId());
       var similarity = gameRecommendationRepository.findFirstByFirstGameIdOrderBySimilarity(
-          rating.getGameId().toString()).getSimilarity();
+          rating.getGameId()).getSimilarity();
       ratingsDivisionSum += Math.abs(similarity - firstRating.getRating());
     }
-    var MAE = Math.sqrt((1 / gameRatings.size()) * ratingsDivisionSum);
-    var metricGenerationDate = LocalDateTime.now();
-    return new UserMetric(UUID.randomUUID(), userId, MAE, metricGenerationDate,
-        getClass().getName());
+    var MAE = 0.0d;
+    try {
+      MAE = Math.sqrt((1.0d / gameRatings.size()) * ratingsDivisionSum);
+    } catch (ArithmeticException exception) {
+      log.error(exception.toString());
+    }
+    return new UserMetric(UUID.randomUUID(), userId, MAE, metricName);
   }
 }

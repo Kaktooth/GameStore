@@ -1,5 +1,6 @@
 package com.store.gamestore.persistence.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -10,7 +11,9 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @Data
 @AllArgsConstructor
 @Document(collection = "user-recommendations")
-public class UserRecommendation {
+public class UserRecommendation implements Serializable {
+
+  private static final long serialVersionUID = -6708530972415161759L;
 
   @MongoId
   private UUID id;

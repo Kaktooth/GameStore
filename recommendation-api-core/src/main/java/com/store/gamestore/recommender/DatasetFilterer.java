@@ -3,9 +3,6 @@ package com.store.gamestore.recommender;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 
-public interface DatasetFilterer {
+public interface DatasetFilterer extends Filterer<Dataset<Row>> {
 
-  DatasetFiltererImpl applyFilter(DatasetFilter filter);
-
-  Dataset<Row> collect();
 }

@@ -2,7 +2,7 @@ package com.store.gamestore.controller.mvc;
 
 
 import com.store.gamestore.model.dto.StoreBannerDTO;
-import com.store.gamestore.model.util.StoreBannerMapper;
+import com.store.gamestore.common.mapper.StoreBannerMapper;
 import com.store.gamestore.model.util.UserHolder;
 import com.store.gamestore.persistence.entity.StoreBanner;
 import com.store.gamestore.service.CommonService;

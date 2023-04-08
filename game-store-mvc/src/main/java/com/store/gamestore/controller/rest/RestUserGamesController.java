@@ -2,7 +2,7 @@ package com.store.gamestore.controller.rest;
 
 import com.store.gamestore.common.message.sender.UserInteractionSender;
 import com.store.gamestore.model.dto.UserGameDTO;
-import com.store.gamestore.model.util.UserGameMapper;
+import com.store.gamestore.common.mapper.UserGameMapper;
 import com.store.gamestore.persistence.entity.InteractionType;
 import com.store.gamestore.service.game.collection.UserGamesService;
 import com.store.gamestore.service.game.file.GameFileService;
@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +35,6 @@ public class RestUserGamesController {
     return userGameMapper.sourceToDestination(userGames);
   }
 
-  @Transactional
   @GetMapping("/download/{gameId}/for-user/{userId}")
   public ResponseEntity<byte[]> getGameFiles(@PathVariable UUID gameId, @PathVariable UUID userId)
       throws SQLException, IOException {

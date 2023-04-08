@@ -1,8 +1,10 @@
 package com.store.gamestore.controller.mvc;
 
+import com.store.gamestore.common.AppConstraints;
+import com.store.gamestore.common.AppConstraints.Search;
+import com.store.gamestore.common.Pagination;
+import com.store.gamestore.common.mapper.GameMapper;
 import com.store.gamestore.model.dto.GameDTO;
-import com.store.gamestore.model.util.GameMapper;
-import com.store.gamestore.model.util.Pagination;
 import com.store.gamestore.model.util.UserHolder;
 import com.store.gamestore.persistence.entity.Game;
 import com.store.gamestore.persistence.entity.StoreBanner;
@@ -39,15 +41,14 @@ public class StoreController {
       model.addAttribute("user", authenticatedUser);
     }
 
-    int size = 4;
-    int searchRange = 4;
     var storeBanners = storeBannerService.getAll();
     model.addAttribute("bannerItems", storeBanners);
 
     var popularGames = gameService.getAll();
     var popularGamesDtoList = gameMapper.sourceToDestination(popularGames);
     var pagination = new Pagination<>(popularGamesDtoList);
-    var popularGamesMap = pagination.toMap(size, pagination.getPageCount(size));
+    var pageLength = pagination.getPageCount(AppConstraints.Pagination.PAGE_SIZE);
+    var popularGamesMap = pagination.toMap(AppConstraints.Pagination.PAGE_SIZE, pageLength);
 
     model.addAttribute("popularGamesMap", popularGamesMap);
     model.addAttribute("bestSellerGamesMap", popularGamesMap);
@@ -56,7 +57,7 @@ public class StoreController {
     if (searchString == null || searchString.equals("")) {
       model.addAttribute("search", false);
     } else {
-      var searchedGames = gameSearchService.searchGames(searchString, searchRange);
+      var searchedGames = gameSearchService.searchGames(searchString, Search.RANGE);
       model.addAttribute("search", true);
       model.addAttribute("searchedGames", searchedGames);
     }
