@@ -16,7 +16,6 @@ import com.store.gamestore.service.RecommenderService;
 import com.store.gamestore.service.TopicService;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +29,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @EnableScheduling
-public class ScheduledRecommendationServiceImpl implements RecommenderService {
+public class ScheduledRecommenderServiceImpl implements RecommenderService {
 
   @Qualifier(Qualifiers.LDA_RECOMMENDER)
   private final Recommender ldaRecommender;
@@ -61,15 +60,6 @@ public class ScheduledRecommendationServiceImpl implements RecommenderService {
   }
 
   @Override
-  public List<GameRecommendation> getRecommendationsByGameIds(Iterable<UUID> gameIds) {
-    List<GameRecommendation> recommendationsIds = new ArrayList<>();
-    for (var gameId : gameIds) {
-      recommendationsIds.addAll(getRecommendationsByGameId(gameId));
-    }
-    return recommendationsIds;
-  }
-
-  @Override
   @Scheduled(fixedDelay = RecommenderConstants.SCHEDULER_RATE)
   public void recommend() {
     ldaRecommender.recommend();
@@ -89,8 +79,7 @@ public class ScheduledRecommendationServiceImpl implements RecommenderService {
       var recommendations = new GameRecommendationFiltererImpl(recommendedGames)
           .applyFilter(gameRecommendationFilter)
           .collect();
-      gameRecommendationTemplate.send(KafkaTopics.GAME_RECOMMENDATIONS, gameId,
-          recommendations);
+      gameRecommendationTemplate.send(KafkaTopics.GAME_RECOMMENDATIONS, gameId, recommendations);
     }
   }
 }

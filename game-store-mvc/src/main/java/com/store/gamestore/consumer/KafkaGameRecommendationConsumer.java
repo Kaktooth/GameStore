@@ -1,4 +1,4 @@
-package com.store.gamestore.service.recommendation;
+package com.store.gamestore.consumer;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

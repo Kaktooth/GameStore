@@ -1,6 +1,7 @@
 package com.store.gamestore.service.recommendation;
 
 import com.store.gamestore.common.AppConstraints.KafkaTopics;
+import com.store.gamestore.consumer.KafkaLatestRecordConsumer;
 import com.store.gamestore.persistence.entity.GameRecommendation;
 import java.util.List;
 import java.util.UUID;

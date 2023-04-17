@@ -10,8 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface GameMetadataRepository extends CrudRepository<GameMetadata, UUID> {
 
   @Query(nativeQuery = true, value =
-      "SELECT games.id, title, description, release_date FROM games\n"
-          + "             JOIN game_profiles gp on games.id = gp.game_id")
+      "SELECT * FROM games JOIN game_profiles gp on games.id = gp.game_id")
   @NotNull
   List<GameMetadata> findAll();
 

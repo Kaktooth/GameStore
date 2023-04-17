@@ -1,6 +1,6 @@
 package com.store.gamestore.controller;
 
-import com.store.gamestore.persistence.entity.UserMetric;
+import com.store.gamestore.persistence.entity.Metric;
 import com.store.gamestore.service.MetricService;
 import java.util.List;
 import java.util.UUID;
@@ -20,12 +20,12 @@ public class MetricsController {
   private final MetricService metricService;
 
   @GetMapping("/{refId}")
-  public List<UserMetric> getMetricsByRefId(@PathVariable UUID refId) {
+  public List<Metric> getMetricsByRefId(@PathVariable UUID refId) {
     return metricService.getMetricsByReferenceId(refId);
   }
 
   @GetMapping("/{refId}/{metricName}")
-  public UserMetric getAllMetricsByRefIdAndMetricName(@PathVariable UUID refId,
+  public Metric getAllMetricsByRefIdAndMetricName(@PathVariable UUID refId,
       @PathVariable String metricName) {
     return metricService.getMetricByReferenceIdAndName(refId, metricName);
   }

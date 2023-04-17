@@ -7,17 +7,20 @@ import com.store.gamestore.common.ApplicationConstants.Columns;
 import com.store.gamestore.persistence.entity.GameMetadata;
 import com.store.gamestore.persistence.entity.GameRating;
 import com.store.gamestore.persistence.entity.GameRecommendation;
+import com.store.gamestore.persistence.entity.UserProfileSettings;
 import com.store.gamestore.persistence.entity.UserRecommendation;
 import com.store.gamestore.persistence.repository.GameMetadataRepository;
 import com.store.gamestore.persistence.repository.GameRatingRepository;
 import com.store.gamestore.persistence.repository.GameRecommendationRepository;
 import com.store.gamestore.persistence.repository.GameTitleMetadataRepository;
+import com.store.gamestore.persistence.repository.UserProfileSettingsRepository;
 import com.store.gamestore.persistence.repository.UserRecommendationRepository;
 import com.store.gamestore.persistence.repository.UserRepository;
 import com.store.gamestore.recommender.DataPreProcessor;
 import com.store.gamestore.recommender.FeaturesExtractor;
 import com.store.gamestore.recommender.Recommender;
 import com.store.gamestore.recommender.TrainedModel;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.UUID;
@@ -70,6 +73,7 @@ public class LDARecommender implements Recommender {
     var ldaModel = (LocalLDAModel) ldaTrainedModel.getTrainedModel();
     var describedTopics = ldaModel.describeTopics();
     describedTopics.show(false);
+
     double ll = ldaModel.logLikelihood(extractedFeatures);
     double lp = ldaModel.logPerplexity(extractedFeatures);
     log.info("The lower bound on the log likelihood of the entire corpus: " + ll);

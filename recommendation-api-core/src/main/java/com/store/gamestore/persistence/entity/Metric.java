@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @Document(collection = "metric-values")
-public class UserMetric {
+public class Metric {
 
   UUID id;
   UUID referenceId;

@@ -2,7 +2,7 @@ package com.store.gamestore.service.impl;
 
 import com.store.gamestore.common.ApplicationConstants.MetricsConstants;
 import com.store.gamestore.metrics.MetricCalculator;
-import com.store.gamestore.persistence.entity.UserMetric;
+import com.store.gamestore.persistence.entity.Metric;
 import com.store.gamestore.persistence.repository.MetricRepository;
 import com.store.gamestore.persistence.repository.UserRepository;
 import com.store.gamestore.service.MetricService;
@@ -28,12 +28,12 @@ public class MetricServiceImpl implements MetricService {
   }
 
   @Override
-  public List<UserMetric> getMetricsByReferenceId(UUID refId) {
+  public List<Metric> getMetricsByReferenceId(UUID refId) {
     return metricRepository.findAllByReferenceId(refId);
   }
 
   @Override
-  public UserMetric getMetricByReferenceIdAndName(UUID refId, String metricName) {
+  public Metric getMetricByReferenceIdAndName(UUID refId, String metricName) {
     return metricRepository.findByReferenceIdAndMetricName(refId, metricName);
   }
 }

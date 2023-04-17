@@ -1,9 +1,7 @@
 package com.store.gamestore.metrics.developer;
 
-import com.store.gamestore.metrics.Metric;
 import com.store.gamestore.persistence.entity.InteractionType;
-import com.store.gamestore.persistence.entity.UserMetric;
-import com.store.gamestore.persistence.repository.UserInteractionRepository;
+import com.store.gamestore.persistence.entity.Metric;
 import com.store.gamestore.service.UserInteractionsService;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -13,16 +11,16 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class VisitedGameMetric implements Metric {
+public class VisitedGameMetric implements com.store.gamestore.metrics.Metric {
 
   private final UserInteractionsService userInteractionsService;
 
   @Override
-  public UserMetric calculateMetric(UUID gameId) {
+  public Metric calculateMetric(UUID gameId) {
     var metricName = getClass().getSimpleName();
     log.info("calculating: {}", metricName);
     var userInteractions = userInteractionsService.countAllUserInteractionsWithGame(gameId,
         InteractionType.VISITED, false).orElse(0).doubleValue();
-    return new UserMetric(UUID.randomUUID(), gameId, userInteractions, metricName);
+    return new Metric(UUID.randomUUID(), gameId, userInteractions, metricName);
   }
 }

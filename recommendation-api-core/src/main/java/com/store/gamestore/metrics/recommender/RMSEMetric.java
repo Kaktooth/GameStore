@@ -1,7 +1,6 @@
 package com.store.gamestore.metrics.recommender;
 
-import com.store.gamestore.metrics.Metric;
-import com.store.gamestore.persistence.entity.UserMetric;
+import com.store.gamestore.persistence.entity.Metric;
 import com.store.gamestore.persistence.repository.GameRatingRepository;
 import com.store.gamestore.persistence.repository.GameRecommendationRepository;
 import java.util.UUID;
@@ -12,14 +11,14 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class RMSEMetric implements Metric {
+public class RMSEMetric implements com.store.gamestore.metrics.Metric {
 
   private final GameRatingRepository gameRatingRepository;
 
   private final GameRecommendationRepository gameRecommendationRepository;
 
   @Override
-  public UserMetric calculateMetric(UUID userId) {
+  public Metric calculateMetric(UUID userId) {
     var metricName = getClass().getSimpleName();
     log.info("calculating: {}", metricName);
     var gameRatings = gameRatingRepository.findAllByUserId(userId);
@@ -38,6 +37,6 @@ public class RMSEMetric implements Metric {
     } catch (ArithmeticException exception) {
       log.error(exception.toString());
     }
-    return new UserMetric(UUID.randomUUID(), userId, RMSE, metricName);
+    return new Metric(UUID.randomUUID(), userId, RMSE, metricName);
   }
 }

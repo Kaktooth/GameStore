@@ -1,6 +1,6 @@
 package com.store.gamestore.persistence.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,13 +9,13 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Data
 @AllArgsConstructor
-@Document(collection = "game-ratings")
-public class GameRating {
+@Document(collection = "profile-settings")
+public class UserRecommenderProfileSettings {
 
   @MongoId
   private UUID id;
   private UUID userId;
-  private UUID gameId;
-  private Double rating;
-  private LocalDateTime dateTime;
+  private Integer minPriceFilter;
+  private Integer maxPriceFilter;
+  private LocalDate gamesReleasedAfter;
 }

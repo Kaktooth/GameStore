@@ -1,4 +1,4 @@
-package com.store.gamestore.service.recommendation;
+package com.store.gamestore.consumer;
 
 import java.util.UUID;
 

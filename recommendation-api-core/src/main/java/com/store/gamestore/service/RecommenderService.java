@@ -14,6 +14,4 @@ public interface RecommenderService {
   List<UserRecommendation> getRecommendationsByUserId(UUID userId);
 
   List<UserRecommendation> getRecommendationsByUserAndTopic(UUID userId, Integer topicId);
-
-  List<GameRecommendation> getRecommendationsByGameIds(Iterable<UUID> gameIds);
 }
