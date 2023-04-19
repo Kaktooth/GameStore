@@ -1,200 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
-  <title>Store</title>
+  <title>Recommendations</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.css">
-  <link rel="stylesheet" href="/css/root-page-style.css" />
-  <link rel="stylesheet" href="/css/game-style.css" />
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-          crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-          crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-          crossorigin="anonymous"></script>
-  <script type="text/javascript" th:src="@{/js/open-form.js}"></script>
-
+  <link rel="stylesheet" href="/css/recommendations-page.css"/>
 </head>
-<body class="bg-dark-2" style="background-image: var(--bg-gradient2);">
-
-<header class="masthead special-color-dark mb-4">
-  <nav class="navbar shadow navbar-dark p-3 bg-dark-2 text-white" aria-label="Main navigation">
-    <div class="container-fluid d-grid gap-3 align-items-center">
-      <ul class="nav col col-lg-auto me-lg-auto mb-2 justify-content-left mb-md-0">
-        <a class="font-weight-bold navbar-brand" href="/store">Game Store</a>
-        <li><a class="nav-link px-2 text-white" href="/store">Store</a></li>
-        <li><a th:if="${#httpServletRequest.remoteUser}!=null" class="nav-link px-2 text-white"
-               href="/collection">Collection</a></li>
-      </ul>
-      <div class="d-flex justify-content-end text-white">
-        <div th:if="${#httpServletRequest.remoteUser}!=null">
-          <a class="nav-link dropdown-toggle l text-white"
-             data-toggle="dropdown" href="#" role="button"
-             aria-haspopup="true"
-             aria-expanded="false">
-            <label th:text="${user.publicUsername}"></label>
-          </a>
-          <div class="dropdown-menu shadow" aria-labelledby="dropdownUser2"
-               style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(-0.00172424px, 56px, 0px);">
-            <a class="dropdown-item" href="/account">Account</a>
-            <a class="dropdown-item" href="/profile">Profile</a>
-            <a class="dropdown-item" href="/support">Contact support</a>
-            <a class="dropdown-item" href="/upload">Upload game</a>
-
-            <hr class="dropdown-divider">
-            <form class="dropdown-item" th:action="@{/logout}" method="post">
-              <button class="btn btn-md btn-light text-dark" type="submit">Log out</button>
-            </form>
-
-          </div>
-        </div>
-        <div th:if="${#httpServletRequest.remoteUser}==null">
-          <a class="text-end text-white" href="/log-in" th:text="'login'"></a>
-        </div>
-      </div>
-    </div>
-  </nav>
-</header>
-<main role="main" class="shadow mb-4">
-  <div class="container-lg">
-    <div class="input-group-prepend float-right"
-         style="position: relative; display: flex; flex-direction: column;">
-      <form method="get" class="form-group" th:href="@{/store}" id="searchForm">
-        <span class="fa fa-search form-control-feedback text-dark"></span>
-        <input type="search" class="form-control bg-dark-2" aria-label="Default"
-               aria-describedby="inputGroup-sizing-default"
-               id="searchString" name="searchString" style="width:300px;">
-        <div style="position: absolute; z-index: 3; word-break: break-all;">
-          <ul class="dropdown-menu bg-dark-2 show" id="drop" th:name="drop"
-              th:if="${search} == true and ${searchedGames.size()} > 0"
-              style="position: static; margin: 0px; z-index: 1;">
-            <li th:each="searchedGame, i : ${searchedGames}">
-              <a th:href="@{/game/{gameId}(gameId =${searchedGame.game.id})}">
-                <div class="dropdown-item bg-dark-2 card" style="width:300px; height: 100px;">
-                  <div class="row no-gutters">
-                    <div class="col-md-6">
-                      <img th:id="'image' + ${i.count}"
-                           th:src="'data:image/png;base64,'+
-                           ${searchedGame.gamePicture.image.getBase64ImageData()}"
-                           class="d-block w-100 img-fluid image-uploaded"/>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="text-center">
-                        <small>
-                          <label class="card-title" style="white-space: pre-wrap;"
-                                 th:text="${searchedGame.game.title}">
-                          </label>
-                        </small>
-                        <p class="card-text">
-                          <small
-                              th:text="${searchedGame.game.price} + '$'">
-                          </small>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </li>
-          </ul>
-          <ul class="dropdown-menu bg-dark-2 show" id="drop2" th:name="drop2"
-              th:if="${search} == true and ${searchedGames.size()} <= 0"
-              style="position: static; inset: 0px 0px auto auto; margin: 0px;">
-            <li>
-              <div class="dropdown-item card" style=" width:270px; height: 60px;">
-                <div class="card-body text-center">
-                  <p class="card-text"
-                     th:text="'Nothing was found.'">
-                  </p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </form>
-    </div>
-
-    <nav class="nav nav-masthead mb-lg justify-content-right">
-      <a class="nav-link active text-white lead" th:href="@{/store}">
-        Explore
-      </a>
-      <a class="nav-link text-white lead" th:href="@{/store/recommendations}">
-        Recommendations
-      </a>
-    </nav>
-
-    <div class="container-md">
-      <h5 class="title">Games for you</h5>
-      <div id="carousel3" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carousel3" th:data-slide-to="${recommendations.intValue()}-1"
-              th:each="recommendations : ${recommendationMap.keySet()}"></li>
-        </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active" th:each="recommendations : ${recommendationMap}"
-               th:if="${recommendations.key}==1">
-            <div class="container p-4">
-              <div class="row row-cols-lg-4 p-4">
-                <div th:each="recommendation, i : ${recommendations.value}">
-                  <a th:href="@{/game/{id}(id =${recommendation.userRecommendation.gameId})}">
-                    <div class="overflow-hidden text-white p-3">
-                      <img th:id="'image' + ${i.index}"
-                           th:src="'data:image/png;base64,'+
-                           ${recommendation.gamePicture.image.getBase64ImageData()}"
-                           class="rounded image shadow"/>
-                           <p class="game-title" th:text="${recommendation.userRecommendation.topicId}"></p>
-<!--                      <p class="game-title" th:text="${recommendation.}"></p>-->
-<!--                      <p class="game-price" th:text="${recommendation.game.price} + ' usd.'"></p>-->
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item" th:each="recommendations : ${recommendationMap}"
-               th:if="${recommendations.key}!=1">
-            <div class="container p-4">
-              <div class="row row-cols-lg-4 p-4">
-                <div th:each="recommendation, i : ${recommendations.value}">
-                  <a th:href="@{/game/{id}(id =${recommendation.userRecommendation.gameId})}">
-                    <div
-                        class="overflow-hidden text-white p-3">
-                      <img th:id="'image' + ${i.index}"
-                           th:src="'data:image/png;base64,'+
-                           ${recommendation.gamePicture.image.getBase64ImageData()}"
-                           class="rounded image shadow"/>
-                      <p class="game-title" th:text="${recommendation.userRecommendation.topicId}"></p>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-target="#carousel3"
-                data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-target="#carousel3"
-                data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </button>
+<body>
+<div class="topic-recommendation-body">
+  <h4 class="animated-header">
+    This games related to ... topic
+  </h4>
+  <div class="games-body">
+    <div class="scroll">
+      <div>
+        <img class="topic-game-image" src="https://plus.unsplash.com/premium_photo-1681140029775-36a657447c4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1285&q=80" />
+        <p class="game-title">game title</p>
+        <p class="game-price">game price</p>
       </div>
     </div>
   </div>
-</main>
-<footer
-    class="footer-10 bg-dark-2 justify-content-center special-color-dark font-small text-muted shadow">
-  <div class="container text-center">
-    <p>
-      This website is only for educational and demonstration purposes.
-    </p>
-  </div>
-</footer>
+</div>
 </body>
 </html>

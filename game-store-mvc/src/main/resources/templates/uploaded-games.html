@@ -14,12 +14,7 @@
           integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
           crossorigin="anonymous"></script>
 </head>
-<body class="bg-dark-2" style="background-image: var(--bg-gradient2);
-  height: 100%;
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;">
+<body class="bg-dark-2">
 
 <header class="masthead special-color-dark mb-4">
   <nav class="navbar shadow navbar-dark p-3 bg-dark-2 text-white" aria-label="Main navigation">
@@ -58,7 +53,7 @@
     </div>
   </nav>
 </header>
-<main role="main" class="shadow text-white mb-4">
+<main role="main" class="shadow text-white mb-4 gradient-bg">
   <div class="container-md text-white mb-4 bg-dark-2">
     <div th:each="upload, i: ${uploadedGames}" th:if="${upload} != null"
          class="row shadow border border-dark rounded-5 border-2 mb-2">

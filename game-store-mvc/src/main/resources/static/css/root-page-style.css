@@ -12,6 +12,10 @@
   rgba(14, 25, 33, 0.11));
 }
 
+.gradient-bg {
+  background-image: var(--bg-gradient2);
+}
+
 .bg-dark-2 {
   background: #212529;
   color: aliceblue;

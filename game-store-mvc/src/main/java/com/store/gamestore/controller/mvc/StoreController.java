@@ -33,14 +33,10 @@ public class StoreController {
 
   //  TODO add top recommended games
   @GetMapping
-  public String getStorePage(
+  public String getMainStorePage(
       @RequestParam(value = "searchString", required = false) String searchString, Model model) {
 
-    var authenticatedUser = userHolder.getAuthenticated();
-    if (authenticatedUser != null) {
-      model.addAttribute("user", authenticatedUser);
-    }
-
+    loadStorePage(searchString, model);
     var storeBanners = storeBannerService.getAll();
     model.addAttribute("bannerItems", storeBanners);
 
@@ -54,6 +50,24 @@ public class StoreController {
     model.addAttribute("bestSellerGamesMap", popularGamesMap);
     model.addAttribute("mostFavoriteGamesMap", popularGamesMap);
 
+    return "store";
+  }
+
+  @GetMapping("/recommendations")
+  public String getRecommendationPage(
+      @RequestParam(value = "searchString", required = false) String searchString, Model model) {
+    loadStorePage(searchString, model);
+    model.addAttribute("recommendations", true);
+    return "store";
+  }
+
+  private void loadStorePage(String searchString, Model model) {
+
+    var authenticatedUser = userHolder.getAuthenticated();
+    if (authenticatedUser != null) {
+      model.addAttribute("user", authenticatedUser);
+    }
+
     if (searchString == null || searchString.equals("")) {
       model.addAttribute("search", false);
     } else {
@@ -61,7 +75,5 @@ public class StoreController {
       model.addAttribute("search", true);
       model.addAttribute("searchedGames", searchedGames);
     }
-
-    return "store";
   }
 }

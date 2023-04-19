@@ -17,7 +17,7 @@
           crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/validate-input.js}"></script>
 </head>
-<body class="bg-dark-2" style="background-image: var(--bg-gradient2);">
+<body class="bg-dark-2">
 
 <header class="masthead special-color-dark mb-4">
   <nav class="navbar shadow navbar-dark p-3 bg-dark-2 text-white" aria-label="Main navigation">
@@ -57,7 +57,7 @@
   </nav>
 </header>
 
-<main role="main" class="shadow mb-4">
+<main role="main" class="shadow mb-4 gradient-bg">
   <div class="container-lg text-white bg-dark-2 shadow">
     <form th:method="post" th:action="@{/banner/upload}" th:object="${gameBanner}"
           class="needs-validation mb-4" enctype="multipart/form-data" novalidate>

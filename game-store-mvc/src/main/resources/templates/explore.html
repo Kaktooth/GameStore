@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Explore</title>
+</head>
+<body>
+
+<div id="carousel1" class="carousel slide mb-4 container-sm"
+     style="width:900px;height:460px" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carousel1" th:each="banner, i : ${bannerItems}"
+        th:data-slide-to="${i.index}"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div th:each="banner, i : ${bannerItems}"
+         class="carousel-item active" th:if="${i.count}==1">
+      <a th:href="@{/game/{id}(id =${banner.gameId})}">
+        <img style="width:900px;height:460px"
+             th:src="'data:image/png;base64,'+ ${banner.image.getBase64ImageData()}"
+             class="rounded d-block w-100 img-fluid">
+        <div class="carousel-caption d-none d-md-block text-right">
+          <p class="lead banner-description" th:text="${banner.description}"></p>
+        </div>
+      </a>
+    </div>
+
+    <div th:each="banner, i : ${bannerItems}" class="carousel-item"
+         th:if="${i.count}!=1">
+      <a th:href="@{/game/{id}(id =${banner.gameId.toString()})}">
+        <img style="width:900px;height:460px"
+             th:src="'data:image/png;base64,'+ ${banner.image.getBase64ImageData()}"
+             class="rounded d-block w-100 img-fluid">
+        <div class="carousel-caption d-none d-md-block text-right">
+          <p class="lead" th:text="${banner.description}"></p>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="container-md">
+  <h5 class="title">Most popular games</h5>
+  <div id="carousel3" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carousel3" th:data-slide-to="${popularGames.intValue()}-1"
+          th:each="popularGames : ${popularGamesMap.keySet()}"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active" th:each="popularGames : ${popularGamesMap}"
+           th:if="${popularGames.key}==1">
+        <div class="container p-4">
+          <div class="row row-cols-lg-4 p-4">
+            <div th:each="upload, i : ${popularGames.value}">
+              <a th:href="@{/game/{id}(id =${upload.game.id})}">
+                <div class="overflow-hidden text-white p-3">
+                  <img th:id="'image' + ${i.index}" th:src="'data:image/png;base64,'
+                          + ${upload.gamePicture.image.getBase64ImageData()}"
+                       class="rounded image shadow"/>
+                  <p class="game-title" th:text="${upload.game.title}"></p>
+                  <p class="game-price" th:text="${upload.game.price} + '$'"></p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item" th:each="popularGames : ${popularGamesMap}"
+           th:if="${popularGames.key}!=1">
+        <div class="container p-4">
+          <div class="row row-cols-lg-4 p-4">
+            <div th:each="upload, i : ${popularGames.value}">
+              <a th:href="@{/game/{id}(id =${upload.game.id.toString()})}">
+                <div
+                    class="overflow-hidden text-white p-3">
+                  <img th:id="'image' + ${i.index}" th:src="'data:image/png;base64,'
+                           + ${upload.gamePicture.image.getBase64ImageData()}"
+                       class="rounded image shadow"/>
+                  <p class="game-title" th:text="${upload.game.title}"></p>
+                  <p class="game-price" th:text="${upload.game.price} + '$'"></p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-target="#carousel3"
+            data-slide="prev">
+      <span class="carousel-control-prev-icon outer-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-target="#carousel3"
+            data-slide="next">
+      <span class="carousel-control-next-icon outer-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </button>
+  </div>
+</div>
+<div class="container-md">
+  <h5 class="title">Most purchased games</h5>
+  <div id="carousel4" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carousel4" th:data-slide-to="${bestSellerGames.intValue()}-1"
+          th:each="bestSellerGames : ${bestSellerGamesMap.keySet()}"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active" th:each="bestSellerGames : ${bestSellerGamesMap}"
+           th:if="${bestSellerGames.key}==1">
+        <div class="container p-4">
+          <div class="row row-cols-lg-4 p-4">
+            <div th:each="upload, i : ${bestSellerGames.value}">
+              <a th:href="@{/game/{id}(id =${upload.game.id.toString()})}">
+                <div
+                    class="overflow-hidden text-white p-3">
+                  <img th:id="'image' + ${i.index}"
+                       th:src="'data:image/png;base64,'
+                           + ${upload.gamePicture.image.getBase64ImageData()}"
+                       class="rounded image shadow"/>
+                  <p class="game-title" th:text="${upload.game.title}"></p>
+                  <p class="game-price" th:text="${upload.game.price} + '$'"></p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item" th:each="bestSellerGames : ${bestSellerGamesMap}"
+           th:if="${bestSellerGames.key}!=1">
+        <div class="container p-4">
+          <div class="row row-cols-lg-4 p-4">
+            <div th:each="upload, i : ${bestSellerGames.value}">
+              <a th:href="@{/game/{id}(id =${upload.game.id.toString()})}">
+                <div
+                    class="overflow-hidden text-white p-3">
+                  <img th:id="'image' + ${i.index}" th:src="'data:image/png;base64,'
+                      + ${upload.gamePicture.image.getBase64ImageData()}"
+                       class="rounded image shadow"/>
+                  <p class="game-title" th:text="${upload.game.title}"></p>
+                  <p class="game-price" th:text="${upload.game.price} + '$'"></p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-target="#carousel4"
+            data-slide="prev">
+      <span class="carousel-control-prev-icon outer-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-target="#carousel4"
+            data-slide="next">
+      <span class="carousel-control-next-icon outer-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </button>
+  </div>
+</div>
+<div class="container-md">
+  <h5 class="title">Most favorite games</h5>
+  <div id="carousel5" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carousel5" th:data-slide-to="${mostFavoriteGames.intValue()}-1"
+          th:each="mostFavoriteGames : ${mostFavoriteGamesMap.keySet()}"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active" th:each="mostFavoriteGames : ${mostFavoriteGamesMap}"
+           th:if="${mostFavoriteGames.key}==1">
+        <div class="container p-4">
+          <div class="row row-cols-lg-4 p-4">
+            <div th:each="upload, i : ${mostFavoriteGames.value}">
+              <a th:href="@{/game/{id}(id =${upload.game.id.toString()})}">
+                <div class="overflow-hidden text-white p-3">
+                  <img th:id="'image' + ${i.index}"
+                       th:src="'data:image/png;base64,'+
+                           ${upload.gamePicture.image.getBase64ImageData()}"
+                       class="rounded image shadow"/>
+                  <p class="game-title" th:text="${upload.game.title}"></p>
+                  <p class="game-price" th:text="${upload.game.price} + '$'"></p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item" th:each="mostFavoriteGames : ${mostFavoriteGamesMap}"
+           th:if="${mostFavoriteGames.key}!=1">
+        <div class="container p-4">
+          <div class="row row-cols-lg-4 p-4">
+            <div th:each="upload, i : ${mostFavoriteGames.value}">
+              <a th:href="@{/game/{id}(id =${upload.game.id.toString()})}">
+                <div class="overflow-hidden text-white p-3">
+                  <img th:id="'image' + ${i.index}"
+                       th:src="'data:image/png;base64,'+
+                           ${upload.gamePicture.image.getBase64ImageData()}"
+                       class="rounded image shadow"/>
+                  <p class="game-title" th:text="${upload.game.title}"></p>
+                  <p class="game-price" th:text="${upload.game.price} + '$'"></p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-target="#carousel5"
+            data-slide="prev">
+      <span class="carousel-control-prev-icon outer-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-target="#carousel5"
+            data-slide="next">
+      <span class="carousel-control-next-icon outer-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </button>
+  </div>
+</div>
+</body>
+</html>

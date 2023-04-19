@@ -18,7 +18,7 @@
         rel="stylesheet"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 </head>
-<body class="bg-dark-2" style="background-image: var(--bg-gradient2);">
+<body class="bg-dark-2">
 <header class="masthead special-color-dark mb-4">
   <nav class="navbar shadow navbar-dark p-3 bg-dark-2 text-white" aria-label="Main navigation">
     <div class="container-fluid d-grid gap-3 align-items-center">
@@ -57,7 +57,7 @@
   </nav>
 </header>
 
-<main role="main" class="shadow d-flex justify-content-center container-lg text-white mb-4">
+<main role="main" class="shadow d-flex justify-content-center container-lg text-white mb-4 gradient-bg">
   <div class="container-lg row bg-dark-2 mb-4">
     <form th:method="post" th:action="@{/purchase/{gameId}(gameId =${game.id})}">
       <div class="card mb-4 bg-dark-2 shadow" style="width: 1100px">
