@@ -18,8 +18,10 @@ public class UserRecommendation implements Serializable {
   @MongoId
   private UUID id;
   private Double predictedRating;
-  private LocalDateTime recommendationDate;
+  private LocalDateTime lastRecommendedDate;
   private UUID userId;
   private UUID gameId;
   private Integer topicId;
+  private RecommendationType recommendationType;
+  private String recommenderName;
 }

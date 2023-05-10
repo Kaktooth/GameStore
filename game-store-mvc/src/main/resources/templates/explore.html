@@ -5,36 +5,38 @@
   <title>Explore</title>
 </head>
 <body>
+<div style="margin-bottom: 120px;">
+  <div id="carousel1" class="carousel slide container-sm"
+       style="width:900px;height:460px" data-ride="carousel">
 
-<div id="carousel1" class="carousel slide mb-4 container-sm"
-     style="width:900px;height:460px" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carousel1" th:each="banner, i : ${bannerItems}"
-        th:data-slide-to="${i.index}"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div th:each="banner, i : ${bannerItems}"
-         class="carousel-item active" th:if="${i.count}==1">
-      <a th:href="@{/game/{id}(id =${banner.gameId})}">
-        <img style="width:900px;height:460px"
-             th:src="'data:image/png;base64,'+ ${banner.image.getBase64ImageData()}"
-             class="rounded d-block w-100 img-fluid">
-        <div class="carousel-caption d-none d-md-block text-right">
-          <p class="lead banner-description" th:text="${banner.description}"></p>
-        </div>
-      </a>
-    </div>
+    <div class="carousel-inner">
+      <ol class="carousel-indicators">
+        <li data-target="#carousel1" th:each="banner, i : ${bannerItems}"
+            th:data-slide-to="${i.index}"></li>
+      </ol>
+      <div th:each="banner, i : ${bannerItems}"
+           class="carousel-item active" th:if="${i.count}==1">
+        <a th:href="@{/game/{id}(id =${banner.gameId}, recommender='nonPersonal')}">
+          <img style="width:900px;height:460px"
+               th:src="'data:image/png;base64,'+ ${banner.image.getBase64ImageData()}"
+               class="rounded d-block w-100 img-fluid">
+          <div class="carousel-caption d-none d-md-block text-right">
+            <p class="lead banner-description" th:text="${banner.description}"></p>
+          </div>
+        </a>
+      </div>
 
-    <div th:each="banner, i : ${bannerItems}" class="carousel-item"
-         th:if="${i.count}!=1">
-      <a th:href="@{/game/{id}(id =${banner.gameId.toString()})}">
-        <img style="width:900px;height:460px"
-             th:src="'data:image/png;base64,'+ ${banner.image.getBase64ImageData()}"
-             class="rounded d-block w-100 img-fluid">
-        <div class="carousel-caption d-none d-md-block text-right">
-          <p class="lead" th:text="${banner.description}"></p>
-        </div>
-      </a>
+      <div th:each="banner, i : ${bannerItems}" class="carousel-item"
+           th:if="${i.count}!=1">
+        <a th:href="@{/game/{id}(id =${banner.gameId}, recommender='nonPersonal')}">
+          <img style="width:900px;height:460px"
+               th:src="'data:image/png;base64,'+ ${banner.image.getBase64ImageData()}"
+               class="rounded d-block w-100 img-fluid">
+          <div class="carousel-caption d-none d-md-block text-right">
+            <p class="lead" th:text="${banner.description}"></p>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -51,7 +53,7 @@
         <div class="container p-4">
           <div class="row row-cols-lg-4 p-4">
             <div th:each="upload, i : ${popularGames.value}">
-              <a th:href="@{/game/{id}(id =${upload.game.id})}">
+              <a th:href="@{/game/{id}(id =${upload.game.id}, recommender='nonPersonal')}">
                 <div class="overflow-hidden text-white p-3">
                   <img th:id="'image' + ${i.index}" th:src="'data:image/png;base64,'
                           + ${upload.gamePicture.image.getBase64ImageData()}"
@@ -69,7 +71,7 @@
         <div class="container p-4">
           <div class="row row-cols-lg-4 p-4">
             <div th:each="upload, i : ${popularGames.value}">
-              <a th:href="@{/game/{id}(id =${upload.game.id.toString()})}">
+              <a th:href="@{/game/{id}(id =${upload.game.id}, recommender='nonPersonal')}">
                 <div
                     class="overflow-hidden text-white p-3">
                   <img th:id="'image' + ${i.index}" th:src="'data:image/png;base64,'
@@ -109,7 +111,7 @@
         <div class="container p-4">
           <div class="row row-cols-lg-4 p-4">
             <div th:each="upload, i : ${bestSellerGames.value}">
-              <a th:href="@{/game/{id}(id =${upload.game.id.toString()})}">
+              <a th:href="@{/game/{id}(id =${upload.game.id}, recommender='nonPersonal')}">
                 <div
                     class="overflow-hidden text-white p-3">
                   <img th:id="'image' + ${i.index}"
@@ -129,9 +131,8 @@
         <div class="container p-4">
           <div class="row row-cols-lg-4 p-4">
             <div th:each="upload, i : ${bestSellerGames.value}">
-              <a th:href="@{/game/{id}(id =${upload.game.id.toString()})}">
-                <div
-                    class="overflow-hidden text-white p-3">
+              <a th:href="@{/game/{id}(id =${upload.game.id}, recommender='nonPersonal')}">
+                <div class="overflow-hidden text-white p-3">
                   <img th:id="'image' + ${i.index}" th:src="'data:image/png;base64,'
                       + ${upload.gamePicture.image.getBase64ImageData()}"
                        class="rounded image shadow"/>
@@ -169,7 +170,7 @@
         <div class="container p-4">
           <div class="row row-cols-lg-4 p-4">
             <div th:each="upload, i : ${mostFavoriteGames.value}">
-              <a th:href="@{/game/{id}(id =${upload.game.id.toString()})}">
+              <a th:href="@{/game/{id}(id =${upload.game.id}, recommender='nonPersonal')}">
                 <div class="overflow-hidden text-white p-3">
                   <img th:id="'image' + ${i.index}"
                        th:src="'data:image/png;base64,'+
@@ -188,7 +189,7 @@
         <div class="container p-4">
           <div class="row row-cols-lg-4 p-4">
             <div th:each="upload, i : ${mostFavoriteGames.value}">
-              <a th:href="@{/game/{id}(id =${upload.game.id.toString()})}">
+              <a th:href="@{/game/{id}(id =${upload.game.id}, recommender='nonPersonal')}">
                 <div class="overflow-hidden text-white p-3">
                   <img th:id="'image' + ${i.index}"
                        th:src="'data:image/png;base64,'+

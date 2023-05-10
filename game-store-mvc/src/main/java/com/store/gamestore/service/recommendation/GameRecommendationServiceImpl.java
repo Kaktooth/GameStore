@@ -1,6 +1,5 @@
 package com.store.gamestore.service.recommendation;
 
-import com.store.gamestore.common.AppConstraints.KafkaTopics;
 import com.store.gamestore.consumer.KafkaLatestRecordConsumer;
 import com.store.gamestore.persistence.entity.GameRecommendation;
 import java.util.List;
@@ -14,10 +13,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class GameRecommendationServiceImpl implements GameRecommendationService {
 
-  private final KafkaLatestRecordConsumer<List<GameRecommendation>> kafkaLatestRecordConsumer;
+  private final KafkaLatestRecordConsumer<List<GameRecommendation>> kafkaRecommendationConsumer;
 
   @Override
   public List<GameRecommendation> getRecommendations(UUID gameId) {
-    return kafkaLatestRecordConsumer.getRecord(KafkaTopics.GAME_RECOMMENDATIONS, gameId);
+    return kafkaRecommendationConsumer.getRecord(gameId);
   }
 }

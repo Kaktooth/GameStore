@@ -45,7 +45,7 @@ public class RestUserGamesController {
     var headers = new HttpHeaders();
     headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + gameFile.getName());
 
-    userInteractionSender.send(InteractionType.DOWNLOADED, userId, gameId);
+    userInteractionSender.send(InteractionType.DOWNLOADED, userId, gameId, false, "");
 
     return ResponseEntity.ok()
         .headers(headers)

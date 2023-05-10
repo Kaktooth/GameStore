@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/purchase")
@@ -33,8 +34,9 @@ public class PurchaseController {
   private final PurchaseHistoryService purchaseHistoryService;
 
   @GetMapping("/{gameId}")
-  public String getPurchasePage(@PathVariable UUID gameId, Model model) {
-
+  public String getPurchasePage(@PathVariable UUID gameId, Model model,
+      @RequestParam(required = false) String recommender) {
+    model.addAttribute("recommender", recommender);
     model.addAttribute("user", userHolder.getAuthenticated());
     var game = gameService.get(gameId);
     var gameImage = gameImageService.findGamePictureByGameIdAndPictureTypeId(gameId,
@@ -46,7 +48,8 @@ public class PurchaseController {
   }
 
   @PostMapping("/{gameId}")
-  public String purchaseGame(@PathVariable UUID gameId, Model model) {
+  public String purchaseGame(@PathVariable UUID gameId, Model model,
+      @RequestParam(value = "recommender", required = false) String recommender) {
 
     var user = userHolder.getAuthenticated();
     model.addAttribute("user", user);
@@ -58,7 +61,17 @@ public class PurchaseController {
         user.getId(), game);
     purchaseHistoryService.save(gamePurchase);
 
-    userInteractionSender.send(InteractionType.BOUGHT, user.getId(), gameId);
+    //TODO refactor
+    var recommenderAttribute = (String) model.getAttribute(recommender);
+    if (recommenderAttribute != null) {
+      recommender = recommenderAttribute;
+    }
+
+    if (recommender != null) {
+      userInteractionSender.send(InteractionType.BOUGHT, user.getId(), gameId, true, recommender);
+    } else {
+      userInteractionSender.send(InteractionType.BOUGHT, user.getId(), gameId, false, "");
+    }
 
     return "redirect:/collection";
   }
@@ -74,12 +87,19 @@ public class PurchaseController {
   }
 
   @PostMapping("/{gameId}/get-free")
-  public String getFreeGame(@PathVariable UUID gameId) {
+  public String getFreeGame(@PathVariable UUID gameId,
+      @RequestParam(value = "recommender", required = false) String recommender) {
 
     var user = userHolder.getAuthenticated();
     var game = gameService.get(gameId);
     var userGame = new UserGame(user.getId(), game);
     userGamesRepository.save(userGame);
+
+    if (recommender != null) {
+      userInteractionSender.send(InteractionType.BOUGHT, user.getId(), gameId, true, recommender);
+    } else {
+      userInteractionSender.send(InteractionType.BOUGHT, user.getId(), gameId, false, "");
+    }
 
     return "redirect:/collection";
   }

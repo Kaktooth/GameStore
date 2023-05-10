@@ -16,6 +16,8 @@ public interface UserInteractionsService {
   Optional<Integer> countAllUserInteractions(UUID userId, InteractionType interactionType,
       Boolean recommended);
 
+  Optional<Integer> countAllRecommenderInteractions(String recommender,
+      InteractionType interactionType);
 
   List<UserInteraction> findAllUserInteractions(UUID userId, InteractionType interactionType,
       Boolean recommended);

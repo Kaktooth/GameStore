@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -48,32 +50,40 @@ public class GameController {
   private final GameRecommendationService gameRecommendationService;
 
   @PostMapping("/add-favorite")
-  public String addToFavorites(@PathVariable UUID gameId, Model model) {
+  public String addToFavorites(@PathVariable UUID gameId,
+      @RequestParam(value = "recommender", required = false) String recommender,
+      Model model, RedirectAttributes redirectAttributes) {
 
     var game = gameService.get(gameId);
     var user = userHolder.getAuthenticated();
     var favoriteGame = new FavoriteGame(user.getId(), game);
     favoriteGameService.save(favoriteGame);
-    getGamePage(gameId, model);
 
-    userInteractionSender.send(InteractionType.FAVORITE, user.getId(), gameId);
+    if (recommender != null) {
+      userInteractionSender.send(InteractionType.FAVORITE, user.getId(), gameId, true, recommender);
+    } else {
+      userInteractionSender.send(InteractionType.FAVORITE, user.getId(), gameId, false, "");
+    }
 
-    return "game";
+    return getGamePage(gameId, recommender, model, redirectAttributes);
   }
 
   @PostMapping("/remove-favorite")
-  public String deleteFromFavorites(@PathVariable UUID gameId, Model model) {
+  public String deleteFromFavorites(@PathVariable UUID gameId,
+      @RequestParam(value = "recommender", required = false) String recommender,
+      Model model, RedirectAttributes redirectAttributes) {
+
     var user = userHolder.getAuthenticated();
     favoriteGameService.deleteByGameIdAndUserId(gameId, user.getId());
-    getGamePage(gameId, model);
-
     userInteractionSender.sendRemoval(InteractionType.FAVORITE, user.getId(), gameId);
 
-    return "game";
+    return getGamePage(gameId, recommender, model, redirectAttributes);
   }
 
   @GetMapping
-  public String getGamePage(@PathVariable UUID gameId, Model model) {
+  public String getGamePage(@PathVariable UUID gameId,
+      @RequestParam(value = "recommender", required = false) String recommender,
+      Model model, RedirectAttributes redirectAttributes) {
 
     var user = userHolder.getAuthenticated();
     model.addAttribute("user", user);
@@ -94,7 +104,12 @@ public class GameController {
       purchased = userGamesService.existsByGameIdAndUserId(gameId, user.getId());
       canBePurchased = !uploadedGameService.findByGameId(gameId).getUserId().equals(user.getId());
 
-      userInteractionSender.send(InteractionType.VISITED, user.getId(), gameId);
+      if (recommender != null) {
+        userInteractionSender.send(InteractionType.VISITED, user.getId(), gameId, true,
+            recommender);
+      } else {
+        userInteractionSender.send(InteractionType.VISITED, user.getId(), gameId, false, "");
+      }
     }
 
     var similarGamesRecommendations = gameRecommendationService.getRecommendations(gameId);
@@ -117,6 +132,9 @@ public class GameController {
     model.addAttribute("gameProfile", gameProfile);
     model.addAttribute("game", game);
     model.addAttribute("requirements", systemRequirementsDTO);
+    model.addAttribute("recommender", recommender);
+    redirectAttributes.addAttribute("recommender", recommender);
+    redirectAttributes.addFlashAttribute("recommender", recommender);
 
     return "game";
   }

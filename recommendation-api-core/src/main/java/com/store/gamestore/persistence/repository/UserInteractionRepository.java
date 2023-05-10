@@ -28,6 +28,11 @@ public interface UserInteractionRepository extends MongoRepository<UserInteracti
       "{ $count:  'gameInteractionCount'}"})
   Optional<Integer> countAllGameInteractions(UUID gameId, InteractionType interactionType);
 
+  @Aggregation(pipeline = {"{ $match: { 'recommender' : ?0, 'interactionType' : ?1 } }",
+      "{ $count:  'recommenderInteractionCount'}"})
+  Optional<Integer> countAllRecommenderInteractions(String recommender,
+      InteractionType interactionType);
+
   @Aggregation(pipeline = {
       "{ $match: { 'userId' : ?0, 'interactionType' : ?1, 'recommended' : ?2  } }",
       "{ $count:  'userInteractionCount'}"})
@@ -44,9 +49,18 @@ public interface UserInteractionRepository extends MongoRepository<UserInteracti
   Optional<Boolean> userInteractionExists(UUID userId, UUID gameId,
       InteractionType interactionType, Boolean recommended);
 
+  @Query(value = "{ 'recommender' : ?0, 'gameId' : ?1, 'interactionType' : ?2 }",
+      exists = true)
+  Optional<Boolean> recommenderInteractionExists(String recommender, UUID gameId,
+      InteractionType interactionType);
+
   @Aggregation(pipeline = {"{ $match: { 'userId' : ?0 }}",
       "{ $group: { _id: \"$gameId\" }}"})
   List<UUID> getAllInteractedGamesByUserId(UUID userId);
+
+  @Aggregation(pipeline = {"{ $match: { 'recommender' : ?0 }}",
+      "{ $group: { _id: \"$gameId\" }}"})
+  List<UUID> getAllInteractedGamesByRecommenderName(String recommender);
 
   List<UserInteraction> findAllByUserIdAndGameIdAndInteractionType(UUID userId, UUID gameId,
       InteractionType interactionType);

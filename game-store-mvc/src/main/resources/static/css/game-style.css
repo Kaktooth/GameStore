@@ -34,8 +34,10 @@
 }
 
 .game-price {
-  font-size: 14px;
+  font-size: 13px;
   font-family: Inter, sans-serif;
+  text-decoration: none;
+  color: aliceblue;
   margin-right: 5px;
 }
 

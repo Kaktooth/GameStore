@@ -24,6 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
     registry.addViewController(ExtendedAppPath.COLLECTION_PAGE).setViewName("collection");
     registry.addViewController(ExtendedAppPath.PAYMENT_INFO_PAGE).setViewName("payment-info");
     registry.addViewController(ExtendedAppPath.PURCHASE_PAGE).setViewName("purchase");
+    registry.addViewController(ExtendedAppPath.RECOMMENDATIONS_METRICS).setViewName("recommendations-metrics");
     registry.addViewController(ExtendedAppPath.ERROR_PAGE).setViewName("error");
     registry.addViewController(ExtendedAppPath.ERROR_PAGE)
         .setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);

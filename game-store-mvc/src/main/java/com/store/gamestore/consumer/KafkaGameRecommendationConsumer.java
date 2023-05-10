@@ -22,10 +22,11 @@ public class KafkaGameRecommendationConsumer implements
     KafkaLatestRecordConsumer<List<GameRecommendation>> {
 
   private final ObjectMapper objectMapper;
-  private final RedisTemplate<UUID, List<GameRecommendation>> redisTemplate;
+  private final RedisTemplate<UUID, Object> redisTemplate;
 
+  //TODO make only one consumer class for all topics
   @KafkaListener(topics = KafkaTopics.GAME_RECOMMENDATIONS)
-  void listenRecommendations(@Payload List<GameRecommendation> recommendations,
+  void listenGameRecommendations(@Payload List<GameRecommendation> recommendations,
       @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) UUID key) {
     var typeReference = new TypeReference<List<GameRecommendation>>() {};
     var gameRecommendations = objectMapper.convertValue(recommendations, typeReference);
@@ -33,7 +34,7 @@ public class KafkaGameRecommendationConsumer implements
   }
 
   @Override
-  public List<GameRecommendation> getRecord(String topic, UUID key) {
-    return redisTemplate.opsForValue().get(key);
+  public List<GameRecommendation> getRecord(UUID key) {
+    return (List<GameRecommendation>) redisTemplate.opsForValue().get(key);
   }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <head>
   <title th:text="${game.title}"></title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.css">
@@ -20,7 +21,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 </head>
 <body class="bg-dark-2">
-<header class="masthead special-color-dark mb-4">
+<header class="masthead special-color-dark">
   <nav class="navbar shadow navbar-dark p-3 bg-dark-2 text-white" aria-label="Main navigation">
     <div class="container-fluid d-grid gap-3 align-items-center">
       <ul class="nav col col-lg-auto me-lg-auto mb-2 justify-content-left mb-md-0">
@@ -41,7 +42,7 @@
                style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(-0.00172424px, 56px, 0px);">
             <a class="dropdown-item" href="/account">Account</a>
             <a class="dropdown-item" href="/profile">Profile</a>
-            <a class="dropdown-item" href="/support">Contact support</a>
+            <a sec:authorize="hasAuthority('1')" class="dropdown-item" href="/metrics">Metrics</a>
             <a class="dropdown-item" href="/upload">Upload game</a>
 
             <hr class="dropdown-divider">
@@ -58,7 +59,8 @@
   </nav>
 </header>
 
-<main role="main" class="shadow d-flex justify-content-center container-lg text-white mb-4 gradient-bg">
+<main role="main"
+      class="shadow d-flex justify-content-center container-lg text-white mb-4 gradient-bg">
   <div class="container-lg col bg-dark-2" style="width:780px">
     <div class="container align-items-center mt-4 mb-3">
       <h5 th:text="${game.title}"></h5></div>
@@ -99,7 +101,7 @@
     <div class="container mb-4">
       <div th:if="${favorite != null}">
         <form th:if="${favorite == false}" method="post"
-              th:action="@{/game/{gameId}/add-favorite(gameId =${game.id})}">
+              th:action="@{/game/{gameId}/add-favorite(gameId =${game.id}, recommender = ${recommender})}">
           <button style="background-image: var(--bs-gradient);"
                   class="btn btn-sm btn-primary btn-outline-light mb-4"
                   type="submit">
@@ -191,7 +193,7 @@
             <div class="container p-4">
               <div class="row row-cols-lg-4">
                 <div th:each="game, i : ${similarGames.value}">
-                  <a th:href="@{/game/{id}(id =${game.gameRecommendation.secondGameId})}">
+                  <a th:href="@{/game/{id}(id =${game.gameRecommendation.secondGameId}, recommender = 'LDA')}">
                     <div class="overflow-hidden text-white p-3">
                       <img th:id="'image' + ${i.index}"
                            th:src="'data:image/png;base64,'+
@@ -210,7 +212,7 @@
             <div class="container p-4">
               <div class="row row-cols-lg-4">
                 <div th:each="game, i : ${similarGames.value}">
-                  <a th:href="@{/game/{id}(id =${game.gameRecommendation.secondGameId})}">
+                  <a th:href="@{/game/{id}(id =${game.gameRecommendation.secondGameId}, recommender = 'LDA')}">
                     <div
                         class="overflow-hidden text-white p-3">
                       <img th:id="'image' + ${i.index}" th:src="'data:image/png;base64,'
@@ -261,12 +263,11 @@
             <p class="lead" th:text="'Buy ' + ${game.title} + ' for ' + ${game.price} + '$'"></p>
           </div>
           <div class="float-right">
-            <form th:method="get" th:action="@{/payment-info/{gameId}(gameId =${game.id})}">
-              <button style="background-image: var(--bs-gradient);"
-                      class="btn btn-md btn-success float-left" type="submit">
-                Buy
-              </button>
-            </form>
+            <a th:href="@{/payment-info/{gameId}(gameId =${game.id}, recommender = ${recommender})}">
+            <button style="background-image: var(--bs-gradient);" class="btn btn-md btn-success float-left" type="button">
+              Buy
+            </button>
+            </a>
           </div>
         </div>
         <div th:if="${game.price} == 0">
@@ -275,7 +276,7 @@
           </div>
           <div class="float-right">
             <form th:method="post"
-                  th:action="@{/purchase/{gameId}/get-free(gameId =${game.id})}">
+                  th:action="@{/purchase/{gameId}/get-free(gameId =${game.id}, recommender = ${recommender})}">
               <button style="background-image: var(--bs-gradient);"
                       class="btn btn-md btn-success float-left" type="submit">
                 Get free

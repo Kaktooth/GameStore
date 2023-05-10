@@ -1,8 +1,9 @@
 package com.store.gamestore.metrics;
 
+import com.store.gamestore.persistence.entity.CalculatedMetric;
 import java.util.UUID;
 
 public interface Metric {
 
-  com.store.gamestore.persistence.entity.Metric calculateMetric(UUID id);
+  CalculatedMetric calculateMetric(UUID referenceId);
 }

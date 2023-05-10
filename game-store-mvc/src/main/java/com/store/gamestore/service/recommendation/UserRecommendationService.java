@@ -6,4 +6,6 @@ import java.util.List;
 public interface UserRecommendationService {
 
   List<UserRecommendation> getRecommendations();
+
+  List<UserRecommendation> getBestRecommendations();
 }

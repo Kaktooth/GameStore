@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <head>
   <title>Uploaded Games</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.css">
 
 </head>
 <body class="bg-dark-2">
-<header class="masthead special-color-dark mb-4">
+<header class="masthead special-color-dark">
   <nav class="navbar shadow navbar-dark p-3 bg-dark-2 text-white" aria-label="Main navigation">
     <div class="container-fluid d-grid gap-3 align-items-center">
       <ul class="nav col col-lg-auto me-lg-auto mb-2 justify-content-left mb-md-0">
@@ -24,9 +25,9 @@
           </a>
           <div class="dropdown-menu shadow" aria-labelledby="dropdownUser2"
                style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(-0.00172424px, 56px, 0px);">
-            <a class="dropdown-item" href="/account?account">Account</a>
-            <a class="dropdown-item" href="/profile?profile">Profile</a>
-            <a class="dropdown-item" href="/support?support">Contact support</a>
+            <a class="dropdown-item" href="/account">Account</a>
+            <a class="dropdown-item" href="/profile">Profile</a>
+            <a sec:authorize="hasAuthority('1')" class="dropdown-item" href="/metrics">Metrics</a>
             <a class="dropdown-item" href="/upload">Upload game</a>
 
             <hr class="dropdown-divider">

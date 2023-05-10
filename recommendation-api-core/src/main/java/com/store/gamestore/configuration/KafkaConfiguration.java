@@ -3,7 +3,6 @@ package com.store.gamestore.configuration;
 import com.store.gamestore.common.ApplicationConstants.KafkaTopics;
 import com.store.gamestore.persistence.entity.UserInteraction;
 import com.store.gamestore.persistence.entity.UserInteractionRemoval;
-import com.store.gamestore.persistence.repository.UserInteractionRepository;
 import com.store.gamestore.service.UserInteractionsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +31,62 @@ public class KafkaConfiguration {
   public NewTopic gameRecommendationsTopic() {
     return TopicBuilder.name(KafkaTopics.GAME_RECOMMENDATIONS)
         .partitions(6)
+        .compact()
+        .build();
+  }
+
+  @Bean
+  public NewTopic vocabularyTopic() {
+    return TopicBuilder.name(KafkaTopics.TOPIC_VOCABULARY)
+        .partitions(6)
+        .compact()
+        .build();
+  }
+
+  @Bean
+  public NewTopic userMetricsTopic() {
+    return TopicBuilder.name(KafkaTopics.USER_METRICS)
+        .partitions(6)
+        .compact()
+        .build();
+  }
+
+  @Bean
+  public NewTopic gameMetricsTopic() {
+    return TopicBuilder.name(KafkaTopics.GAME_METRICS)
+        .partitions(6)
+        .compact()
+        .build();
+  }
+
+  @Bean
+  public NewTopic recommenderMetricsTopic() {
+    return TopicBuilder.name(KafkaTopics.RECOMMENDER_METRICS)
+        .partitions(6)
+        .compact()
+        .build();
+  }
+
+  @Bean
+  public NewTopic popularGamesTopic() {
+    return TopicBuilder.name(KafkaTopics.POPULAR_GAMES)
+        .partitions(3)
+        .compact()
+        .build();
+  }
+
+  @Bean
+  public NewTopic mostPurchasedGamesTopic() {
+    return TopicBuilder.name(KafkaTopics.MOST_PURCHASED_GAMES)
+        .partitions(3)
+        .compact()
+        .build();
+  }
+
+  @Bean
+  public NewTopic favoriteGamesTopic() {
+    return TopicBuilder.name(KafkaTopics.FAVORITE_GAMES)
+        .partitions(3)
         .compact()
         .build();
   }

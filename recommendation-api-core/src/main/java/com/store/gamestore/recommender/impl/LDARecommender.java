@@ -6,23 +6,20 @@ import static org.apache.spark.sql.functions.col;
 import com.store.gamestore.common.ApplicationConstants.Columns;
 import com.store.gamestore.persistence.entity.GameMetadata;
 import com.store.gamestore.persistence.entity.GameRating;
-import com.store.gamestore.persistence.entity.GameRecommendation;
-import com.store.gamestore.persistence.entity.UserProfileSettings;
+import com.store.gamestore.persistence.entity.RecommendationType;
 import com.store.gamestore.persistence.entity.UserRecommendation;
 import com.store.gamestore.persistence.repository.GameMetadataRepository;
 import com.store.gamestore.persistence.repository.GameRatingRepository;
 import com.store.gamestore.persistence.repository.GameRecommendationRepository;
 import com.store.gamestore.persistence.repository.GameTitleMetadataRepository;
-import com.store.gamestore.persistence.repository.UserProfileSettingsRepository;
 import com.store.gamestore.persistence.repository.UserRecommendationRepository;
 import com.store.gamestore.persistence.repository.UserRepository;
 import com.store.gamestore.recommender.DataPreProcessor;
 import com.store.gamestore.recommender.FeaturesExtractor;
 import com.store.gamestore.recommender.Recommender;
 import com.store.gamestore.recommender.TrainedModel;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +49,7 @@ public class LDARecommender implements Recommender {
   private final GameRecommendationRepository gameRecommendationRepository;
   private final FeaturesExtractor<CountVectorizerModel> featuresExtractor;
   private final ImplicitRatingsEvaluator implicitRatingsEvaluator;
-  private final KLDivergenceCalculator klDivergence;
+  private final JSDDistanceCalculator jsdDistanceCalculator;
 
   @Override
   public void recommend() {
@@ -83,7 +80,7 @@ public class LDARecommender implements Recommender {
     log.info("Transformed data:");
     distributedTopics.show(false);
 
-    var calculatedTopics = klDivergence.calculateSimilarities(distributedTopics);
+    var calculatedTopics = jsdDistanceCalculator.calculateSimilarities(distributedTopics);
 
     for (var user : users) {
       var ratedGames = gameRatingRepository.findAllByUserId(user.getId());
@@ -98,18 +95,28 @@ public class LDARecommender implements Recommender {
 
   public void saveRecommendation(UUID gameId, UUID userId, Integer topicId) {
 
-    var recommendations = gameRecommendationRepository.findAllByFirstGameId(gameId)
-        .stream()
-        .sorted(Comparator.comparing(GameRecommendation::getSimilarity))
-        .limit(6)
-        .map(gameRecommendation -> new UserRecommendation(UUID.randomUUID(),
-            gameRecommendation.getSimilarity(), LocalDateTime.now(), userId,
-            gameRecommendation.getSecondGameId(), topicId))
-        .filter(recommendation -> !userRecommendationRepository.existsByGameIdAndPredictedRating(
-            recommendation.getGameId(), recommendation.getPredictedRating()))
-        .collect(Collectors.toList());
+    var currentDate = LocalDateTime.now();
+    var recommendations = gameRecommendationRepository.findAllByFirstGameId(gameId);
+    var userRecommendations = new ArrayList<UserRecommendation>();
+    for (var recommendation : recommendations) {
+      var userRecommendation = userRecommendationRepository.findByUserIdAndGameIdAndTopicId(userId,
+          recommendation.getSecondGameId(), topicId);
+      if(userRecommendation == null){
+        userRecommendation = new UserRecommendation(UUID.randomUUID(),
+            recommendation.getSimilarity(), currentDate, userId,
+            recommendation.getSecondGameId(), topicId, RecommendationType.TOPIC,
+            getClass().getSimpleName());
+        userRecommendations.add(userRecommendation);
+      }
 
-    userRecommendationRepository.saveAll(recommendations);
+      if(!userRecommendation.getPredictedRating().equals(recommendation.getSimilarity())) {
+        userRecommendation.setPredictedRating(recommendation.getSimilarity());
+        userRecommendation.setLastRecommendedDate(currentDate);
+        userRecommendations.add(userRecommendation);
+      }
+    }
+
+    userRecommendationRepository.saveAll(userRecommendations);
   }
 
   private Integer getMostUsedTopic(Dataset<Row> topicsDistributionDataset, String gameTitle) {

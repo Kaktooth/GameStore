@@ -1,5 +1,6 @@
 package com.store.gamestore.persistence.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +18,7 @@ import org.hibernate.Hibernate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User extends Domain {
+public class User extends Domain implements Serializable {
 
   @Column(name = "username", nullable = false)
   @NotEmpty(message = "Username should not be empty")

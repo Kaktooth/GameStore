@@ -60,3 +60,11 @@ banner-description {
   margin-right: 5px;
   word-break: break-word;
 }
+
+.game-price {
+  font-size: 12px;
+  font-family: Inter, sans-serif;
+  text-decoration: none;
+  color: aliceblue;
+  margin-right: 5px;
+}

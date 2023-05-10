@@ -1,6 +1,7 @@
 package com.store.gamestore.config;
 
-import com.store.gamestore.common.AppConstraints.CacheNames;
+import com.store.gamestore.common.AppConstraints.CacheDuration;
+import com.store.gamestore.common.AppConstraints.CacheKeys;
 import java.time.Duration;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
@@ -18,13 +19,35 @@ public class CacheConfig {
 
   @Bean
   public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer() {
+
     return builder -> builder
-        .withCacheConfiguration(CacheNames.POPULAR_GAMES,
-            RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(48)))
-        .withCacheConfiguration(CacheNames.BEST_SELLER_GAMES,
-            RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(48)))
-        .withCacheConfiguration(CacheNames.FAVORITE_GAMES,
-            RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(48)));
+        .withCacheConfiguration(CacheKeys.BANNER_ITEMS,
+            RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(CacheDuration.LONG)))
+        .withCacheConfiguration(CacheKeys.POPULAR_GAMES,
+            RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(CacheDuration.NORMAL)))
+        .withCacheConfiguration(CacheKeys.BEST_SELLER_GAMES,
+            RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(CacheDuration.NORMAL)))
+        .withCacheConfiguration(CacheKeys.FAVORITE_GAMES,
+            RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(CacheDuration.NORMAL)))
+        .withCacheConfiguration(CacheKeys.BEST_RECOMMENDED_GAMES,
+            RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(CacheDuration.NORMAL)))
+        .withCacheConfiguration(CacheKeys.RECOMMENDED_GAMES_BY_TOPIC,
+            RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(CacheDuration.NORMAL)))
+        .withCacheConfiguration(CacheKeys.TOPIC_VOCABULARY,
+            RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(CacheDuration.NORMAL)))
+        .withCacheConfiguration(CacheKeys.GAME_CATEGORIES,
+            RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(CacheDuration.NORMAL)))
+        .withCacheConfiguration(CacheKeys.RECOMMENDED_GAMES_BY_CATEGORY,
+            RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(CacheDuration.NORMAL)));
   }
 
   @Bean

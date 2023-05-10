@@ -1,5 +1,6 @@
 package com.store.gamestore.common;
 
+import java.util.UUID;
 import lombok.experimental.UtilityClass;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructType;
@@ -12,6 +13,8 @@ public class ApplicationConstants {
 
     public static final int SCHEDULER_RATE = 60000;
     public static final int GAME_RECOMMENDATIONS_LIMIT = 12;
+    public static final int BEST_RECOMMENDATIONS_LIMIT = 12;
+    public static final int TOPIC_NUMBER = 4;
   }
 
   @UtilityClass
@@ -79,7 +82,7 @@ public class ApplicationConstants {
     public static final String FIRST_COLUMN = "_1";
     public static final String SECOND_COLUMN = "_2";
     public static final String ID_COLUMN = "id";
-    public static final String NORMILIZED_VALUE ="normalizedValue";
+    public static final String NORMILIZED_VALUE = "normalizedValue";
   }
 
   @UtilityClass
@@ -144,5 +147,28 @@ public class ApplicationConstants {
     public static final String USER_RECOMMENDATIONS = "user-recommendations";
     public static final String USER_INTERACTIONS = "user-interactions";
     public static final String USER_INTERACTION_REMOVALS = "user-interactions-removal";
+    public static final String GAME_METRICS = "game-metrics";
+    public static final String USER_METRICS = "user-metrics";
+    public static final String RECOMMENDER_METRICS = "recommender-metrics";
+    public static final String TOPIC_VOCABULARY = "topic-vocabulary";
+    public static final String POPULAR_GAMES = "popular-games";
+    public static final String MOST_PURCHASED_GAMES = "most-purchased-games";
+    public static final String FAVORITE_GAMES = "favorite-games";
+
+
+    public static final UUID USER_METRICS_ID = UUID.fromString(
+        "6fc50041-4170-4596-84b1-352413d8d007");
+    public static final UUID GAME_METRICS_ID = UUID.fromString(
+        "b79ddd55-7f0b-49f6-a6ca-ddc5f0f16b73");
+    public static final UUID RECOMMENDER_METRICS_ID = UUID.fromString(
+        "619a4d39-d840-4626-8bbb-966179fdcec8");
+    public static final UUID TOPIC_VOCABULARY_ID = UUID.fromString(
+        "ab16a924-0d25-4e2d-9e08-beba7d1f9c6e");
+    public static final UUID POPULAR_GAMES_ID = UUID.fromString(
+        "b8473b85-efd7-4b78-a078-95bd12e59273");
+    public static final UUID MOST_PURCHASED_GAMES_ID = UUID.fromString(
+        "615b1da6-26f6-47ca-8d75-99c944699559");
+    public static final UUID FAVORITE_GAMES_ID = UUID.fromString(
+        "d2e2cce7-da3d-4193-8bd4-cf2b15c0dee1");
   }
 }

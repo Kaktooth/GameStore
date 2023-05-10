@@ -1,6 +1,7 @@
 package com.store.gamestore.config;
 
 import com.store.gamestore.persistence.entity.GameRecommendation;
+import com.store.gamestore.persistence.entity.UserRecommendation;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.context.annotation.Bean;
@@ -13,9 +14,9 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 public class RedisTemplateConfig {
 
   @Bean
-  public RedisTemplate<UUID, List<GameRecommendation>> redisTemplate(
+  public RedisTemplate<UUID, Object> uuidRedisTemplate(
       RedisConnectionFactory redisConnectionFactory) {
-    RedisTemplate<UUID, List<GameRecommendation>> template = new RedisTemplate<>();
+    RedisTemplate<UUID, Object> template = new RedisTemplate<>();
     template.setConnectionFactory(redisConnectionFactory);
     template.setKeySerializer(RedisSerializer.java());
     template.setValueSerializer(RedisSerializer.java());

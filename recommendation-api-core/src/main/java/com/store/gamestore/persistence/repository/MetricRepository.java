@@ -1,13 +1,13 @@
 package com.store.gamestore.persistence.repository;
 
-import com.store.gamestore.persistence.entity.Metric;
+import com.store.gamestore.persistence.entity.CalculatedMetric;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface MetricRepository extends MongoRepository<Metric, UUID> {
+public interface MetricRepository extends MongoRepository<CalculatedMetric, UUID> {
 
-  List<Metric> findAllByReferenceId(UUID refId);
+  List<CalculatedMetric> findAllByReferenceId(UUID refId);
 
-  Metric findByReferenceIdAndMetricName(UUID refId, String metricName);
+  CalculatedMetric findByReferenceIdAndMetricName(UUID refId, String metricName);
 }

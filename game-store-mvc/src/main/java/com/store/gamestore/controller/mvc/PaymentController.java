@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/payment-info/{gameId}")
@@ -22,11 +24,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PaymentController {
 
   private final UserHolder userHolder;
-
   private final CommonService<Game, UUID> gameService;
 
   @GetMapping
-  public String getPaymentInformationPage(@PathVariable UUID gameId, Model model) {
+  public String getPaymentInformationPage(@PathVariable UUID gameId, Model model,
+      @RequestParam(required = false) String recommender) {
     var onlyLetters = "^[a-zA-Z\\s]+$";
     var onlyDigits = "^[\\d]+$";
     model.addAttribute("user", userHolder.getAuthenticated());
@@ -38,18 +40,20 @@ public class PaymentController {
     model.addAttribute("currentYear", LocalDateTime.now().getYear());
     model.addAttribute("onlyLetters", onlyLetters);
     model.addAttribute("onlyDigits", onlyDigits);
+    model.addAttribute("recommender", recommender);
 
     return "payment-info";
   }
 
   @PostMapping
   public String proceedVerifyingPaymentInfo(@ModelAttribute PaymentInfoDTO paymentInfo,
-      @PathVariable UUID gameId) {
+      @PathVariable UUID gameId,
+      @RequestParam(value = "recommender", required = false) String recommender) {
 
     verify();
-    return "redirect:/purchase/" + gameId;
+    //TODO add flash attributes
+    return "redirect:/purchase/" + gameId + "?recommender=" + recommender;
   }
-
 
   public void verify() {
     // TODO verify card

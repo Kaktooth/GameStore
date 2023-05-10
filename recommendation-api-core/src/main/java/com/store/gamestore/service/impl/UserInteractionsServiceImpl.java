@@ -42,6 +42,12 @@ public class UserInteractionsServiceImpl implements UserInteractionsService {
   }
 
   @Override
+  public Optional<Integer> countAllRecommenderInteractions(String recommender,
+      InteractionType interactionType) {
+    return userInteractionRepository.countAllRecommenderInteractions(recommender, interactionType);
+  }
+
+  @Override
   public List<UserInteraction> findAllUserInteractions(UUID userId, InteractionType interactionType,
       Boolean recommended) {
     return userInteractionRepository.findAllUserInteractions(userId, interactionType, recommended);

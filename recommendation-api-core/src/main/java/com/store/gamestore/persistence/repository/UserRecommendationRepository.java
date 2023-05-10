@@ -9,6 +9,8 @@ public interface UserRecommendationRepository extends MongoRepository<UserRecomm
 
   List<UserRecommendation> findAllByGameIdOrderByPredictedRatingDesc(UUID gameId);
 
+  UserRecommendation findByUserIdAndGameIdAndTopicId(UUID userId, UUID gameId, Integer topicId);
+
   List<UserRecommendation> findAllByUserIdOrderByPredictedRatingDesc(UUID userId);
 
   List<UserRecommendation> findAllByUserIdAndTopicIdOrderByPredictedRatingDesc(UUID userId,

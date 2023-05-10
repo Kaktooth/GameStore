@@ -20,7 +20,16 @@ public class KafkaUserInteractionSender implements UserInteractionSender {
   @Override
   public void send(InteractionType interactionType, UUID userId, UUID gameId) {
     var userInteraction = new UserInteraction(UUID.randomUUID().toString(), userId.toString(),
-        gameId.toString(), interactionType, LocalDateTime.now(), false);
+        gameId.toString(), interactionType, LocalDateTime.now(), false, "");
+    userInteractionKafkaTemplate.send(KafkaTopics.USER_INTERACTIONS, userInteraction.getId(),
+        userInteraction);
+  }
+
+  @Override
+  public void send(InteractionType interactionType, UUID userId, UUID gameId, Boolean recommended,
+      String recommender) {
+    var userInteraction = new UserInteraction(UUID.randomUUID().toString(), userId.toString(),
+        gameId.toString(), interactionType, LocalDateTime.now(), recommended, recommender);
     userInteractionKafkaTemplate.send(KafkaTopics.USER_INTERACTIONS, userInteraction.getId(),
         userInteraction);
   }

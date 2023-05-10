@@ -21,4 +21,5 @@ public class UserInteraction {
   private InteractionType interactionType;
   private LocalDateTime date;
   private Boolean recommended;
+  private String recommenderName;
 }

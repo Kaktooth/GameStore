@@ -6,6 +6,7 @@ import com.store.gamestore.common.ApplicationConstants.Columns;
 import com.store.gamestore.common.ApplicationConstants.FileFormats;
 import com.store.gamestore.common.ApplicationConstants.LDAConstants;
 import com.store.gamestore.common.ApplicationConstants.LoadingPaths;
+import com.store.gamestore.common.ApplicationConstants.RecommenderConstants;
 import com.store.gamestore.common.ApplicationConstants.UDF;
 import com.store.gamestore.recommender.DataPreProcessor;
 import com.store.gamestore.recommender.FeaturesExtractor;
@@ -14,7 +15,6 @@ import com.store.gamestore.recommender.TrainedModel;
 import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.spark.ml.Model;
@@ -42,11 +42,13 @@ public class LDATrainedModel implements TrainedModel<LDAModel>, TopicFinder {
   public Set<String> findPopularTopicTerms(Dataset<Row> topicsDataset, String[] vocabulary,
       Integer topic) {
 
-    log.info("topic: {}", topic);
     var termIndices = topicsDataset.filter(col(Columns.TOPIC_COLUMN).equalTo(topic))
         .first().<Integer>getList(1);
 
-    return termIndices.stream().sorted().limit(3).map(termIndex -> vocabulary[termIndex])
+    return termIndices.stream()
+        .sorted()
+        .limit(RecommenderConstants.TOPIC_NUMBER)
+        .map(termIndex -> vocabulary[termIndex])
         .collect(Collectors.toSet());
   }
 

@@ -4,5 +4,5 @@ import java.util.UUID;
 
 public interface KafkaLatestRecordConsumer<T> {
 
-  T getRecord(String topic, UUID key);
+  T getRecord(UUID key);
 }

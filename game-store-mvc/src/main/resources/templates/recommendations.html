@@ -4,18 +4,77 @@
   <title>Recommendations</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="/css/recommendations-page.css"/>
+  <script type="text/javascript" th:src="@{/js/open-recommendations-with-category.js}"></script>
 </head>
 <body>
-<div class="topic-recommendation-body">
-  <h4 class="animated-header">
-    This games related to ... topic
-  </h4>
-  <div class="games-body">
-    <div class="scroll">
-      <div>
-        <img class="topic-game-image" src="https://plus.unsplash.com/premium_photo-1681140029775-36a657447c4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1285&q=80" />
-        <p class="game-title">game title</p>
-        <p class="game-price">game price</p>
+<div class="container-md">
+  <h5 class="title animated-header mb-4"
+      th:text="'Select a game category to see what games you might like'">
+  </h5>
+  <div class="list-body">
+    <div class="category-body">
+      <div class="scroll">
+        <div th:each="category : ${categories}">
+          <button class="category" th:text="${category}" th:data-category="${category.toString()}"
+                  th:onclick="openRecommendations(this.getAttribute('data-category'))"></button>
+        </div>
+      </div>
+    </div>
+    <div class="margin-top">
+      <div class="games-in-category"
+           th:each="userRecommendations, i : ${userRecommendationsByCategory}">
+        <div class="hidden-games" th:name="${userRecommendations.key}"
+             th:each="recommendation : ${userRecommendations.value}">
+          <a th:href="@{/game/{gameId}/(gameId =${recommendation.userRecommendation.gameId},  recommender='LDA')}">
+            <img class="topic-game-image"
+                 th:src="'data:image/png;base64,'+ ${recommendation.gamePicture.image.getBase64ImageData()}"/>
+            <p class="game-title" th:text="${recommendation.title}"></p>
+            <p class="game-price" th:text="${recommendation.price} + '$'"></p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h5 class="title animated-header">You might like this games</h5>
+  <div
+      class="row d-flex justify-content-around row-cols-1 row-cols-lg-4 row-cols-l align-items-stretch">
+    <div class="col py-5" th:each="game, i : ${userRecommendedBestGames}">
+      <div class="text-white">
+        <a th:href="@{/game/{gameId}/(gameId =${game.userRecommendation.gameId},  recommender='LDA')}">
+          <img th:id="'image' + ${i.index}"
+               th:src="'data:image/png;base64,'+ ${game.gamePicture.image.getBase64ImageData()}"
+               class="rounded shadow best-game-img" alt=""/>
+        </a>
+        <p class="game-title" th:text="${game.title}"></p>
+        <p class="game-price" th:text="${game.price} + '$'"></p>
+        <div class="float-right">
+          <a th:href="@{/store/ignore-game/{gameId}(gameId =${game.userRecommendation.gameId})}">
+            <button class="btn btn-dark-moon btn-rounded">
+              Ignore
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:each="topicRecommendations, i : ${gamesRecommendedByTopic}">
+  <div class="list-body">
+    <h4 class="animated-header" th:text="'This games related to'
+  + ${topicVocabulary.get(topicRecommendations.key).toString().replace('[',' ').replace(']',' ')}
+   + 'topics'">
+    </h4>
+    <div class="games-body">
+      <div class="scroll">
+        <div th:each="recommendation : ${topicRecommendations.value}">
+          <a th:href="@{/game/{gameId}/(gameId =${recommendation.userRecommendation.gameId},  recommender='LDA')}">
+            <img class="topic-game-image"
+                 th:src="'data:image/png;base64,'
+                 + ${recommendation.gamePicture.image.getBase64ImageData()}"/>
+            <p class="game-title" th:text="${recommendation.title}"></p>
+            <p class="game-price" th:text="${recommendation.price} + '$'"></p>
+          </a>
+        </div>
       </div>
     </div>
   </div>
