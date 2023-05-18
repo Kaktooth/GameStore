@@ -33,9 +33,16 @@
   padding: 1rem;
 }
 
+.in-category-game-image {
+  width: 90%;
+  height: 90%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
 .topic-game-image {
-  width: 18vmin;
-  height: 18vmin;
+  width: 30vmin;
+  height: 30vmin;
   object-fit: cover;
   border-radius: 0.5rem;
 }

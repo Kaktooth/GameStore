@@ -25,7 +25,6 @@ subprojects {
 
     pmd {
         consoleOutput = true
-        threads = 4
     }
 
     sonarqube {

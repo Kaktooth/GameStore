@@ -133,6 +133,11 @@
                 th:href="@{/game-metrics/{gameId}(gameId = ${metrics.getKey().id})}"
                 th:selected="${metrics.getKey().title == selectedGame.title}"></option>
       </select>
+      <a style="background-image: var(--bs-gradient); position:relative; top: 15px;" class="btn btn-sm btn-success float-right
+       align-content-center" type="button"
+         th:href="@{/export/game-metrics}">
+        Export All
+      </a>
     </div>
     <div class="flow">
       <div class="flow-item" th:each="metrics : ${gameMetrics.get(selectedGame)}"

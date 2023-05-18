@@ -1,0 +1,5 @@
+FROM amazoncorretto:17-alpine-jdk
+VOLUME /gamestore
+ADD ./build/libs/GameStore-0.0.1-SNAPSHOT.jar GameStore-0.0.1-SNAPSHOT.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "GameStore-0.0.1-SNAPSHOT.jar"]

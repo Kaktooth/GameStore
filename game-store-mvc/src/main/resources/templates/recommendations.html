@@ -26,7 +26,7 @@
         <div class="hidden-games" th:name="${userRecommendations.key}"
              th:each="recommendation : ${userRecommendations.value}">
           <a th:href="@{/game/{gameId}/(gameId =${recommendation.userRecommendation.gameId},  recommender='LDA')}">
-            <img class="topic-game-image"
+            <img class="in-category-game-image"
                  th:src="'data:image/png;base64,'+ ${recommendation.gamePicture.image.getBase64ImageData()}"/>
             <p class="game-title" th:text="${recommendation.title}"></p>
             <p class="game-price" th:text="${recommendation.price} + '$'"></p>

@@ -148,7 +148,7 @@
      id="filter" tabindex="-1" role="dialog" aria-labelledby="Filter games"
      aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <form th:action="@{/store}">
+    <form th:action="@{/store}" method="post" th:object="${filterparams}">
       <div class="modal-content text-white bg-dark">
         <div class="modal-header">
           <h5 class="modal-title " id="modalTitle">Filter Recommendations</h5>
@@ -158,25 +158,25 @@
         </div>
         <div class="modal-body">
           <p>Games minimal release date:</p>
-          <input type="date" th:value="${releaseDate}">
+          <input type="date" th:value="${releaseDate}" th:field="*{releaseDate}">
           <p>Minimal games price:</p>
           <div>
-            <input id="minRange" name="minRange" type="range" th:min="${minGamesPrice}"
+            <input id="minRange" name="minRange" type="range" th:min="0"
                    th:value="${minGamesPrice}"
-                   th:max="${maxGamesPrice}">
+                   th:max="1700" th:field="*{minGamesPrice}">
             <input id="minRangeResult" name="minRangeResult" type="text" value="0">
           </div>
           <p>Maximal games price:</p>
           <div>
-            <input id="maxRange" name="maxRange" type="range" th:min="${minGamesPrice}"
+            <input id="maxRange" name="maxRange" type="range" th:min="0"
                    th:value="${maxGamesPrice}"
-                   th:max="${maxGamesPrice}">
+                   th:max="1700" th:field="*{maxGamesPrice}">
             <input id="maxRangeResult" name="maxRangeResult" type="text" value="1700">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" data-dismiss="modal">Apply</button>
+          <button type="submit" class="btn btn-primary">Apply</button>
         </div>
       </div>
     </form>
