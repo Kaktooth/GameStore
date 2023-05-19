@@ -40,7 +40,7 @@ public class BoughtPrecisionRecommenderMetric implements RecommenderMetric {
             recommenderName, InteractionType.BOUGHT));
     var precision = BigDecimal.valueOf(0);
     try {
-      precision = usedGames.divide(usedGames.add(notUsedGames), 2, RoundingMode.HALF_UP);
+      precision = usedGames.divide(usedGames.add(notUsedGames), 3, RoundingMode.HALF_UP);
     } catch (ArithmeticException exception) {
       log.error(exception.toString());
     }

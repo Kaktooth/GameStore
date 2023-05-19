@@ -8,6 +8,7 @@ import com.store.gamestore.persistence.entity.MetricType;
 import com.store.gamestore.persistence.entity.RecommenderType;
 import com.store.gamestore.service.UserInteractionsService;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -34,11 +35,11 @@ public class DownloadRecallRecommenderMetric implements RecommenderMetric {
         userInteractionsService.countAllRecommenderInteractions(recommenderName,
             InteractionType.DOWNLOADED).orElse(0));
     var notRecommendedGames = BigDecimal.valueOf(
-        userInteractionsService.countAllRecommenderInteractions("",
+        userInteractionsService.countAllRecommenderInteractions("nonPersonal",
             InteractionType.DOWNLOADED).orElse(0));
     var recall = BigDecimal.valueOf(0);
     try {
-      recall = recommendedGames.divide(recommendedGames.add(notRecommendedGames));
+      recall = recommendedGames.divide(recommendedGames.add(notRecommendedGames), 3, RoundingMode.HALF_UP);
     } catch (ArithmeticException exception) {
       log.error(exception.toString());
     }

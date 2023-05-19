@@ -5,7 +5,6 @@ import com.store.gamestore.persistence.entity.CalculatedMetric;
 import com.store.gamestore.persistence.entity.MetricComparingType;
 import com.store.gamestore.service.metrics.MetricsService;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.math3.util.Pair;
 import org.springframework.stereotype.Controller;
@@ -33,7 +32,7 @@ public class AdminMetricsController {
     var lowestValues = new HashMap<String, Double>();
     var metricNames = recommenderMetrics.values().iterator().next().stream()
         .map(CalculatedMetric::getMetricName)
-        .collect(Collectors.toList());
+        .toList();
     for (var metrics : recommenderMetrics.entrySet()) {
       for (var metric : metrics.getValue()) {
         var key = metric.getMetricName();
@@ -46,7 +45,8 @@ public class AdminMetricsController {
           lowestValues.put(key, metric.getValue().doubleValue());
         }
       }
-
+    }
+    for (var metrics : recommenderMetrics.entrySet()) {
       final var values = new HashMap<String, Pair<Boolean, Double>>();
       for (var metric : metrics.getValue()) {
         if (metric.getMetricComparingType() == MetricComparingType.HIGHER) {

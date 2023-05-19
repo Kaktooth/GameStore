@@ -6,6 +6,7 @@ import com.store.gamestore.persistence.entity.CalculatedMetric;
 import com.store.gamestore.persistence.entity.InteractionType;
 import com.store.gamestore.persistence.entity.MetricType;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class BoughtPrecisionMetric implements UserMetric {
         InteractionType.BOUGHT, true));
     var precision = BigDecimal.valueOf(0);
     try {
-      precision = usedGames.divide(usedGames.add(notUsedGames));
+      precision = usedGames.divide(usedGames.add(notUsedGames), 3, RoundingMode.HALF_UP);
     } catch (ArithmeticException exception) {
       log.error(exception.toString());
     }

@@ -8,6 +8,7 @@ import com.store.gamestore.persistence.entity.MetricComparingType;
 import com.store.gamestore.persistence.entity.MetricType;
 import com.store.gamestore.persistence.entity.RecommenderType;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -38,7 +39,7 @@ public class DownloadPrecisionRecommenderMetric implements RecommenderMetric {
             recommenderName, InteractionType.DOWNLOADED));
     var precision = BigDecimal.valueOf(0);
     try {
-      precision = usedGames.divide(usedGames.add(notUsedGames));
+      precision = usedGames.divide(usedGames.add(notUsedGames), 3, RoundingMode.HALF_UP);
     } catch (ArithmeticException exception) {
       log.error(exception.toString());
     }

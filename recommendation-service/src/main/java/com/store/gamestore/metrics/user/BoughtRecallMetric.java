@@ -6,6 +6,7 @@ import com.store.gamestore.persistence.entity.InteractionType;
 import com.store.gamestore.persistence.entity.MetricType;
 import com.store.gamestore.service.UserInteractionsService;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class BoughtRecallMetric implements UserMetric {
         InteractionType.BOUGHT, false).orElse(0));
     var recall = BigDecimal.valueOf(0);
     try {
-      recall = recommendedGames.divide(recommendedGames.add(notRecommendedGames));
+      recall = recommendedGames.divide(recommendedGames.add(notRecommendedGames), 3, RoundingMode.HALF_UP);
     } catch (ArithmeticException exception) {
       log.error(exception.toString());
     }
