@@ -56,15 +56,18 @@ public class GameController {
 
     var game = gameService.get(gameId);
     var user = userHolder.getAuthenticated();
-    var favoriteGame = new FavoriteGame(user.getId(), game);
-    favoriteGameService.save(favoriteGame);
+    var favoriteGameExists = favoriteGameService.existsByGameIdAndUserId(gameId, user.getId());
+    if (favoriteGameExists.equals(false)) {
+      var favoriteGame = new FavoriteGame(user.getId(), game);
+      favoriteGameService.save(favoriteGame);
 
-    if (recommender != null) {
-      userInteractionSender.send(InteractionType.FAVORITE, user.getId(), gameId, true, recommender);
-    } else {
-      userInteractionSender.send(InteractionType.FAVORITE, user.getId(), gameId, false, "");
+      if (recommender != null) {
+        userInteractionSender.send(InteractionType.FAVORITE, user.getId(), gameId, true,
+            recommender);
+      } else {
+        userInteractionSender.send(InteractionType.FAVORITE, user.getId(), gameId, false, "");
+      }
     }
-
     return getGamePage(gameId, recommender, model, redirectAttributes);
   }
 

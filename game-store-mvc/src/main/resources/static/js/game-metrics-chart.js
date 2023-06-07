@@ -4,7 +4,6 @@ $(document).ready(function () {
     packages: ['corechart', 'bar']
   });
   google.charts.setOnLoadCallback(drawColumnChart);
-  google.charts.setOnLoadCallback(drawPieChart);
 });
 
 function drawColumnChart() {
@@ -15,8 +14,13 @@ function drawColumnChart() {
     data.addRow([key, real_data[key]]);
   });
   var options = {
-    width: 870,
-    height: 550,
+    chartArea:{left:0,top:0,width:"100%",height:"100%"},
+    // bgColor: '#212529',
+    // textStyle: {
+    //   color: '#f0f8ff',
+    // },
+    width: 900,
+    height: 600,
     isStacked: true,
     legend: {position: 'top', maxLines: 3},
     title: 'Selected interaction Chart',
@@ -28,22 +32,5 @@ function drawColumnChart() {
   };
   var chart = new google.visualization.ColumnChart(document
   .getElementById('chart_div'));
-  chart.draw(data, options);
-}
-
-function drawPieChart() {
-  var data = new google.visualization.DataTable();
-  data.addColumn('string', 'Date');
-  data.addColumn('number', 'Interaction');
-  Object.keys(real_data).forEach(function (key) {
-    data.addRow([key, real_data[key]]);
-  });
-  var options = {
-    width: 870,
-    height: 400,
-    title: 'Selected interaction during month'
-  };
-  var chart = new google.visualization.PieChart(document
-  .getElementById('piechart'));
   chart.draw(data, options);
 }

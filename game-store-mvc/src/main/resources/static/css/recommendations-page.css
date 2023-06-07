@@ -78,8 +78,8 @@
 }
 
 .best-game-img {
-  width:240px;
-  height:240px;
+  width:250px;
+  height:250px;
 }
 
 .list-recommendation-body {
@@ -122,6 +122,15 @@
 }
 
 .btn-dark-moon {
+  font-size: 12px;
+  background: #141E30;
+  background: -webkit-linear-gradient(to right, #243B55, #141E30);
+  background: linear-gradient(to right, #243B55, #141E30);
+  color: #fff;
+}
+
+.btn-dark-moon {
+  font-size: 12px;
   background: #141E30;
   background: -webkit-linear-gradient(to right, #243B55, #141E30);
   background: linear-gradient(to right, #243B55, #141E30);

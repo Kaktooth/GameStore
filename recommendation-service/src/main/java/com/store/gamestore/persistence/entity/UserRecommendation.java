@@ -22,6 +22,5 @@ public class UserRecommendation implements Serializable {
   private UUID userId;
   private UUID gameId;
   private Integer topicId;
-  private RecommendationType recommendationType;
   private String recommenderName;
 }

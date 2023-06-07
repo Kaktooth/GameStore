@@ -18,38 +18,38 @@
           integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
           crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript" th:src="@{/js/game-metrics-chart.js}"></script>
+  <!--  <script th:inline="javascript" type="text/javascript" th:src="@{/js/game-metrics-chart.js}"></script>-->
   <script th:inline="javascript">
     var real_data = /*[[${chartData}]]*/'noValue';
+    var interaction = /*[[${interaction}]]*/'noValue';
     $(document).ready(function () {
       google.charts.load('current', {
         packages: ['corechart', 'bar']
       });
       google.charts.setOnLoadCallback(drawColumnChart);
-      google.charts.setOnLoadCallback(drawPieChart);
     });
 
     function drawColumnChart() {
       var data = new google.visualization.DataTable();
       data.addColumn('string', 'Date');
-      data.addColumn('number', 'Interaction');
+      data.addColumn('number', interaction);
       Object.keys(real_data).forEach(function (key) {
         data.addRow([key, real_data[key]]);
       });
       var options = {
-        chartArea:{left:0,top:0,width:"100%",height:"100%"},
-        bgColor: '#212529',
-        textStyle: {
-          color: '#f0f8ff',
-        },
+        chartArea: {left: 50, top: 50, width: 800, height: 500},
+        // bgColor: '#212529',
+        // textStyle: {
+        //   color: '#f0f8ff',
+        // },
         width: 900,
         height: 600,
         isStacked: true,
         legend: {position: 'top', maxLines: 3},
-        title: 'Selected interaction Chart',
-        hAxis : {
-          textStyle : {
-            fontSize: 9
+        // title: 'Selected interaction Chart',
+        hAxis: {
+          textStyle: {
+            fontSize: 12
           }
         }
       };
@@ -58,27 +58,6 @@
       chart.draw(data, options);
     }
 
-    function drawPieChart() {
-      var data = new google.visualization.DataTable();
-      data.addColumn('string', 'Date');
-      data.addColumn('number', 'Interaction');
-      Object.keys(real_data).forEach(function (key) {
-        data.addRow([key, real_data[key]]);
-      });
-      var options = {
-        chartArea:{left:0,top:0,width:"100%",height:"100%"},
-        bgColor: '#212529',
-        textStyle: {
-          color: '#f0f8ff',
-        },
-        width: 900,
-        height: 600,
-        title: 'Selected interaction during month'
-      };
-      var chart = new google.visualization.PieChart(document
-      .getElementById('piechart'));
-      chart.draw(data, options);
-    }
   </script>
 </head>
 
@@ -145,17 +124,26 @@
            + ${#numbers.formatInteger(metrics.value, 1)}"></div>
     </div>
   </div>
+  <h4 style="margin-bottom: 50px; text-align: center;">User Interactions Chart</h4>
   <div class="container-md mb-2 charts-grid">
     <div class="column-flow">
-      <div class="column-flow-item">Visited</div>
-      <div class="column-flow-item">Recommended</div>
-      <div class="column-flow-item">Added to Favorites</div>
-      <div class="column-flow-item">Purchased</div>
-      <div class="column-flow-item">Downloaded</div>
+
+      <div class="column-flow-item">
+        <a th:href="@{/game-metrics/{gameId}(gameId = ${selectedGame.getId()}, chartName='VISITED')}">Visited</a>
+      </div>
+      <div class="column-flow-item">
+        <a th:href="@{/game-metrics/{gameId}(gameId = ${selectedGame.getId()}, chartName='FAVORITE')}">Added
+          to Favorites</a>
+      </div>
+      <div class="column-flow-item">
+        <a th:href="@{/game-metrics/{gameId}(gameId = ${selectedGame.getId()}, chartName='BOUGHT')}">Purchased</a>
+      </div>
+      <div class="column-flow-item">
+        <a th:href="@{/game-metrics/{gameId}(gameId = ${selectedGame.getId()}, chartName='IGNORED')}">Ignored</a>
+      </div>
     </div>
     <div>
       <div id="chart_div" style="width: 900px; height: 600px;"></div>
-      <div id="piechart" style="width: 900px; height: 600px;"></div>
     </div>
   </div>
 </main>

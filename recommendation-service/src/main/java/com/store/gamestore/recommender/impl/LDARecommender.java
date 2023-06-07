@@ -7,7 +7,6 @@ import com.store.gamestore.common.ApplicationConstants.Columns;
 import com.store.gamestore.persistence.entity.GameMetadata;
 import com.store.gamestore.persistence.entity.GameRating;
 import com.store.gamestore.persistence.entity.InteractionType;
-import com.store.gamestore.persistence.entity.RecommendationType;
 import com.store.gamestore.persistence.entity.UserInteraction;
 import com.store.gamestore.persistence.entity.UserRecommendation;
 import com.store.gamestore.persistence.repository.GameMetadataRepository;
@@ -107,13 +106,13 @@ public class LDARecommender implements Recommender {
     var recommendations = gameRecommendationRepository.findAllByFirstGameId(gameId);
     var userRecommendations = new ArrayList<UserRecommendation>();
     for (var recommendation : recommendations) {
-      var userRecommendation = userRecommendationRepository.findByUserIdAndGameIdAndTopicId(userId,
+      //TODO check. Can be multiple
+      var userRecommendation = userRecommendationRepository.findFirstByUserIdAndGameIdAndTopicId(userId,
           recommendation.getSecondGameId(), topicId);
       if (userRecommendation == null) {
         userRecommendation = new UserRecommendation(UUID.randomUUID(),
             recommendation.getSimilarity(), currentDate, userId,
-            recommendation.getSecondGameId(), topicId, RecommendationType.TOPIC,
-            getClass().getSimpleName());
+            recommendation.getSecondGameId(), topicId, getClass().getSimpleName());
         userRecommendations.add(userRecommendation);
       }
 

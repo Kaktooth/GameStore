@@ -69,8 +69,11 @@ public class JSDDistanceCalculator implements SimilarityCalculator {
           .secondGameId(secondGame.getId())
           .similarity(similarity)
           .build();
-      if (!gameRecommendationRepository.existsByFirstGameIdAndSecondGameIdAndSimilarity(
-          gamesSimilarity.getFirstGameId(), gamesSimilarity.getSecondGameId(), similarity)) {
+
+      final var gameRecommendationNotExists = !gameRecommendationRepository.existsByFirstGameIdAndSecondGameIdAndSimilarity(
+          gamesSimilarity.getFirstGameId(), gamesSimilarity.getSecondGameId(), similarity);
+      final var isValidResult = !similarity.isNaN();
+      if (gameRecommendationNotExists && isValidResult) {
         gameRecommendationRepository.save(gamesSimilarity);
       }
     }

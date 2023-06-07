@@ -5,6 +5,7 @@ import com.store.gamestore.persistence.entity.UserInteraction;
 import com.store.gamestore.persistence.entity.UserInteractionRemoval;
 import com.store.gamestore.persistence.repository.UserInteractionRepository;
 import com.store.gamestore.service.UserInteractionsService;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -116,5 +117,17 @@ public class UserInteractionsServiceImpl implements UserInteractionsService {
   @Override
   public Integer countMaxUserInteractions(UUID userId, InteractionType interactionType) {
     return userInteractionRepository.countMaxUserInteractions(userId, interactionType);
+  }
+
+  @Override
+  public Optional<Integer> countAllGameInteractionsByDate(UUID gameId,
+      InteractionType interactionType, LocalDate start, LocalDate end) {
+    return userInteractionRepository.countAllGameInteractionsByDate(gameId, interactionType, start,
+        end);
+  }
+
+  @Override
+  public List<UserInteraction> findAllInteractionsWithGame(UUID gameId) {
+    return userInteractionRepository.findAllByGameId(gameId);
   }
 }

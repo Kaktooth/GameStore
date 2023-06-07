@@ -1,5 +1,6 @@
 package com.store.gamestore.persistence.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "user-interactions")
-public class UserInteraction {
+public class UserInteraction implements Serializable {
 
   @MongoId
   private UUID id;

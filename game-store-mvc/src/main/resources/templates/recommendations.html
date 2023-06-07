@@ -47,6 +47,14 @@
         </a>
         <p class="game-title" th:text="${game.title}"></p>
         <p class="game-price" th:text="${game.price} + '$'"></p>
+        <!--        Add to favorites button for recommendation-->
+<!--        <div class="float-left">-->
+<!--          <form th:method="post" th:action="@{/game/{gameId}/add-favorite(gameId =${game.userRecommendation.gameId})}">-->
+<!--            <button type="submit" class="btn btn-dark-moon btn-rounded">-->
+<!--              Add to favorites-->
+<!--            </button>-->
+<!--          </form>-->
+<!--        </div>-->
         <div class="float-right">
           <a th:href="@{/store/ignore-game/{gameId}(gameId =${game.userRecommendation.gameId})}">
             <button class="btn btn-dark-moon btn-rounded">

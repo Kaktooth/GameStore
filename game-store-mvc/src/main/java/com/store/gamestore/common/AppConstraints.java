@@ -102,6 +102,7 @@ public class AppConstraints {
     public static final String POPULAR_GAMES = "popular-games";
     public static final String MOST_PURCHASED_GAMES = "most-purchased-games";
     public static final String FAVORITE_GAMES = "favorite-games";
+    public static final String USER_INTERACTION_METRICS = "user-interactions-metrics";
 
     public static final UUID USER_METRICS_ID = UUID.fromString(
         "6fc50041-4170-4596-84b1-352413d8d007");
@@ -117,5 +118,7 @@ public class AppConstraints {
         "615b1da6-26f6-47ca-8d75-99c944699559");
     public static final UUID FAVORITE_GAMES_ID = UUID.fromString(
         "d2e2cce7-da3d-4193-8bd4-cf2b15c0dee1");
+    public static final UUID USER_INTERACTION_METRICS_ID = UUID.fromString(
+        "13acef2c-9990-415b-abcd-c28ae8945783");
   }
 }

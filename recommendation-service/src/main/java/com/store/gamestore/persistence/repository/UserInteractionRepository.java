@@ -2,6 +2,7 @@ package com.store.gamestore.persistence.repository;
 
 import com.store.gamestore.persistence.entity.InteractionType;
 import com.store.gamestore.persistence.entity.UserInteraction;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,6 +19,8 @@ public interface UserInteractionRepository extends MongoRepository<UserInteracti
   List<UserInteraction> findAllUserInteractions(UUID userId, InteractionType interactionType,
       Boolean recommended);
 
+  List<UserInteraction> findAllByGameId(UUID gameId);
+
   @Aggregation(pipeline = {
       "{ $match: { 'gameId' : ?0, 'interactionType' : ?1, 'recommended' : ?2 } }",
       "{ $count:  'gameInteractionCount'}"})
@@ -27,6 +30,12 @@ public interface UserInteractionRepository extends MongoRepository<UserInteracti
   @Aggregation(pipeline = {"{ $match: { 'gameId' : ?0, 'interactionType' : ?1 } }",
       "{ $count:  'gameInteractionCount'}"})
   Optional<Integer> countAllGameInteractions(UUID gameId, InteractionType interactionType);
+
+  @Aggregation(pipeline = {
+      "{ $match: { 'gameId' : ?0, 'interactionType' : ?1, date:{$gte:ISODate(?2),$lt:ISODate(?3)}} }",
+      "{ $count:  'gameInteractionCount'}"})
+  Optional<Integer> countAllGameInteractionsByDate(UUID gameId, InteractionType interactionType,
+      LocalDate start, LocalDate end);
 
   @Aggregation(pipeline = {"{ $match: { 'recommenderName' : ?0, 'interactionType' : ?1 } }",
       "{ $count:  'recommenderInteractionCount'}"})

@@ -91,6 +91,14 @@ public class KafkaConfiguration {
         .build();
   }
 
+  @Bean
+  public NewTopic userInteractionsForChartTopic() {
+    return TopicBuilder.name(KafkaTopics.USER_INTERACTION_METRICS)
+        .partitions(3)
+        .compact()
+        .build();
+  }
+
   @KafkaListener(topics = KafkaTopics.USER_INTERACTIONS, groupId = KafkaTopics.USER_INTERACTIONS)
   public void onEvent(UserInteraction userInteraction) {
     if (userInteraction != null) {

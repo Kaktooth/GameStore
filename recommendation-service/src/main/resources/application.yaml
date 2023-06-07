@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql:game-store-db
+    url: jdbc:postgresql:game-store-db2
     username: postgres
     password: admin
     driver-class-name: org.postgresql.Driver

@@ -17,6 +17,7 @@ import com.store.gamestore.persistence.entity.SystemRequirements;
 import com.store.gamestore.persistence.entity.UploadedGame;
 import com.store.gamestore.service.CommonService;
 import com.store.gamestore.service.enumeration.CommonEnumerationService;
+import com.store.gamestore.service.user.authorities.AuthorityService;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -37,6 +38,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class GameUploadController {
 
   private final UserHolder userHolder;
+  private final AuthorityService authorityService;
   private final CommonService<Game, UUID> gameService;
   private final CommonService<Image, UUID> imageService;
   private final CommonService<GamePicture, UUID> gameImageService;
@@ -95,6 +97,12 @@ public class GameUploadController {
     requirementsService.save(requirements);
 
     var user = userHolder.getAuthenticated();
+
+    var authority = authorityService.findAuthorityByUserId(user.getId());
+    if (authority.getAuthorityId() != 1) {
+      authority.setAuthorityId(2);
+      authorityService.save(authority);
+    }
 
     var uploadedGame = new UploadedGame(user.getId(), game);
     uploadedGameService.save(uploadedGame);

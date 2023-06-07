@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/metrics")
 @RequiredArgsConstructor
-public class AdminMetricsController {
+public class AdminController {
 
   private final MetricsService metricsService;
   private final UserHolder userHolder;

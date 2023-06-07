@@ -3,6 +3,7 @@ package com.store.gamestore.service;
 import com.store.gamestore.persistence.entity.InteractionType;
 import com.store.gamestore.persistence.entity.UserInteraction;
 import com.store.gamestore.persistence.entity.UserInteractionRemoval;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -41,4 +42,9 @@ public interface UserInteractionsService {
   void deleteAllUserInteractionsByRemoval(UserInteractionRemoval userInteraction);
 
   Integer countMaxUserInteractions(UUID userId, InteractionType interactionType);
+
+  Optional<Integer> countAllGameInteractionsByDate(UUID gameId, InteractionType interactionType,
+      LocalDate start, LocalDate end);
+
+  List<UserInteraction> findAllInteractionsWithGame(UUID gameId);
 }

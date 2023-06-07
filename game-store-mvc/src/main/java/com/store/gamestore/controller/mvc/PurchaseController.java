@@ -67,7 +67,7 @@ public class PurchaseController {
       recommender = recommenderAttribute;
     }
 
-    if (recommender != null) {
+    if (recommender != null && !recommender.isEmpty()) {
       userInteractionSender.send(InteractionType.BOUGHT, user.getId(), gameId, true, recommender);
     } else {
       userInteractionSender.send(InteractionType.BOUGHT, user.getId(), gameId, false, "");

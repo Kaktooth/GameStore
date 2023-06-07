@@ -6,4 +6,5 @@ import java.util.UUID;
 
 public interface AuthorityRepository extends CommonRepository<Authority, UUID> {
 
+  Authority findAuthorityByUserId(UUID id);
 }

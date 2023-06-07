@@ -24,7 +24,10 @@ public class VisitedGameMetric implements GameMetric {
     log.info("calculating: {}", metricName);
     var userInteractions = BigDecimal.valueOf(userInteractionsService.countAllUserInteractionsWithGame(gameId,
         InteractionType.VISITED, false).orElse(0).doubleValue());
-    return new CalculatedMetric(UUID.randomUUID(), gameId, userInteractions, metricName, "",
+    var userInteractionsRecommended = BigDecimal.valueOf(userInteractionsService.countAllUserInteractionsWithGame(gameId,
+        InteractionType.VISITED, true).orElse(0).doubleValue());
+    var viewed = userInteractions.add(userInteractionsRecommended);
+    return new CalculatedMetric(UUID.randomUUID(), gameId, viewed, metricName, "",
         MetricType.GAME);
   }
 }

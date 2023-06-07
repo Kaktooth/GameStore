@@ -3,11 +3,9 @@ package com.store.gamestore.persistence.entity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Data
 @AllArgsConstructor
@@ -22,7 +20,6 @@ public class UserRecommendation implements Serializable {
   private UUID userId;
   private UUID gameId;
   private Integer topicId;
-  private RecommendationType recommendationType;
   private String recommenderName;
 
   @Override public boolean equals(Object o) {

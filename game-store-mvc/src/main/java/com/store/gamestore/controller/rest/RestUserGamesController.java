@@ -1,9 +1,8 @@
 package com.store.gamestore.controller.rest;
 
+import com.store.gamestore.common.mapper.UserGameMapper;
 import com.store.gamestore.common.message.sender.UserInteractionSender;
 import com.store.gamestore.model.dto.UserGameDTO;
-import com.store.gamestore.common.mapper.UserGameMapper;
-import com.store.gamestore.persistence.entity.InteractionType;
 import com.store.gamestore.service.game.collection.UserGamesService;
 import com.store.gamestore.service.game.file.GameFileService;
 import java.io.IOException;
@@ -44,8 +43,6 @@ public class RestUserGamesController {
 
     var headers = new HttpHeaders();
     headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + gameFile.getName());
-
-    userInteractionSender.send(InteractionType.DOWNLOADED, userId, gameId, false, "");
 
     return ResponseEntity.ok()
         .headers(headers)

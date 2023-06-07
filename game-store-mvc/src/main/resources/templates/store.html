@@ -68,60 +68,67 @@
         <span class="material-icons">settings</span>
       </a>
     </div>
-    <div class="float-right mb-4 mt-2">
-      <form method="get" class="form-group flow" th:href="@{/store}" id="searchForm">
-        <span class="icon material-icons">search</span>
-        <input type="search" class="form-control bg-dark-2" aria-label="Default"
-               aria-describedby="inputGroup-sizing-default"
-               id="searchString" name="searchString" style="width:300px; z-index: 1;">
-        <div style="position: absolute; z-index: 3; word-break: break-all;">
-          <ul class="dropdown-menu bg-dark-2 show" id="drop" th:name="drop"
-              th:if="${search} == true and ${searchedGames.size()} > 0"
-              style="position: static; margin: 0px; z-index: 1;">
-            <li th:each="searchedGame, i : ${searchedGames}">
-              <a th:href="@{/game/{gameId}(gameId =${searchedGame.game.id})}">
-                <div class="dropdown-item bg-dark-2 card" style="width:300px; height: 100px;">
-                  <div class="row no-gutters">
-                    <div class="col-md-6">
-                      <img th:id="'image' + ${i.count}"
-                           th:src="'data:image/png;base64,'+
-                           ${searchedGame.gamePicture.image.getBase64ImageData()}"
-                           class="d-block w-100 img-fluid image-uploaded"/>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="text-center">
-                        <small>
-                          <label class="card-title" style="white-space: pre-wrap;"
-                                 th:text="${searchedGame.game.title}">
-                          </label>
-                        </small>
-                        <p class="card-text">
-                          <small
-                              th:text="${searchedGame.game.price} + '$'">
-                          </small>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </li>
-          </ul>
-          <ul class="dropdown-menu bg-dark-2 show" id="drop2" th:name="drop2"
-              th:if="${search} == true and ${searchedGames.size()} <= 0"
-              style="position: static; inset: 0px 0px auto auto; margin: 0px;">
-            <li>
-              <div class="dropdown-item card" style=" width:270px; height: 60px;">
-                <div class="card-body text-center">
-                  <p class="card-text"
-                     th:text="'Nothing was found.'">
-                  </p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </form>
+    <div class="float-right mb-2 mt-2">
+      <span style="visibility: hidden" class="icon material-icons">search</span>
+      <input type="search" class="form-control bg-dark-2" aria-label="Default"
+      aria-describedby="inputGroup-sizing-default"
+      id="searchString" name="searchString" style="visibility: hidden; width:300px; z-index: 1;">
+    </div>
+      <!--    ______Search_____ //TODO to return search remove div-->
+<!--    <div class="float-right mb-4 mt-2">-->
+<!--      <form method="get" class="form-group flow" th:href="@{/store}" id="searchForm">-->
+<!--        <span class="icon material-icons">search</span>-->
+<!--        <input type="search" class="form-control bg-dark-2" aria-label="Default"-->
+<!--               aria-describedby="inputGroup-sizing-default"-->
+<!--               id="searchString" name="searchString" style="width:300px; z-index: 1;">-->
+<!--        <div style="position: absolute; z-index: 3; word-break: break-all;">-->
+<!--          <ul class="dropdown-menu bg-dark-2 show" id="drop" th:name="drop"-->
+<!--              th:if="${search} == true and ${searchedGames.size()} > 0"-->
+<!--              style="position: static; margin: 0px; z-index: 1;">-->
+<!--            <li th:each="searchedGame, i : ${searchedGames}">-->
+<!--              <a th:href="@{/game/{gameId}(gameId =${searchedGame.game.id})}">-->
+<!--                <div class="dropdown-item bg-dark-2 card" style="width:300px; height: 100px;">-->
+<!--                  <div class="row no-gutters">-->
+<!--                    <div class="col-md-6">-->
+<!--                      <img th:id="'image' + ${i.count}"-->
+<!--                           th:src="'data:image/png;base64,'+-->
+<!--                           ${searchedGame.gamePicture.image.getBase64ImageData()}"-->
+<!--                           class="d-block w-100 img-fluid image-uploaded"/>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-6">-->
+<!--                      <div class="text-center">-->
+<!--                        <small>-->
+<!--                          <label class="card-title" style="white-space: pre-wrap;"-->
+<!--                                 th:text="${searchedGame.game.title}">-->
+<!--                          </label>-->
+<!--                        </small>-->
+<!--                        <p class="card-text">-->
+<!--                          <small-->
+<!--                              th:text="${searchedGame.game.price} + '$'">-->
+<!--                          </small>-->
+<!--                        </p>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </a>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--          <ul class="dropdown-menu bg-dark-2 show" id="drop2" th:name="drop2"-->
+<!--              th:if="${search} == true and ${searchedGames.size()} <= 0"-->
+<!--              style="position: static; inset: 0px 0px auto auto; margin: 0px;">-->
+<!--            <li>-->
+<!--              <div class="dropdown-item card" style=" width:270px; height: 60px;">-->
+<!--                <div class="card-body text-center">-->
+<!--                  <p class="card-text"-->
+<!--                     th:text="'Nothing was found.'">-->
+<!--                  </p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--      </form>-->
     </div>
 
     <div class="mb-4">
@@ -130,7 +137,7 @@
     <div th:if="${#httpServletRequest.remoteUser}!=null">
       <th:block th:replace="recommendations"></th:block>
     </div>
-    <div class="container text-center" th:if="${#httpServletRequest.remoteUser}==null">
+    <div class="container text-center mb-2" th:if="${#httpServletRequest.remoteUser}==null">
       <h3>Please log in to your account to see more recommendations</h3>
     </div>
   </div>
