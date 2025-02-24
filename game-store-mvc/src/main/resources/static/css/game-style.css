@@ -1,0 +1,54 @@
+
+.mb-lg {
+  margin-bottom: 20px !important;
+}
+
+.image {
+  width: 220px;
+  height: 220px;
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: 250;
+  margin-top: 5rem;
+  padding-bottom: 10px;
+  font-family: sans-serif;
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(0.25turn, rgba(2, 180, 210, 0.80), rgba(2, 180, 210, 0));
+  border-image-slice: 1;
+  width: 100%;
+}
+
+.game-title {
+  font-size: 15px;
+  margin-bottom: 3px;
+  font-weight: 50;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: "Motiva Sans", Sans-serif;
+  color: aliceblue;
+  margin-top: 5px;
+  margin-right: 5px;
+  word-break: break-word;
+}
+
+.game-price {
+  font-size: 13px;
+  font-family: Inter, sans-serif;
+  text-decoration: none;
+  color: aliceblue;
+  margin-right: 5px;
+}
+
+.outer-prev-icon {
+  position: relative;
+  bottom: 30px;
+  right: 50px;
+}
+
+.outer-next-icon {
+  position: relative;
+  bottom: 30px;
+  left: 50px;
+}

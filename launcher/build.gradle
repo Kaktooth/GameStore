@@ -2,24 +2,15 @@ plugins {
     id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.10'
-    id 'edu.sc.seis.launch4j' version '2.5.3'
-}
-launch4j {
-
-    outfile = "Launcher.exe"
-    jreMaxVersion = '1.8.9'
-    jdkPreference = 'preferJre'
-    initialHeapSize = 128
-    maxHeapSize = 512
-    stayAlive = false
-    bundledJre64Bit = true
-    jar = "launcher.jar"
-    bundledJrePath = 'jre'
-    jreMinVersion = "1.8.0"
 }
 
 group 'com.launcher'
-version '1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(16)
+    }
+}
 
 repositories {
     mavenCentral()
@@ -29,10 +20,7 @@ ext {
     junitVersion = '5.7.1'
 }
 
-sourceCompatibility = '16'
-targetCompatibility = '16'
-
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
@@ -77,61 +65,4 @@ dependencies {
 
 test {
     useJUnitPlatform()
-}
-
-
-task(prepareReleases, dependsOn: ['jar', 'build', 'startScripts', 'createx64Exe', 'createx86Exe'], type: Task) {
-    doLast {
-
-        def base = "build/distributions/base";
-
-        copy {
-            with distributions.main.getContents()
-            from "other/"
-            into "$base"
-        }
-
-        copy {
-            from "$base";
-            into "build/distributions/windows-x86/";
-        }
-
-        copy {
-            from "build/launch4j/" + project.name + ".exe";
-            into "build/distributions/windows-x86/bin";
-
-        }
-
-        copy {
-            from "jre/$jreVersion$jreBuild/windows-i586/prepared/";
-            into "build/distributions/windows-x86/jre";
-        }
-
-        // Windows x64
-        copy {
-            from "$base";
-            into "build/distributions/windows-x64/";
-        }
-
-        copy {
-            from "build/launch4j/" + project.name + "64.exe";
-            into "build/distributions/windows-x64/bin";
-
-        }
-
-        copy {
-            from "jre/$jreVersion$jreBuild/windows-x64/prepared/";
-            into "build/distributions/windows-x64/jre";
-        }
-
-    }
-}
-
-task(zipW64, dependsOn: 'prepareReleases', type: Zip) {
-    from "build/distributions/windows-x64/";
-    destinationDir file("release");
-    appendix "windows-x64";
-}
-
-task(release, dependsOn: ['zipW32', 'zipW64'], type: Task) {
 }

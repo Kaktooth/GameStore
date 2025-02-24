@@ -1,0 +1,24 @@
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.icon {
+  align-self: center;
+  width: 30px;
+  height: 30px;
+  color: white;
+  text-decoration: none;
+  z-index: 1;
+}
+
+.flow {
+  color: white;
+  align-self: center;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+}
+

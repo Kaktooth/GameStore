@@ -1,0 +1,26 @@
+:root {
+  --bs-dark-rgb: rgb(33, 37, 41);
+  --bs-gradient: linear-gradient(75deg, rgba(255, 255, 25, 0.25), rgba(255, 25, 255, 0));
+  --bg-gradient: linear-gradient(65deg, rgba(0, 12, 15, 0.15), rgba(255, 144, 200, 0));
+  --bg-gradient2: linear-gradient(123deg, rgba(254, 0, 0, 0.38), rgba(0, 12, 15, 0.15), rgba(0, 12, 15, 0.15), rgba(255, 144, 200, 0), rgba(2, 180, 210, 0.24));
+  --bg-gradient3: linear-gradient(36deg, rgba(241, 244, 0, 0.02), rgba(0, 2, 15, 0.13), rgba(2, 180, 210, 0.09));
+  --night-gradient: linear-gradient(180deg, rgba(243, 145, 137, 0.39), rgba(113, 114, 161, 0.39),
+  rgba(187, 128, 130, 0.24), rgba(110, 117, 130, 0.19), rgba(4, 101, 130, 0.11));
+  --night-gradient-2: linear-gradient(180deg, rgba(15, 44, 103, 0.39),
+  rgba(205, 24, 24, 0.24), rgba(243, 149, 13, 0.19), rgba(244, 225, 133, 0.11));
+  --night-gradient-3: linear-gradient(180deg, rgba(15, 44, 103, 0.19),
+  rgba(14, 25, 33, 0.11));
+}
+
+.gradient-bg {
+  background-image: var(--bg-gradient2);
+}
+
+.bg-dark-2 {
+  background: #212529;
+  color: aliceblue;
+}
+
+.gradient-button .btn {
+  background-image: linear-gradient(to bottom, rgba(251, 253, 255, 0.3), rgba(255, 255, 255, 0.2) 49%, rgba(0, 0, 0, 0.15) 51%, rgba(0, 0, 0, 0.05));
+}

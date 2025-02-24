@@ -1,0 +1,142 @@
+* {
+  box-sizing: border-box;
+}
+
+.list-body {
+  width: 100%;
+  position: relative;
+  background-color: #212529;
+  border: 1px solid #145257;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 40px;
+}
+
+.animated-header {
+  color: white;
+  animation: scale 2s forwards cubic-bezier(0.5, 1, 0.89, 1);
+}
+
+@keyframes scale {
+  0% {
+    color: #145257;
+  }
+  100% {
+    color: white;
+  }
+}
+
+.games-body {
+  width: 100%;
+  position: relative;
+  background-color: #252529;
+  padding: 1rem;
+}
+
+.in-category-game-image {
+  width: 90%;
+  height: 90%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.topic-game-image {
+  width: 30vmin;
+  height: 30vmin;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.h3 .blue {
+  color: #145257;
+}
+
+.scroll {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  white-space: nowrap;
+  overflow-x: scroll;
+}
+
+.scroll > div {
+  margin-right: 30px;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scroll::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.best-game-img {
+  width:250px;
+  height:250px;
+}
+
+.list-recommendation-body {
+  width: 100%;
+  position: relative;
+  background-color: #212529;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.category {
+  background-color: #252529;
+  color: aliceblue;
+  font-size: 13px;
+  margin: 5px;
+  font-weight: 50;
+  letter-spacing: 1px;
+  font-family: "Motiva Sans", Sans-serif;
+  word-break: break-word;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.margin-top {
+  margin-top: 40px;
+}
+
+.hidden-games {
+  display: none;
+  width: 210px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.games-in-category {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.btn-dark-moon {
+  font-size: 12px;
+  background: #141E30;
+  background: -webkit-linear-gradient(to right, #243B55, #141E30);
+  background: linear-gradient(to right, #243B55, #141E30);
+  color: #fff;
+}
+
+.btn-dark-moon {
+  font-size: 12px;
+  background: #141E30;
+  background: -webkit-linear-gradient(to right, #243B55, #141E30);
+  background: linear-gradient(to right, #243B55, #141E30);
+  color: #fff;
+}
+
+.btn-rounded {
+  border-radius: 25px;
+}

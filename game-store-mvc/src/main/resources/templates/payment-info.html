@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head>
+  <title>Payment Info</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/root-page-style.css" />
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+          crossorigin="anonymous"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+        rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/validate-input.js}"></script>
+</head>
+<body class="bg-dark-2">
+<header class="masthead special-color-dark">
+  <nav class="navbar shadow navbar-dark p-3 bg-dark-2 text-white" aria-label="Main navigation">
+    <div class="container-fluid d-grid gap-3 align-items-center">
+      <ul class="nav col col-lg-auto me-lg-auto mb-2 justify-content-left mb-md-0">
+        <a class="font-weight-bold navbar-brand" href="/store">Game Store</a>
+        <li><a class="nav-link px-2 text-white" href="/store">Store</a></li>
+        <li><a th:if="${#httpServletRequest.remoteUser}!=null" class="nav-link px-2 text-white"
+               href="/collection">Collection</a></li>
+      </ul>
+      <div class="d-flex justify-content-end text-white">
+        <div th:if="${#httpServletRequest.remoteUser}!=null">
+          <a class="nav-link dropdown-toggle l text-white"
+             data-toggle="dropdown" href="#" role="button"
+             aria-haspopup="true"
+             aria-expanded="false">
+            <label th:text="${user.publicUsername}"></label>
+          </a>
+          <div class="dropdown-menu shadow" aria-labelledby="dropdownUser2"
+               style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(-0.00172424px, 56px, 0px);">
+            <a class="dropdown-item" href="/account">Account</a>
+            <a class="dropdown-item" href="/profile">Profile</a>
+            <a sec:authorize="hasAuthority('1')" class="dropdown-item" href="/metrics">Metrics</a>
+            <a class="dropdown-item" href="/upload">Upload game</a>
+
+            <hr class="dropdown-divider">
+            <form class="dropdown-item" th:action="@{/logout}" method="post">
+              <button class="btn btn-md btn-light text-dark" type="submit">Log out</button>
+            </form>
+
+          </div>
+        </div>
+        <div th:if="${#httpServletRequest.remoteUser}==null">
+          <a class="text-end text-white" href="/log-in" th:text="'login'"></a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main role="main" class="shadow d-flex justify-content-center container-lg text-white mb-4 gradient-bg">
+  <div class="container-lg row bg-dark-2 mb-4">
+    <form class="needs-validation mb-4" th:method="post" th:object="${paymentInfoInput}"
+          th:action="@{/payment-info/{gameId}(gameId =${game.id}, recommender = ${recommender})}" novalidate>
+      <h5 class="form-row">Payment Method</h5>
+      <div class="form-row">
+        <div class="col-md-4 mb-3">
+          <label for="method">Select payment method</label>
+          <select th:field="*{method}" class="custom-select my-1 mr-sm-2" id="method" required>
+            <option th:each="paymentMethod: ${paymentMethods.entrySet()}"
+                    th:value="${paymentMethod.getKey()}"
+                    th:text="${paymentMethod.getValue()}">
+            </option>
+          </select>
+        </div>
+        <div class="col-md-1 mb-3">
+        </div>
+        <div class="col-md-2 mb-3">
+          <label for="month">Expiration date</label>
+          <input th:field="*{month}" type="number" class="form-control" id="month"
+                 placeholder="Month"
+                 min="1" max="12" required>
+          <div class="invalid-feedback">
+            Please provide a valid month(1 - 12)
+          </div>
+          <input th:field="*{year}" type="number" class="form-control" id="year" placeholder="Year"
+                 th:min="${currentYear}" required>
+          <div class="invalid-feedback">
+            Please provide a valid year
+          </div>
+        </div>
+        <div class="col-md-2 mb-3">
+          <label for="securityCode">Security code</label>
+          <input th:field="*{securityCode}" type="text" class="form-control" id="securityCode"
+                 minlength="3" maxlength="4" placeholder="Enter code" required>
+          <div class="invalid-feedback">
+            Please provide a security code(3 or 4 digits)
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4 mb-3">
+          <label for="cardNumber">Card number</label>
+          <input th:field="*{cardNumber}" type="text" class="form-control" id="cardNumber"
+                 minlength="16" maxlength="16" placeholder="Enter card number" required>
+          <div class="invalid-feedback">
+            Please provide a card number(16 digits)
+          </div>
+        </div>
+      </div>
+      <h5 class="form-row">Billing information</h5>
+      <div class="form-row">
+        <div class="col-md-4 mb-3">
+          <label for="firstName">First name</label>
+          <input th:field="*{firstName}" type="text" class="form-control" id="firstName"
+                 th:pattern="${onlyLetters}" placeholder="First name" required>
+          <div class="invalid-feedback">
+            Invalid first name.
+          </div>
+        </div>
+        <div class="col-md-5 mb-3">
+          <label for="lastName">Last name</label>
+          <input th:field="*{lastName}" type="text" class="form-control" id="lastName"
+                 placeholder="Last name"
+                 th:pattern="${onlyLetters}" required>
+          <div class="invalid-feedback">
+            Invalid last name.
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4 mb-3">
+          <label for="country">Country</label>
+          <input th:field="*{country}" type="text" class="form-control" id="country"
+                 placeholder="Country"
+                 th:pattern="${onlyLetters}" required>
+          <div class="invalid-feedback">
+            Please provide a valid country.
+          </div>
+        </div>
+
+      </div>
+      <div class="form-row">
+        <div class="col-md-3 mb-3">
+          <label for="city">City</label>
+          <input th:field="*{city}" type="text" class="form-control" id="city" placeholder="City"
+                 th:pattern="${onlyLetters}" required>
+          <div class="invalid-feedback">
+            Please provide a valid city.
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="state">State</label>
+          <input th:field="*{state}" type="text" class="form-control" id="state"
+                 th:pattern="${onlyLetters}" placeholder="State" required>
+          <div class="invalid-feedback">
+            Please provide a valid state.
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="zip">Zip</label>
+          <input th:field="*{zip}" type="text" class="form-control" id="zip"
+                 th:pattern="${onlyDigits}" minlength="5" maxlength="5" placeholder="Zip" required>
+          <div class="invalid-feedback">
+            Please provide a valid zip.
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-success float-right" type="submit">
+        Continue
+      </button>
+    </form>
+  </div>
+</main>
+
+<footer style="background-image: var(--bg-gradient);"
+        class="footer-10 bg-dark-2 justify-content-center special-color-dark font-small text-muted shadow">
+  <div class="container text-center">
+    <p>
+      This website is only for educational and demonstration purposes.
+    </p>
+    <a href="">Privacy Policy</a>
+    <a href="">Agreement</a>
+  </div>
+</footer>
+</body>
+</html>

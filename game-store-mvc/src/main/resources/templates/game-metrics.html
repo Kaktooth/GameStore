@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/root-page-style.css"/>
+  <link rel="stylesheet" href="/css/game-metrics.css"/>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+          crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <!--  <script th:inline="javascript" type="text/javascript" th:src="@{/js/game-metrics-chart.js}"></script>-->
+  <script th:inline="javascript">
+    var real_data = /*[[${chartData}]]*/'noValue';
+    var interaction = /*[[${interaction}]]*/'noValue';
+    $(document).ready(function () {
+      google.charts.load('current', {
+        packages: ['corechart', 'bar']
+      });
+      google.charts.setOnLoadCallback(drawColumnChart);
+    });
+
+    function drawColumnChart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Date');
+      data.addColumn('number', interaction);
+      Object.keys(real_data).forEach(function (key) {
+        data.addRow([key, real_data[key]]);
+      });
+      var options = {
+        chartArea: {left: 50, top: 50, width: 800, height: 500},
+        // bgColor: '#212529',
+        // textStyle: {
+        //   color: '#f0f8ff',
+        // },
+        width: 900,
+        height: 600,
+        isStacked: true,
+        legend: {position: 'top', maxLines: 3},
+        // title: 'Selected interaction Chart',
+        hAxis: {
+          textStyle: {
+            fontSize: 12
+          }
+        }
+      };
+      var chart = new google.visualization.ColumnChart(document
+      .getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+
+  </script>
+</head>
+
+<body class="bg-dark-2">
+
+<header class="masthead special-color-dark">
+  <nav class="navbar shadow navbar-dark p-3 bg-dark-2 text-white" aria-label="Main navigation">
+    <div class="container-fluid d-grid gap-3 align-items-center">
+      <ul class="nav col col-lg-auto me-lg-auto mb-2 justify-content-left mb-md-0">
+        <a class="font-weight-bold navbar-brand" href="/store">Game Store</a>
+        <li><a class="nav-link px-2 text-white" href="/store">Store</a></li>
+        <li><a class="nav-link px-2 text-white" href="/uploaded-games">Uploaded Games</a></li>
+      </ul>
+      <div class="d-flex justify-content-end text-white">
+        <div th:if="${#httpServletRequest.remoteUser}!=null">
+          <a class="nav-link dropdown-toggle l text-white"
+             data-toggle="dropdown" href="#" role="button"
+             aria-haspopup="true"
+             aria-expanded="false">
+            <label th:text="${user.publicUsername}"></label>
+          </a>
+          <div class="dropdown-menu shadow" aria-labelledby="dropdownUser2"
+               style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(-0.00172424px, 56px, 0px);">
+            <a class="dropdown-item" href="/account">Account</a>
+            <a class="dropdown-item" href="/profile">Profile</a>
+            <a sec:authorize="hasAuthority('1')" class="dropdown-item" href="/metrics">Metrics</a>
+            <a class="dropdown-item" href="/upload">Upload game</a>
+
+            <hr class="dropdown-divider">
+            <form class="dropdown-item" th:action="@{/logout}" method="post">
+              <button class="btn btn-md btn-light text-dark" type="submit">Log out</button>
+            </form>
+
+          </div>
+        </div>
+        <div th:if="${#httpServletRequest.remoteUser}==null">
+          <a class="text-end text-white" href="/log-in?login" th:text="'login'"></a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<main role="main" class="shadow">
+  <div class="container-md">
+    <div class="mb-4">
+      <select th:value="${selectedGame}"
+              th:onchange="'window.location.href = \''+ @{/game-metrics} + '/\' + this.value'"
+              id="selectedGame" name="selectedGame" class="select-game-metrics">
+        <option th:each="metrics : ${gameMetrics.entrySet()}"
+                th:text="${metrics.getKey().getTitle()}"
+                th:value="${metrics.getKey().id}"
+                th:href="@{/game-metrics/{gameId}(gameId = ${metrics.getKey().id})}"
+                th:selected="${metrics.getKey().title == selectedGame.title}"></option>
+      </select>
+      <a style="background-image: var(--bs-gradient); position:relative; top: 15px;" class="btn btn-sm btn-success float-right
+       align-content-center" type="button"
+         th:href="@{/export/game-metrics}">
+        Export All
+      </a>
+    </div>
+    <div class="flow">
+      <div class="flow-item" th:each="metrics : ${gameMetrics.get(selectedGame)}"
+           th:text="${metrics.metricName.replace('GameMetric','')} + ': '
+           + ${#numbers.formatInteger(metrics.value, 1)}"></div>
+    </div>
+  </div>
+  <h4 style="margin-bottom: 50px; text-align: center;">User Interactions Chart</h4>
+  <div class="container-md mb-2 charts-grid">
+    <div class="column-flow">
+
+      <div class="column-flow-item">
+        <a th:href="@{/game-metrics/{gameId}(gameId = ${selectedGame.getId()}, chartName='VISITED')}">Visited</a>
+      </div>
+      <div class="column-flow-item">
+        <a th:href="@{/game-metrics/{gameId}(gameId = ${selectedGame.getId()}, chartName='FAVORITE')}">Added
+          to Favorites</a>
+      </div>
+      <div class="column-flow-item">
+        <a th:href="@{/game-metrics/{gameId}(gameId = ${selectedGame.getId()}, chartName='BOUGHT')}">Purchased</a>
+      </div>
+      <div class="column-flow-item">
+        <a th:href="@{/game-metrics/{gameId}(gameId = ${selectedGame.getId()}, chartName='IGNORED')}">Ignored</a>
+      </div>
+    </div>
+    <div>
+      <div id="chart_div" style="width: 900px; height: 600px;"></div>
+    </div>
+  </div>
+</main>
+<footer style="background-image: var(--bg-gradient);"
+        class="footer-10 bg-dark-2 justify-content-center special-color-dark font-small text-muted shadow">
+  <div class="container text-center">
+    <p>
+      This website is only for educational and demonstration purposes.
+    </p>
+    <a href="">Privacy Policy</a>
+    <a href="">Agreement</a>
+  </div>
+</footer>
+</body>
+</html>
